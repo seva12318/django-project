@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from marks.models import Choice, Journal, Lesson, School, Student, Subject, Teacher
+from marks.models import Journal, Lesson, School, Student, Subject, Teacher
 
 # Register your models here.
 @admin.register(Student)
