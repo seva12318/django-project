@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from marks.models import Journal, Lesson, School, Student, Subject, Teacher
 
-# Register your models here.
+# Register your models here.asdasda
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     pass
