@@ -1,15 +1,15 @@
-GET http://127.0.0.1:8000/api/students/
+GET http://127.0.0.1:8000/api/marks/subjects/
 
 ###
 
-POST http://127.0.0.1:8000/api/subjects/
+POST http://127.0.0.1:8000/api/students/
 Content-Type: application/json
 
 {
-    "name": "экономика",
-    "level": "Продвинутый",
-    "time": "11:45",
-    "teacher_id": 4
+    "name": "Денис",
+    "surname": "Качалин", 
+    "patr": "Викторович",  
+    "school": 1
 }
 
 ###
