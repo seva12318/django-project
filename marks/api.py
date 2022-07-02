@@ -3,8 +3,8 @@ from msilib.schema import Class
 from rest_framework import viewsets, renderers
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from marks.models import School, Student
-from marks.serializer import SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer
+from marks.models import School, Student, Subject, Teacher
+from marks.serializer import SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset =  Student.objects.all()
@@ -49,3 +49,20 @@ class SchoolViewSet(viewsets.ModelViewSet):
     def odd_schools(self,*args, **kwargs):
         schools = School.objects.filter(id__in = (1,3))
         return Response(SchoolSerializer(schools, many=True, ).data)
+
+class TeacherViewSet(viewsets.ModelViewSet):
+    queryset =  Teacher.objects.all()
+    serializer_class = TeacherSerializer
+    renderer_classes = [renderers.JSONRenderer]
+
+    @action(detail=True, url_path="subjects", methods=['GET'])
+    def subjects(self, *args, **kwargs):
+        current_teacher = self.get_object()
+        subjects = Subject.objects.filter(teacher=current_teacher)
+        
+        serializer = SubjectSerializer(subjects, many=True)
+        data = serializer.data
+
+        return Response({
+           "subjects": data, 
+        })

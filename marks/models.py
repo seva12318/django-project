@@ -1,3 +1,4 @@
+from pyexpat import model
 from turtle import title
 from django.db import models
 
@@ -50,3 +51,14 @@ class Journal(models.Model):
     
     class Meta:
         db_table = "journal"
+
+class Choice(models.Model):
+    students = models.ForeignKey("Student", null=True, on_delete=models.SET_NULL)
+    year = models.CharField("Год", max_length=4)
+    semester = models.CharField("Семестр", max_length=1)
+    sub_first = models.ForeignKey("Subject", null=True, on_delete=models.SET_NULL, related_name="sub_first")
+    sub_second = models.ForeignKey("Subject", null=True, on_delete=models.SET_NULL, related_name="sub_second")
+    num_class = models.CharField("Класс", max_length=3)
+    
+    class Meta:
+        db_table = "choices"

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse 
 
-from marks.models import Lesson, School, Student, Subject, Teacher
+from marks.models import Choice, Lesson, School, Student, Subject, Teacher
 
 # Create your views here.
 class StudentView(View):
@@ -100,4 +100,16 @@ class OneLessonView(View):
             "homework": lesson.homework,
             "date": lesson.date,
         })
+
+class ChoicesView(View):
+    def get(request, *args):
+        choices = list(Choice.objects.all().values())
+
+        return JsonResponse({
+            "choices": list(choices)
+        })
+
+        
+
+
 

@@ -2,14 +2,14 @@ GET http://127.0.0.1:8000/api/students/
 
 ###
 
-POST http://127.0.0.1:8000/api/students/
+POST http://127.0.0.1:8000/api/subjects/
 Content-Type: application/json
 
 {
-    "name": "Михаил",
-    "surname": "Каташевцев", 
-    "patr": "Викторович", 
-    "school": 1
+    "name": "экономика",
+    "level": "Продвинутый",
+    "time": "11:45",
+    "teacher_id": 4
 }
 
 ###
@@ -39,5 +39,5 @@ POST http://127.0.0.1:8000/api/schools/
 Content-Type: application/json
 
 {
-  "title": "Гимназия №3"
+  "title": "Гимназия"
 }
