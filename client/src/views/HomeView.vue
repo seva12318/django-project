@@ -10,6 +10,11 @@ const {students} = storeToRefs(lessonsStore);
 let sortFiled = ref("name");
 let inputText = ref("");
 
+let surname = ref("");
+let name = ref("");
+let patr = ref("");
+let school = ref("");
+
 const studentsStored = computed(() =>{
     return _(students.value)
         .orderBy(x => x[sortFiled.value])
@@ -21,16 +26,27 @@ function toggleSort(fildeName){
 }
 
 function onSurnameClick(student){
-    console.log(students.surname)
+    console.log(student.surname)
 }
 
 function onNameClick(student){
-    console.log(students.name)
+    console.log(student.name)
 }
 
 function onDeleteClick(student){
     lessonsStore.deleteStudent(student.id)
 }
+
+function onFormSumbit(){
+    lessonsStore.addStudent(surname.value, name.value, patr.value, school.value)
+}
+
+function onUpdateClick(id, event){
+   // console.log(id)
+   // console.log(event)
+    lessonsStore.updStudent(id,  event.surname, event.name)
+}
+
 
 onBeforeMount( () => {
     lessonsStore.fetchStudents();
@@ -47,10 +63,21 @@ onBeforeMount( () => {
         v-for="s in studentsStored" 
         :name = "s.name" 
         :surname = "s.surname"
+        :patr = "s.patr" 
+        :schoolId = "s.school_id"
         @surname-click = "onSurnameClick(s)"
         @name-click = "onNameClick(s)"
         @delete = "onDeleteClick(s)"
+        @update = "onUpdateClick(s.id, $event)"
     />
+    <hr> 
+    <form action="" @submit.prevent.stop="onFormSumbit">
+        <input type="text" v-model="surname" placeholder="Фамилия"/>
+        <input type="text" v-model="name" placeholder="Имя"/>
+        <input type="text" v-model="patr" placeholder="Отчество"/>
+        <input type="text" v-model="school" placeholder="Школа"/>
+        <button>Добавить</button>
+    </form>
 </template>
 
 

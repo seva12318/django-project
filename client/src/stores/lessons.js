@@ -16,6 +16,34 @@ export const useLessonsStore = defineStore({
                 method: "DELETE"
             });
             await this.fetchStudents();
+        },
+        async addStudent(surname, name, patr, school) {
+            let r = await fetch(`/api/students/`,{
+                method: "POST",
+                headers: {
+                    "content-type":"application/json"
+                },
+                body: JSON.stringify({
+                    surname,
+                    name,
+                    patr,
+                    school
+                })
+            });
+            await this.fetchStudents();
+        },
+        async updStudent(studentId, surname, name) {
+            let r = await fetch(`/api/students/${studentId}/`,{
+                method: "PATCH",
+                headers: {
+                    "content-type":"application/json"
+                },
+                body: JSON.stringify({
+                    surname,
+                    name
+                })
+            });
+            await this.fetchStudents();
         }
     }
 }) 
