@@ -1,7 +1,7 @@
 #from xml.etree.ElementInclude import include
 from django.db import router
 from marks.api import SchoolViewSet, StudentViewSet
-from marks.views import ChoicesView, LessonView, OneChoicesView, OneLessonView, OneSchoolView, OneStudentView, OneSubjectView, OneTeacherView, SchoolView, StudentView, SubjectView, TeacherView
+from marks.views import ChoicesView, LessonView, OneLessonView, OneSchoolView, OneStudentView, OneSubjectView, OneTeacherView, SchoolView, StudentView, SubjectView, TeacherView
 from django.urls import include, path
 
 from rest_framework.routers import DefaultRouter
@@ -21,6 +21,5 @@ urlpatterns = [
     path("subjects/<int:id>/", OneSubjectView.as_view()),
     path("lessons/", LessonView.as_view()),
     path("lessons/<int:id>/", OneLessonView.as_view()),
-    path("choices/", ChoicesView.as_view()),
-    path("choices/<int:id>/", OneChoicesView.as_view()),
+    path("choices/", ChoicesView.as_view())
 ]

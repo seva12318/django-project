@@ -72,13 +72,12 @@ class SubjectView(View):
 class OneSubjectView(View):
     def get(request, *args, **kwargs):
         id = kwargs['id']
-        subject: Subject = Subject.objects.select_related("teacher").get(id=id)
-        #school: School = student.school
+        subject: Subject = Subject.objects.select_related("teacher").get(id=id) 
         return JsonResponse({
             "name": subject.name,
             "level": subject.level,
             "time": subject.time,
-            "teacher": subject.teacher.surname,
+            "teacher": subject.teacher.surname + ' ' + subject.teacher.name + ' ' + subject.teacher.patr
         })
 
 class LessonView(View):

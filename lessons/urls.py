@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from marks.api import SchoolViewSet, StudentViewSet, TeacherViewSet
+from marks.api import ChoiceViewSet, JournalViewSet, LessonViewSet, SchoolViewSet, StudentViewSet, SubjectViewSet, TeacherViewSet
 import marks.urls
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
@@ -23,6 +23,10 @@ router = DefaultRouter()
 router.register(r'students', StudentViewSet, basename='student')
 router.register(r'schools', SchoolViewSet, basename='school')
 router.register(r'teachers', TeacherViewSet, basename='teacher')
+router.register(r'journals', JournalViewSet, basename='journal')
+router.register(r'lessons', LessonViewSet, basename='lesson')
+router.register(r'choices', ChoiceViewSet, basename='choice')
+router.register(r'subjects', SubjectViewSet, basename='subject')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
