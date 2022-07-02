@@ -1,12 +1,12 @@
 from dataclasses import fields
-from pyexpat import model
 from rest_framework import serializers
-
+import lessons
 from marks.models import Journal, Lesson, School, Student, Teacher, Subject, Choice
   
 class StudentSerializer(serializers.ModelSerializer):
+    school = serializers.CharField(source="school.title", read_only=True)
     class Meta:
-        model = Student
+        model  =Student
         fields = ['id', 'name', 'surname', 'patr', 'school']  
 
 class SchoolSerializer(serializers.ModelSerializer):
@@ -20,24 +20,30 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = '__all__' 
 
 class SubjectSerializer(serializers.ModelSerializer):
+    teacher = serializers.CharField(source="teacher.surname" , read_only=True)
     class Meta:
         model = Subject
-        fields = '__all__' 
+        fields = ['level', 'name', 'time', 'teacher'] 
 
 class LessonSerializer(serializers.ModelSerializer):
+    subjects = serializers.CharField(source="subjects.name", read_only=True) 
     class Meta:
         model = Lesson
-        fields = '__all__' 
+        fields = ['subjects', 'topic', 'homework', 'date']
 
 class JournalSerializer(serializers.ModelSerializer):
+    students = serializers.CharField(source="students.surname", read_only=True)
+
     class Meta:
         model = Journal
-        fields = '__all__' 
+        fields = ['students', 'lessons', 'mark'] 
 
 class ChoiceSerializer(serializers.ModelSerializer):
+    sub_first = serializers.CharField(source="subjects.name", read_only=True) 
+    sub_second = serializers.CharField(source="subjects.name", read_only=True) 
     class Meta:
         model = Choice
-        fields = '__all__' 
+        fields =     ['students', 'year', 'semester', 'sub_first', 'sub_second', 'num_class']
 
 class SchoolAddStudentsSerializer(serializers.Serializer):
     students = serializers.ListField(child=serializers.IntegerField()) 

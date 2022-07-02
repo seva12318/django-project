@@ -7,7 +7,7 @@ class Student(models.Model):
     name = models.CharField("Имя", max_length=50)
     surname = models.CharField("Фамилия", max_length=50)
     patr = models.CharField("Отчество", max_length=50)
-    school = models.ForeignKey("School", null=True, on_delete=models.SET_NULL)
+    school = models.ForeignKey("School", null=True, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "students"
@@ -30,13 +30,13 @@ class Subject(models.Model):
     level = models.CharField("Уровень", max_length=50)
     name = models.CharField("Название предмета", max_length=100)
     time = models.CharField("Время начала занятия", max_length=6)
-    teacher = models.ForeignKey("Teacher", null=True, on_delete=models.SET_NULL)
+    teacher = models.ForeignKey("Teacher", null=True, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "subjects"
 
 class Lesson(models.Model):
-    subjects = models.ForeignKey("Subject", null=True, on_delete=models.SET_NULL)
+    subjects = models.ForeignKey("Subject", null=True, on_delete=models.CASCADE)
     topic = models.CharField("Тема", max_length=100)
     homework = models.CharField("Домашнее задание", max_length=500)
     date = models.CharField("Дата", max_length=10)
@@ -45,19 +45,19 @@ class Lesson(models.Model):
         db_table = "lessons"
 
 class Journal(models.Model):
-    students = models.ForeignKey("Student", null=True, on_delete=models.SET_NULL)
-    lessons = models.ForeignKey("Subject", null=True, on_delete=models.SET_NULL)
+    students = models.ForeignKey("Student", null=True, on_delete=models.CASCADE)
+    lessons = models.ForeignKey("Lesson", null=True, on_delete=models.CASCADE)
     mark = models.CharField("Оценка", max_length=1)
     
     class Meta:
         db_table = "journal"
 
 class Choice(models.Model):
-    students = models.ForeignKey("Student", null=True, on_delete=models.SET_NULL)
+    students = models.ForeignKey("Student", null=True, on_delete=models.CASCADE)
     year = models.CharField("Год", max_length=4)
     semester = models.CharField("Семестр", max_length=1)
-    sub_first = models.ForeignKey("Subject", null=True, on_delete=models.SET_NULL, related_name="sub_first")
-    sub_second = models.ForeignKey("Subject", null=True, on_delete=models.SET_NULL, related_name="sub_second")
+    sub_first = models.ForeignKey("Subject", null=True, on_delete=models.CASCADE, related_name="sub_first")
+    sub_second = models.ForeignKey("Subject", null=True, on_delete=models.CASCADE, related_name="sub_second")
     num_class = models.CharField("Класс", max_length=3)
     
     class Meta:
