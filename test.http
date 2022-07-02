@@ -1,0 +1,43 @@
+GET http://127.0.0.1:8000/api/students/
+
+###
+
+POST http://127.0.0.1:8000/api/students/
+Content-Type: application/json
+
+{
+    "name": "Михаил",
+    "surname": "Каташевцев", 
+    "patr": "Викторович", 
+    "school": 1
+}
+
+###
+DELETE http://127.0.0.1:8000/api/students/3/
+
+###
+PUT http://127.0.0.1:8000/api/students/3/
+Content-Type: application/json
+
+{
+    "name": "Михаил",
+    "surname": "Каташевцев", 
+    "patr": "Викторович",  
+    "school": 2
+}
+
+###
+POST http://127.0.0.1:8000/api/schools/2/add-students/
+Content-Type: application/json
+
+{
+  "students": [2]
+}
+
+###
+POST http://127.0.0.1:8000/api/schools/
+Content-Type: application/json
+
+{
+  "title": "Гимназия №3"
+}
