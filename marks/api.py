@@ -3,8 +3,8 @@ from msilib.schema import Class
 from rest_framework import viewsets, renderers
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from marks.models import School, Student
-from marks.serializer import SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer
+from marks.models import Choice, Journal, Lesson, School, Student, Subject, Teacher
+from marks.serializer import ChoiceSerializer, JournalSerializer, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset =  Student.objects.all()
@@ -14,6 +14,23 @@ class StudentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         #self.request.user
         return Student.objects.all()
+    #API с выбранными предметами
+
+class JournalViewSet(viewsets.ModelViewSet):
+    queryset = Journal.objects.all()
+    serializer_class = JournalSerializer
+    renderer_classes = [renderers.JSONRenderer]
+
+    def get_queryset(self):
+        return Journal.objects.all()    
+
+class LessonViewSet(viewsets.ModelViewSet):
+    queryset = Lesson.objects.all()
+    serializer_class = LessonSerializer
+    renderer_classes = [renderers.JSONRenderer]
+
+    def get_queryset(self):
+        return Lesson.objects.all()    
 
 class SchoolViewSet(viewsets.ModelViewSet):
     queryset =  School.objects.all()
@@ -49,3 +66,35 @@ class SchoolViewSet(viewsets.ModelViewSet):
     def odd_schools(self,*args, **kwargs):
         schools = School.objects.filter(id__in = (1,3))
         return Response(SchoolSerializer(schools, many=True, ).data)
+
+class SubjectViewSet(viewsets.ModelViewSet):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+    renderer_classes = [renderers.JSONRenderer]
+
+    def get_queryset(self):
+        return Subject.objects.all()  
+
+class ChoiceViewSet(viewsets.ModelViewSet):
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
+    renderer_classes = [renderers.JSONRenderer]
+    def get_queryset(self):
+        return Choice.objects.all() 
+
+class TeacherViewSet(viewsets.ModelViewSet):
+    queryset =  Teacher.objects.all()
+    serializer_class = TeacherSerializer
+    renderer_classes = [renderers.JSONRenderer]
+
+    @action(detail=True, url_path="subjects", methods=['GET'])
+    def subjects(self, *args, **kwargs):
+        current_teacher = self.get_object()
+        subjects = Subject.objects.filter(teacher=current_teacher)
+        
+        serializer = SubjectSerializer(subjects, many=True)
+        data = serializer.data
+
+        return Response({
+           "subjects": data, 
+        })

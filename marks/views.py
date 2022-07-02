@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse 
 
-from marks.models import Lesson, School, Student, Subject, Teacher
+from marks.models import Choice, Lesson, School, Student, Subject, Teacher
 
 # Create your views here.
 class StudentView(View):
@@ -72,13 +72,12 @@ class SubjectView(View):
 class OneSubjectView(View):
     def get(request, *args, **kwargs):
         id = kwargs['id']
-        subject: Subject = Subject.objects.select_related("teacher").get(id=id)
-        #school: School = student.school
+        subject: Subject = Subject.objects.select_related("teacher").get(id=id) 
         return JsonResponse({
             "name": subject.name,
             "level": subject.level,
             "time": subject.time,
-            "teacher": subject.teacher.surname,
+            "teacher": subject.teacher.surname + ' ' + subject.teacher.name + ' ' + subject.teacher.patr
         })
 
 class LessonView(View):
@@ -100,4 +99,16 @@ class OneLessonView(View):
             "homework": lesson.homework,
             "date": lesson.date,
         })
+
+class ChoicesView(View):
+    def get(request, *args):
+        choices = list(Choice.objects.all().values())
+
+        return JsonResponse({
+            "choices": list(choices)
+        })
+
+        
+
+
 
