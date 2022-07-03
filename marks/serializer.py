@@ -20,7 +20,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = '__all__' 
 
 class SubjectSerializer(serializers.ModelSerializer):
-    teacher = serializers.CharField(source="teacher.surname" , read_only=True)
+    teacher = serializers.CharField(source="teacher.__str__" , read_only=True)
     class Meta:
         model = Subject
         fields = ['level', 'name', 'time', 'teacher'] 
@@ -32,20 +32,22 @@ class LessonSerializer(serializers.ModelSerializer):
         fields = ['subjects', 'topic', 'homework', 'date']
 
 class JournalSerializer(serializers.ModelSerializer):
-    students = serializers.CharField(source="students.surname", read_only=True)
+    students = serializers.CharField(source="students.__str__", read_only=True)
 
     class Meta:
         model = Journal
         fields = ['students', 'lessons', 'mark'] 
 
 class ChoiceSerializer(serializers.ModelSerializer):
-    sub_first = serializers.CharField(source="subjects.name", read_only=True) 
-    sub_second = serializers.CharField(source="subjects.name", read_only=True) 
+    sub_first = serializers.CharField(source="sub_first.name", read_only=True)
+    sub_second = serializers.CharField(source="sub_second.name", read_only=True) 
+    students = serializers.CharField(source="students.__str__", read_only=True)
     class Meta:
         model = Choice
-        fields =     ['students', 'year', 'semester', 'sub_first', 'sub_second', 'num_class']
+        fields = ['students', 'year', 'semester', 'sub_first', 'sub_second', 'num_class']
 
 class SchoolAddStudentsSerializer(serializers.Serializer):
     students = serializers.ListField(child=serializers.IntegerField()) 
+
 
 

@@ -8,6 +8,9 @@ class Student(models.Model):
     surname = models.CharField("Фамилия", max_length=50)
     patr = models.CharField("Отчество", max_length=50)
     school = models.ForeignKey("School", null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.surname} {self.name} {self.patr}'
     
     class Meta:
         db_table = "students"
@@ -23,6 +26,9 @@ class Teacher(models.Model):
     name = models.CharField("Имя", max_length=50)
     patr = models.CharField("Отчество", max_length=50)
     
+    def __str__(self):
+        return f'{self.surname} {self.name} {self.patr}'
+
     class Meta:
         db_table = "teachers"
 
@@ -58,7 +64,7 @@ class Choice(models.Model):
     semester = models.CharField("Семестр", max_length=1)
     sub_first = models.ForeignKey("Subject", null=True, on_delete=models.CASCADE, related_name="sub_first")
     sub_second = models.ForeignKey("Subject", null=True, on_delete=models.CASCADE, related_name="sub_second")
-    num_class = models.CharField("Класс", max_length=3)
-    
+    num_class = models.CharField("Класс", max_length=3)  
+
     class Meta:
         db_table = "choices"

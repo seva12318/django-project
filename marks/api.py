@@ -12,9 +12,18 @@ class StudentViewSet(viewsets.ModelViewSet):
     renderer_classes = [renderers.JSONRenderer]
 
     def get_queryset(self):
-        #self.request.user
         return Student.objects.all()
-    #API с выбранными предметами
+    
+    @action(detail=True, url_path="choice", methods=['GET'])
+    def students(self, *args, **kwargs):
+        current_student= self.get_object()
+        choice = Choice.objects.filter(students=current_student)
+        serializer = ChoiceSerializer(choice, many=True)
+        data = serializer.data
+
+        return Response({
+            "students-choices": data,
+        })
 
 class JournalViewSet(viewsets.ModelViewSet):
     queryset = Journal.objects.all()
@@ -80,7 +89,7 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     serializer_class = ChoiceSerializer
     renderer_classes = [renderers.JSONRenderer]
     def get_queryset(self):
-        return Choice.objects.all() 
+        return Choice.objects.all()
 
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset =  Teacher.objects.all()
