@@ -1,4 +1,4 @@
-GET http://127.0.0.1:8000/api/marks/subjects/
+GET http://127.0.0.1:8000/api/students/
 
 ###
 
@@ -16,14 +16,13 @@ Content-Type: application/json
 DELETE http://127.0.0.1:8000/api/students/3/
 
 ###
-PUT http://127.0.0.1:8000/api/students/3/
+PUT http://127.0.0.1:8000/api/journals/2/
 Content-Type: application/json
 
 {
-    "name": "Михаил",
-    "surname": "Каташевцев", 
-    "patr": "Викторович",  
-    "school": 2
+    "students": "Михаил",
+    "lessons": "Каташевцев", 
+    "mark": "Викторович",  
 }
 
 ###
@@ -31,7 +30,7 @@ POST http://127.0.0.1:8000/api/schools/2/add-students/
 Content-Type: application/json
 
 {
-  "students": [2]
+  "students": [5]
 }
 
 ###
