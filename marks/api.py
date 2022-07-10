@@ -31,7 +31,16 @@ class JournalViewSet(viewsets.ModelViewSet):
     renderer_classes = [renderers.JSONRenderer]
 
     def get_queryset(self):
-        return Journal.objects.all()    
+        return Journal.objects.all()  
+
+    @action(detail=True, url_path="lesson", methods=['GET'])
+    def students(self, *args, **kwargs):
+        journal = Journal.objects.filter(lessons=self.kwargs['pk'])
+        serializer = JournalSerializer(journal, many=True)
+        data = serializer.data
+        return Response({
+           "journal": data, 
+        })
 
 class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()

@@ -33,6 +33,7 @@ class LessonSerializer(serializers.ModelSerializer):
 
 class JournalSerializer(serializers.ModelSerializer):
     students = serializers.CharField(source="students.__str__", read_only=True)
+    #lessons = serializers.CharField(source="lessons.subjects.name", read_only=True)
 
     class Meta:
         model = Journal
