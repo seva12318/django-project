@@ -34,13 +34,14 @@ class JournalViewSet(viewsets.ModelViewSet):
         return Journal.objects.all()  
 
     @action(detail=True, url_path="lesson", methods=['GET'])
-    def students(self, *args, **kwargs):
-        journal = Journal.objects.filter(lessons=self.kwargs['pk'])
+    def lesson(self, *args, **kwargs):
+        journal = Journal.objects.filter(students=self.kwargs['pk'])
         serializer = JournalSerializer(journal, many=True)
         data = serializer.data
+
         return Response({
-           "journal": data, 
-        })
+            "journal": data,
+        })  
 
 class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
