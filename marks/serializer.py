@@ -50,5 +50,8 @@ class ChoiceSerializer(serializers.ModelSerializer):
 class SchoolAddStudentsSerializer(serializers.Serializer):
     students = serializers.ListField(child=serializers.IntegerField()) 
 
+class LessonAddMark(serializers.Serializer):
+    jouurnal = serializers.ListField(child=serializers.IntegerField())  
+
 
 

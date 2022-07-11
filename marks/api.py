@@ -4,7 +4,7 @@ from rest_framework import viewsets, renderers
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from marks.models import Choice, Journal, Lesson, School, Student, Subject, Teacher
-from marks.serializer import ChoiceSerializer, JournalSerializer, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
+from marks.serializer import ChoiceSerializer, JournalSerializer, LessonAddMark, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset =  Student.objects.all()
@@ -49,8 +49,28 @@ class LessonViewSet(viewsets.ModelViewSet):
     renderer_classes = [renderers.JSONRenderer]
 
     def get_queryset(self):
-        return Lesson.objects.all()    
+        return Lesson.objects.all()  
 
+    @action(detail=True, url_path="journal", methods=['GET'])
+    def journal(self, *args, **kwargs):
+        current_lesson = self.get_object()
+        journal = Journal.objects.filter(lessons = current_lesson)
+        serializer = JournalSerializer(journal, many=True)
+        data = serializer.data
+
+        return Response({
+            "journal" : data
+        })
+    #@action(detail=True, url_path="get-marks", methods=['POST'])
+    #def get_marks(self,request, *args, **kwargs):
+    #    current_lesson = self.get_object()
+    #    serializer = LessonAddMark(data=self.request.data)
+    #    serializer.is_valid(True)
+    #    data = serializer.validated_data
+
+    #    Journal.objects.filter(id__in=data['journal']).update(marks=current_lesson.mar)
+
+    #    return Response(status=200)
 class SchoolViewSet(viewsets.ModelViewSet):
     queryset =  School.objects.all()
     serializer_class = SchoolSerializer
