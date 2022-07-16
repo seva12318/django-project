@@ -16,7 +16,7 @@ Content-Type: application/json
 DELETE http://127.0.0.1:8000/api/students/3/
 
 ###
-PUT http://127.0.0.1:8000/api/journals/2/
+GET http://127.0.0.1:8000/api/journals/2/
 Content-Type: application/json
 
 {
@@ -26,11 +26,13 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8000/api/schools/2/add-students/
+POST http://127.0.0.1:8000/api/lessons/2/get-marks/
 Content-Type: application/json
 
 {
-  "students": [5]
+  "students": 2,
+  "lessons": 1, 
+  "mark": "5"
 }
 
 ###
