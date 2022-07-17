@@ -21,6 +21,9 @@ class School(models.Model):
     class Meta:
         db_table = "school"
 
+    def __str__(self):
+        return f'{self.title}'
+
 class Teacher(models.Model):
     surname = models.CharField("Фамилия", max_length=50)
     name = models.CharField("Имя", max_length=50)
@@ -40,6 +43,9 @@ class Subject(models.Model):
     
     class Meta:
         db_table = "subjects"
+    
+    def __str__(self):
+        return f'{self.name} {self.time}'
 
 class Lesson(models.Model):
     subjects = models.ForeignKey("Subject", null=True, on_delete=models.CASCADE)
@@ -49,6 +55,9 @@ class Lesson(models.Model):
     
     class Meta:
         db_table = "lessons"
+    
+    def __str__(self):
+        return f'{self.topic}'
 
 class Journal(models.Model):
     students = models.ForeignKey("Student", null=True, on_delete=models.CASCADE)
@@ -57,6 +66,7 @@ class Journal(models.Model):
     
     class Meta:
         db_table = "journal"
+
 
 class Choice(models.Model):
     students = models.ForeignKey("Student", null=True, on_delete=models.CASCADE)

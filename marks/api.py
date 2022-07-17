@@ -67,10 +67,13 @@ class LessonViewSet(viewsets.ModelViewSet):
         current_lesson = self.get_object()
         serializer = LessonAddMarkSerializer(data=request.data)
         if serializer.is_valid(True):
-            serializer.save(data=request.data)
+            #serializer.save()   
+            if  Journal.objects.filter(students_id = request.data['students'], lessons_id = request.data['lessons']).count()==0:
+                Journal.objects.create(students_id = request.data['students'], lessons_id = request.data['lessons'] ,mark=request.data['mark'])
+            else:
+                Journal.objects.filter(students_id = request.data['students'], lessons_id = request.data['lessons']).update(mark = request.data['mark'])
             return Response(status=200)
         else:
-        #Journal.objects.filter(id__in=data['journal']).update(marks=current_lesson.mark)
     	    return Response(status=400)
 
 class SchoolViewSet(viewsets.ModelViewSet):

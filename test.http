@@ -1,4 +1,4 @@
-GET http://127.0.0.1:8000/api/students/
+GET http://127.0.0.1:8000/api/journals/
 
 ###
 
@@ -31,7 +31,7 @@ Content-Type: application/json
 
 {
   "students": 2,
-  "lessons": 1, 
+  "lessons": 3, 
   "mark": "5"
 }
 
