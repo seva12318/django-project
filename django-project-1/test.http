@@ -1,0 +1,44 @@
+GET http://127.0.0.1:8000/api/journals/
+
+###
+
+POST http://127.0.0.1:8000/api/students/
+Content-Type: application/json
+
+{
+    "name": "Денис",
+    "surname": "Качалин", 
+    "patr": "Викторович",  
+    "school": 1
+}
+
+###
+DELETE http://127.0.0.1:8000/api/students/3/
+
+###
+GET http://127.0.0.1:8000/api/journals/2/
+Content-Type: application/json
+
+{
+    "students": "Михаил",
+    "lessons": "Каташевцев", 
+    "mark": "Викторович",  
+}
+
+###
+POST http://127.0.0.1:8000/api/lessons/2/get-marks/
+Content-Type: application/json
+
+{
+  "students": 2,
+  "lessons": 3, 
+  "mark": "5"
+}
+
+###
+POST http://127.0.0.1:8000/api/schools/
+Content-Type: application/json
+
+{
+  "title": "Гимназия"
+}
