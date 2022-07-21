@@ -4,10 +4,10 @@ import lessons
 from marks.models import Journal, Lesson, School, Student, Teacher, Subject, Choice
   
 class StudentSerializer(serializers.ModelSerializer):
-    school = serializers.CharField(source="school.title", read_only=True)
+    school_title = serializers.CharField(source="school.title", read_only=True)
     class Meta:
         model  =Student
-        fields = ['id', 'name', 'surname', 'patr', 'school']  
+        fields = ['id', 'name', 'surname', 'patr', 'school', 'school_title']  
 
 class SchoolSerializer(serializers.ModelSerializer):
      class Meta:
@@ -20,32 +20,32 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = '__all__' 
 
 class SubjectSerializer(serializers.ModelSerializer):
-    teacher = serializers.CharField(source="teacher.__str__" , read_only=True)
+    teacher_fio = serializers.CharField(source="teacher.__str__" , read_only=True)
     class Meta:
         model = Subject
-        fields = ['level', 'name', 'time', 'teacher'] 
+        fields = ['level', 'name', 'time', 'teacher', 'teacher_fio'] 
 
 class LessonSerializer(serializers.ModelSerializer):
-    subjects = serializers.CharField(source="subjects.name", read_only=True) 
+    subjects_name = serializers.CharField(source="subjects.name", read_only=True) 
     class Meta:
         model = Lesson
-        fields = ['subjects', 'topic', 'homework', 'date']
+        fields = ['subjects', 'subjects_name', 'topic', 'homework', 'date']
 
 class JournalSerializer(serializers.ModelSerializer):
-    students = serializers.CharField(source="students.__str__", read_only=True)
+    students_name = serializers.CharField(source="students.__str__", read_only=True)
     #lessons = serializers.CharField(source="lessons.subjects.name", read_only=True)
 
     class Meta:
         model = Journal
-        fields = ['students', 'lessons', 'mark'] 
+        fields = ['students', 'students_name', 'lessons', 'mark'] 
 
 class ChoiceSerializer(serializers.ModelSerializer):
-    sub_first = serializers.CharField(source="sub_first.name", read_only=True)
-    sub_second = serializers.CharField(source="sub_second.name", read_only=True) 
-    students = serializers.CharField(source="students.__str__", read_only=True)
+    sub_first_name = serializers.CharField(source="sub_first.name", read_only=True)
+    sub_second_name = serializers.CharField(source="sub_second.name", read_only=True) 
+    students_name = serializers.CharField(source="students.__str__", read_only=True)
     class Meta:
         model = Choice
-        fields = ['students', 'year', 'semester', 'sub_first', 'sub_second', 'num_class']
+        fields = ['students', 'students_name', 'year', 'semester', 'sub_first', 'sub_first_name', 'sub_second', 'sub_second_name', 'num_class']
 
 class SchoolAddStudentsSerializer(serializers.Serializer):
     students = serializers.ListField(child=serializers.IntegerField()) 
