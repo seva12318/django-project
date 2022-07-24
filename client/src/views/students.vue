@@ -88,13 +88,7 @@ onBeforeMount( () => {
         @update = "onUpdateClick(s.id, $event)"
     />
     <hr> 
-    <!-- <form action="" @submit.prevent.stop="onFormSumbit">
-        <input type="text" v-model="surname" placeholder="Фамилия"/>
-        <input type="text" v-model="name" placeholder="Имя"/>
-        <input type="text" v-model="patr" placeholder="Отчество"/>
-        <input type="text" v-model="school" placeholder="Школа"/>
-        <button>Добавить</button>
-    </form> -->
+    
 <button id="show-modal" @click="showModal = true">Добавить</button>
 
   <Teleport to="body">

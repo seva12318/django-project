@@ -77,3 +77,24 @@ Content-Type: application/json
 {
   "title": "Гимназия"
 }
+
+
+###
+POST http://127.0.0.1:8000/api/teachers/
+Content-Type: application/json
+
+{
+ "name": "Михаил",  
+ "surname": "Каташевцев", 
+ "patr": "Дмитриевич"
+}
+
+###
+POST http://127.0.0.1:8000/api/teachers/
+Content-Type: application/json
+
+{
+ "name": "Андрей",  
+ "surname": "Дорофеев", 
+ "patr": "Сергеевич"
+}

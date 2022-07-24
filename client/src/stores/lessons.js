@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 export const useLessonsStore = defineStore({
     "id": "lessons",
     state: ()=>({
-        students:[]
+        students:[],
+        teachers:[]
     }),
     actions: {
         async fetchStudents() {
@@ -44,6 +45,11 @@ export const useLessonsStore = defineStore({
                 })
             });
             await this.fetchStudents();
+        },
+        async fetchTeachers() {
+            let r = await fetch("/api/teachers/");
+            this.teachers = await r.json();
+           
         }
     }
 }) 
