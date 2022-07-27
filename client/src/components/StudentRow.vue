@@ -3,7 +3,7 @@ defineProps({
     name: String,
     surname: String,
     patr: String,
-    schoolId: String
+    school_title: String
 })
 
 const emit = defineEmits(["nameClick", "surnameClick", "delete", "update"])
@@ -21,7 +21,7 @@ function onSurnameClick(){
         <span class="student-name" @click="$emit('nameClick')"> Имя: <input type="text" v-model="name"> </span>  
         <span class="student-surname" @click="OnSurnameClick"> Фамилия: <input type="text" v-model="surname"> </span> 
         <span> Отчество: <input type="text" v-model="patr"> </span>  
-        <span> Школа: <input type="text" v-model="schoolId"> </span> 
+        <span> Школа: <input type="text" v-model="school_title"> </span> 
         <span @click="$emit('delete')">delete</span>
         <span @click="$emit('update', {name, surname})">update</span>
     </div>

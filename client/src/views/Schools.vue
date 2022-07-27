@@ -20,9 +20,9 @@ import Modal from '../components/modal-window.vue'
 
 const lessonsStore = useLessonsStore(); 
 const {schools} = storeToRefs(lessonsStore);
-let sortFiled = ref("title");
+let sortFiled = ref("school_title");
 
-let title = ref("");
+let school_title = ref("");
 
 const schoolStored = computed(() =>{
     return _(schools.value)
@@ -44,7 +44,7 @@ onBeforeMount( () => {
 
     <SchoolRow 
         v-for="s in schoolStored" 
-        :title = "s.title" 
+        :school_title = "s.title" 
         @name-click = "onNameClick(s)"
         @delete = "onDeleteClick(s)"
         @update = "onUpdateClick(s.id, $event)"

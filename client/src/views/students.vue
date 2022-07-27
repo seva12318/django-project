@@ -28,7 +28,7 @@ let inputText = ref("");
 let surname = ref("");
 let name = ref("");
 let patr = ref("");
-let school = ref("");
+let school_title = ref("");
 
 const studentsStored = computed(() =>{
     return _(students.value)
@@ -53,7 +53,7 @@ function onDeleteClick(student){
 }
 
 function onFormSumbit(){
-    lessonsStore.addStudent(surname.value, name.value, patr.value, school.value)
+    lessonsStore.addStudent(surname.value, name.value, patr.value, school_title.value)
 }
 
 function onUpdateClick(id, event){
@@ -81,7 +81,7 @@ onBeforeMount( () => {
         :name = "s.name" 
         :surname = "s.surname"
         :patr = "s.patr" 
-        :schoolId = "s.school_id"
+        :school_title = "s.school_title"
         @surname-click = "onSurnameClick(s)"
         @name-click = "onNameClick(s)"
         @delete = "onDeleteClick(s)"
