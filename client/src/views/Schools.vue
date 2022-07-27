@@ -1,6 +1,4 @@
 <script>
-import Modal from '../components/modal-window.vue'
-
 export default {
   components: {
     Modal
@@ -11,10 +9,48 @@ export default {
     }
   }
 }
+</script>
+<script setup>
+import { storeToRefs } from 'pinia';
+import {computed, onBeforeMount, ref} from 'vue';
+import {useLessonsStore} from '../stores/lessons';
+import SchoolRow from '@/components/SchoolRow.vue';
+import _ from 'lodash';
+import Modal from '../components/modal-window.vue'
+
+const lessonsStore = useLessonsStore(); 
+const {schools} = storeToRefs(lessonsStore);
+let sortFiled = ref("title");
+
+let title = ref("");
+
+const schoolStored = computed(() =>{
+    return _(schools.value)
+        .orderBy(x => x[sortFiled.value])
+        .value();
+});
+
+function toggleSort(fildeName){
+    sortFiled.value = fildeName
+}
+
+onBeforeMount( () => {
+    lessonsStore.fetchSchools();
+})
 
 </script>
 
 <template>
+
+    <SchoolRow 
+        v-for="s in schoolStored" 
+        :title = "s.title" 
+        @name-click = "onNameClick(s)"
+        @delete = "onDeleteClick(s)"
+        @update = "onUpdateClick(s.id, $event)"
+    />
+    <hr> 
+
   <button id="show-modal" @click="showModal = true">Добавить</button>
 
   <Teleport to="body">
