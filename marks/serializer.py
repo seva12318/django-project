@@ -57,4 +57,3 @@ class LessonAddMarkSerializer(serializers.Serializer):
         fields = ['students', 'lessons', 'mark']
 
 
-

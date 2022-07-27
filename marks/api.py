@@ -42,6 +42,25 @@ class JournalViewSet(viewsets.ModelViewSet):
         return Response({
             "journal": data,
         })  
+    
+    @action(detail=True, url_path="school", methods=['GET'])
+    def school(self, *args, **kwargs):
+        participants = Student.objects.filter(school=self.kwargs['pk'])
+        #serializer = StudentSerializer(participants, many=True)
+        i=0
+        for part in participants:
+            journal = Journal.objects.filter(students = part)
+            serializer = JournalSerializer(journal, many=True)
+            #КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
+            if i == 0:
+                data = serializer.data
+            else:
+                data=data+serializer.data
+            i=i+1
+
+        return Response({
+            "school-journal": data,
+        })
 
 class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
