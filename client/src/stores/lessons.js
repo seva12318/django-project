@@ -5,7 +5,8 @@ export const useLessonsStore = defineStore({
     state: ()=>({
         students:[],
         teachers:[],
-        schools:[]
+        schools:[],
+        subjects:[]
     }),
     actions: {
         async fetchStudents() {
@@ -55,6 +56,11 @@ export const useLessonsStore = defineStore({
         async fetchSchools() {
             let r = await fetch("/api/schools/");
             this.schools = await r.json();
+           
+        },
+        async fetchSubjects() {
+            let r = await fetch("/api/subjects/");
+            this.subjects = await r.json();
            
         }
     }

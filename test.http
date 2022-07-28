@@ -2,7 +2,7 @@ GET http://127.0.0.1:8000/api/students/
 
 ###
 
-POST http://127.0.0.1:8000/api/kessons/
+POST http://127.0.0.1:8000/api/lessons/
 Content-Type: application/json
 
 {
@@ -29,8 +29,8 @@ POST http://127.0.0.1:8000/api/journals/
 Content-Type: application/json
 
 {
- "students": 2,  
- "lessons": 3, 
+ "students": 1,  
+ "lessons": 1, 
  "mark": "5"
 }
 
@@ -51,7 +51,7 @@ Content-Type: application/json
 DELETE http://127.0.0.1:8000/api/students/8/
 
 ###
-GET http://127.0.0.1:8000/api/journals/2/
+GET http://127.0.0.1:8000/api/journals/1/
 Content-Type: application/json
 
 {
@@ -61,12 +61,12 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8000/api/lessons/2/get-marks/
+POST http://127.0.0.1:8000/api/lessons/1/get-marks/
 Content-Type: application/json
 
 {
-  "students": 2,
-  "lessons": 3, 
+  "students": 1,
+  "lessons": 1, 
   "mark": "5"
 }
 
