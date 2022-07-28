@@ -4,7 +4,7 @@ from rest_framework import viewsets, renderers
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from marks.models import Choice, Journal, Lesson, School, Student, Subject, Teacher
-from marks.serializer import ChoiceSerializer, JournalSerializer, LessonAddMarkSerializer, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
+from marks.serializer import JournalReportSerializer, ChoiceSerializer, JournalSerializer, LessonAddMarkSerializer, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset =  Student.objects.all()
@@ -50,7 +50,7 @@ class JournalViewSet(viewsets.ModelViewSet):
         i=0
         for part in participants:
             journal = Journal.objects.filter(students = part)
-            serializer = JournalSerializer(journal, many=True)
+            serializer = JournalReportSerializer(journal, many=True)
             #КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
             if i == 0:
                 data = serializer.data

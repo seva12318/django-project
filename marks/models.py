@@ -45,7 +45,7 @@ class Subject(models.Model):
         db_table = "subjects"
     
     def __str__(self):
-        return f'{self.name} {self.time}'
+        return f'{self.name} ({self.level})'
 
 class Lesson(models.Model):
     subjects = models.ForeignKey("Subject", null=True, on_delete=models.CASCADE)
