@@ -22,8 +22,9 @@ function onSurnameClick(){
         <span class="student-surname" @click="OnSurnameClick"> Фамилия: <input type="text" v-model="surname"> </span> 
         <span> Отчество: <input type="text" v-model="patr"> </span>  
         <span> Школа: <input type="text" v-model="school_title"> </span> 
+        <!-- добавить обновление школы -->
         <span @click="$emit('delete')">delete</span>
-        <span @click="$emit('update', {name, surname})">update</span>
+        <span @click="$emit('update', {name, surname, patr, school_title})">update</span>
     </div>
 </template>
 

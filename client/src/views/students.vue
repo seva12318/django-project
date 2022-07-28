@@ -59,7 +59,7 @@ function onFormSumbit(){
 function onUpdateClick(id, event){
    // console.log(id)
    // console.log(event)
-    lessonsStore.updStudent(id,  event.surname, event.name)
+    lessonsStore.updStudent(id,  event.surname, event.name, event.patr, event.school_title)
 }
 
 

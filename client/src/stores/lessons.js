@@ -35,7 +35,7 @@ export const useLessonsStore = defineStore({
             });
             await this.fetchStudents();
         },
-        async updStudent(studentId, surname, name) {
+        async updStudent(studentId, surname, name, patr, school_title) {
             let r = await fetch(`/api/students/${studentId}/`,{
                 method: "PATCH",
                 headers: {
@@ -43,7 +43,9 @@ export const useLessonsStore = defineStore({
                 },
                 body: JSON.stringify({
                     surname,
-                    name
+                    name,
+                    patr,
+                    school_title
                 })
             });
             await this.fetchStudents();
@@ -53,15 +55,74 @@ export const useLessonsStore = defineStore({
             this.teachers = await r.json();
            
         },
+        async deleteTeacher(teacherId) {
+            let r = await fetch(`/api/teachers/${teacherId}/`,{
+                method: "DELETE"
+            });
+            await this.fetchTeachers();
+        },
+        async updTeacher(teacherId, name, surname, patr) {
+            let r = await fetch(`/api/teachers/${teacherId}/`,{
+                method: "PATCH",
+                headers: {
+                    "content-type":"application/json"
+                },
+                body: JSON.stringify({
+                    name,
+                    surname,
+                    patr
+                })
+            });
+            await this.fetchTeachers();
+        },
         async fetchSchools() {
             let r = await fetch("/api/schools/");
             this.schools = await r.json();
            
         },
+        async deleteSchool(schoolId) {
+            let r = await fetch(`/api/schools/${schoolId}/`,{
+                method: "DELETE"
+            });
+            await this.fetchSchools();
+        },
+        async updSchool(schoolId, title) {
+            let r = await fetch(`/api/schools/${schoolId}/`,{
+                method: "PATCH",
+                headers: {
+                    "content-type":"application/json"
+                },
+                body: JSON.stringify({
+                    title
+                })
+            });
+            await this.fetchSchools();
+        },
         async fetchSubjects() {
             let r = await fetch("/api/subjects/");
             this.subjects = await r.json();
            
+        },
+        async deleteSubject(subjectId) {
+            let r = await fetch(`/api/subjects/${subjectId}/`,{
+                method: "DELETE"
+            });
+            await this.fetchSubjects();
+        },
+        async updSubject(subjectId, name, level, time, teacher_fio) {
+            let r = await fetch(`/api/subjects/${subjectId}/`,{
+                method: "PATCH",
+                headers: {
+                    "content-type":"application/json"
+                },
+                body: JSON.stringify({
+                    name,
+                    level,
+                    time,
+                    teacher_fio
+                })
+            });
+            await this.fetchSubjects();
         }
     }
 }) 

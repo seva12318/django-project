@@ -34,6 +34,16 @@ function toggleSort(fildeName){
     sortFiled.value = fildeName
 }
 
+function onDeleteClick(school){
+    lessonsStore.deleteSchool(school.id)
+}
+
+function onUpdateClick(id, event){
+   // console.log(id)
+    console.log(event)
+    lessonsStore.updSchool(id,  event.school_title)
+}
+
 onBeforeMount( () => {
     lessonsStore.fetchSchools();
 })

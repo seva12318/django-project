@@ -44,17 +44,17 @@ function toggleSort(fildeName){
 //     console.log(teacher.name)
 // }
 
-// function onDeleteClick(teacher){
-//     lessonsStore.deleteTeacher(teacher.id)
-// }
+function onDeleteClick(teacher){
+    lessonsStore.deleteTeacher(teacher.id)
+}
 
 // function onFormSumbit(){
 //     lessonsStore.addTeacher(surname.value, name.value, patr.value, school.value)
 // }
 
-// function onUpdateClick(id, event){
-//     lessonsStore.updTeacher(id,  event.surname, event.name)
-// }
+function onUpdateClick(id, event){
+    lessonsStore.updTeacher(id,  event.name, event.surname, event.patr )
+}
 
 
 onBeforeMount( () => {

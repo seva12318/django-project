@@ -98,3 +98,11 @@ Content-Type: application/json
  "surname": "Дорофеев", 
  "patr": "Сергеевич"
 }
+
+###
+PUT http://127.0.0.1:8000/api/subjects/1/
+Content-Type: application/json
+
+{
+  "title": "Кря2"
+}
