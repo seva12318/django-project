@@ -23,13 +23,13 @@ class SubjectSerializer(serializers.ModelSerializer):
     teacher_fio = serializers.CharField(source="teacher.__str__" , read_only=True)
     class Meta:
         model = Subject
-        fields = ['id', 'level', 'name', 'time', 'teacher', 'teacher_fio'] 
+        fields = ['level', 'name', 'time', 'teacher', 'teacher_fio'] 
 
 class LessonSerializer(serializers.ModelSerializer):
     subjects_name = serializers.CharField(source="subjects.name", read_only=True) 
     class Meta:
         model = Lesson
-        fields = ['id', 'subjects', 'subjects_name', 'topic', 'homework', 'date']
+        fields = ['subjects', 'subjects_name', 'topic', 'homework', 'date']
 
 class JournalSerializer(serializers.ModelSerializer):
     students_name = serializers.CharField(source="students.__str__", read_only=True)
