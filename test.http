@@ -1,4 +1,4 @@
-GET http://127.0.0.1:8000/api/students/
+GET http://127.0.0.1:8000/api/journals/1/school
 
 ###
 
@@ -14,14 +14,11 @@ Content-Type: application/json
 
 ###
 
-POST http://127.0.0.1:8000/api/subjects/
+PUT http://127.0.0.1:8000/api/schools/1/
 Content-Type: application/json
 
 {
-  "level": "Продвинутый", 
-  "name": "Кря",
-  "time": "11:45", 
-  "teacher": 2
+  "title": "Кря2"
 }
 
 ###

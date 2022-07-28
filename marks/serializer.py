@@ -23,13 +23,13 @@ class SubjectSerializer(serializers.ModelSerializer):
     teacher_fio = serializers.CharField(source="teacher.__str__" , read_only=True)
     class Meta:
         model = Subject
-        fields = ['level', 'name', 'time', 'teacher', 'teacher_fio'] 
+        fields = ['id', 'level', 'name', 'time', 'teacher', 'teacher_fio'] 
 
 class LessonSerializer(serializers.ModelSerializer):
     subjects_name = serializers.CharField(source="subjects.name", read_only=True) 
     class Meta:
         model = Lesson
-        fields = ['subjects', 'subjects_name', 'topic', 'homework', 'date']
+        fields = ['id', 'subjects', 'subjects_name', 'topic', 'homework', 'date']
 
 class JournalSerializer(serializers.ModelSerializer):
     students_name = serializers.CharField(source="students.__str__", read_only=True)
@@ -37,7 +37,7 @@ class JournalSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Journal
-        fields = ['students', 'students_name', 'lessons', 'mark'] 
+        fields = ['id','students', 'students_name', 'lessons', 'mark'] 
 
 class ChoiceSerializer(serializers.ModelSerializer):
     sub_first_name = serializers.CharField(source="sub_first.name", read_only=True)
@@ -45,7 +45,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
     students_name = serializers.CharField(source="students.__str__", read_only=True)
     class Meta:
         model = Choice
-        fields = ['students', 'students_name', 'year', 'semester', 'sub_first', 'sub_first_name', 'sub_second', 'sub_second_name', 'num_class']
+        fields = ['id', 'students', 'students_name', 'year', 'semester', 'sub_first', 'sub_first_name', 'sub_second', 'sub_second_name', 'num_class']
 
 class SchoolAddStudentsSerializer(serializers.Serializer):
     students = serializers.ListField(child=serializers.IntegerField()) 
@@ -54,6 +54,14 @@ class LessonAddMarkSerializer(serializers.Serializer):
     #jouurnal = serializers.ListField(child=serializers.IntegerField())  
     class Meta:
         model = Journal
-        fields = ['students', 'lessons', 'mark']
+        fields = ['id','students', 'lessons', 'mark']
+
+class JournalReportSerializer(serializers.ModelSerializer):
+    students_name = serializers.CharField(source="students.__str__", read_only=True)
+    lessons_name = serializers.CharField(source="lessons.subjects.__str__", read_only=True)
+    date = serializers.CharField(source="lessons.date", read_only=True)
+    class Meta:
+        model = Journal
+        fields = ['students', 'students_name', 'lessons', 'date', 'lessons_name', 'mark'] 
 
 
