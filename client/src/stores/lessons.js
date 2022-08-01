@@ -6,7 +6,8 @@ export const useLessonsStore = defineStore({
         students:[],
         teachers:[],
         schools:[],
-        subjects:[]
+        subjects:[],
+        reports:[]
     }),
     actions: {
         async fetchStudents() {
@@ -123,6 +124,11 @@ export const useLessonsStore = defineStore({
                 })
             });
             await this.fetchSubjects();
-        }
+        },
+        async fetchReports(subjectId) {
+            let r = await fetch(`/api/journals/${subjectId}/school/`);
+            this.reports = await r.json();
+           
+        },
     }
 }) 
