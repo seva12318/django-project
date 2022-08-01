@@ -1,33 +1,32 @@
 <script>
 export default {
   props: {
-    show: Boolean
-  }
-}
+    show: Boolean,
+  },
+};
 </script>
 
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div v-if="show" class="modal-mask" @click="$emit('close')">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container" @click.stop>
           <div class="modal-header">
             <slot name="header">default header</slot>
-            
           </div>
 
           <div class="modal-body">
             <slot name="body">default body</slot>
-            
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
-              default footer
-              <button
-                class="modal-default-button"
-                @click="$emit('close')"
-              >OK</button>
+              <button class="modal-default-button" @click="$emit('close')">
+                Отмена
+              </button>
+              <button class="modal-default-button" @click="$emit('submit')">
+                OK
+              </button>
             </slot>
           </div>
         </div>
@@ -62,6 +61,11 @@ export default {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .modal-header h3 {
@@ -70,11 +74,20 @@ export default {
 }
 
 .modal-body {
-  margin: 20px 0;
+  /* margin-bottom: 20px; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .modal-default-button {
-  float: right;
+  border: none;
+  background-color: #42b983;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /*
@@ -98,5 +111,11 @@ export default {
 .modal-leave-to .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-around;
+  gap: 50%;
 }
 </style>
