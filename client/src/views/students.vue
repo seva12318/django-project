@@ -4,7 +4,7 @@ import { useLessonsStore } from "../stores/lessons";
 import { computed, onBeforeMount, ref } from "vue";
 
 const lessonsStore = useLessonsStore();
-const { students } = storeToRefs(lessonsStore);
+const { students, schools } = storeToRefs(lessonsStore);
 
 const studentsStored = computed(() => {
   return _(students.value)
@@ -39,6 +39,7 @@ function onUpdateClick(id, event) {
 
 onBeforeMount(() => {
   lessonsStore.fetchStudents();
+  lessonsStore.fetchSchools();
 });
 </script>
 
@@ -59,7 +60,7 @@ export default {
         surname: "",
         name: "",
         patr: "",
-        school: "",
+        school: 1,
       },
     };
   },
@@ -76,7 +77,7 @@ export default {
         surname: "",
         name: "",
         patr: "",
-        school: "",
+        school: 1,
       };
     },
   },
@@ -94,7 +95,7 @@ export default {
     :name="s.name"
     :surname="s.surname"
     :patr="s.patr"
-    :schoolId="s.school_id"
+    :school_title="s.school_title"
     @surname-click="onSurnameClick(s)"
     @name-click="onNameClick(s)"
     @delete="onDeleteClick(s)"
@@ -112,17 +113,26 @@ export default {
 
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
-    <modal :show="showModal" @close="onFormSumbit()">
+    <modal
+      :show="showModal"
+      @submit="onFormSumbit()"
+      @close="showModal = false"
+    >
       <template #header>
         <h3>Добавить обучающегося</h3>
       </template>
       <template #body>
-        <h3>Данные обучающегося</h3>
-
         <input type="text" v-model="newStudent.surname" placeholder="Фамилия" />
         <input type="text" v-model="newStudent.name" placeholder="Имя" />
         <input type="text" v-model="newStudent.patr" placeholder="Отчество" />
-        <input type="text" v-model="newStudent.school" placeholder="Школа" />
+        <div>
+          <span>Школа: </span>
+          <select v-model="newStudent.school" placeholder="Школа">
+            <option v-for="s in schools" :value="s.id">
+              {{ s.title }}
+            </option>
+          </select>
+        </div>
       </template>
 
       <template #footer> </template>
