@@ -1,14 +1,34 @@
 <script>
 export default {
   components: {
-    Modal
+    Modal,
   },
   data() {
     return {
-      showModal: false
-    }
-  }
-}
+      showModal: false,
+      newTeacher: {
+        surname: "",
+        name: "",
+        patr: "",
+      },
+    };
+  },
+  methods: {
+    onFormSumbit() {
+      this.showModal = false;
+      this.lessonsStore.addTeacher(
+        this.newTeacher.surname,
+        this.newTeacher.name,
+        this.newTeacher.patr
+      );
+      this.newTeacher = {
+        surname: "",
+        name: "",
+        patr: "",
+      };
+    },
+  },
+};
 </script>
 <script setup>
 import { storeToRefs } from 'pinia';
@@ -49,7 +69,7 @@ function onDeleteClick(teacher){
 }
 
 // function onFormSumbit(){
-//     lessonsStore.addTeacher(surname.value, name.value, patr.value, school.value)
+//     lessonsStore.addTeacher(surname.value, name.value, patr.value)
 // }
 
 function onUpdateClick(id, event){
@@ -65,6 +85,31 @@ onBeforeMount( () => {
 </script>
 
 <template>
+<button id="show-modal" @click="showModal = true">Добавить</button>
+
+  <Teleport to="body">
+    <!-- use the modal component, pass in the prop -->
+    <modal
+      :show="showModal"
+      @submit="onFormSumbit()"
+      @close="showModal = false"
+    >
+      <template #header>
+        <h3>Добавить преподавателя</h3>
+      </template>
+      <template #body>
+        <input type="text" v-model="newTeacher.surname" placeholder="Фамилия" />
+        <input type="text" v-model="newTeacher.name" placeholder="Имя" />
+        <input type="text" v-model="newTeacher.patr" placeholder="Отчество" />
+        
+      </template>
+
+      <template #footer> </template>
+    </modal>
+  </Teleport>
+
+<hr />
+
     <button @click="toggleSort('name')">По имени</button>
     <button @click="toggleSort('surname')">По фамилии</button>
     
@@ -80,27 +125,7 @@ onBeforeMount( () => {
             />
     <hr> 
 
-  <button id="show-modal" @click="showModal = true">Добавить</button>
-
-  <Teleport to="body">
-    <modal :show="showModal" @close="showModal = false">
-      <template #header>
-        <h3>Добавить учителя</h3>
-      </template>
-      <template #body>
-       
-        <h3>Данные учителя:</h3>
-        
-        <input type="text" v-model="surname" placeholder="Фамилия"/>
-        <input type="text" v-model="name" placeholder="Имя"/>
-        <input type="text" v-model="patr" placeholder="Отчество"/>
-        
-        </template>
-       
-        <template #footer> 
-        </template>
-    </modal>
-  </Teleport>
+ 
 </template>
 <style>
 

@@ -56,6 +56,20 @@ export const useLessonsStore = defineStore({
             this.teachers = await r.json();
            
         },
+        async addTeacher(surname, name, patr) {
+            let r = await fetch(`/api/teachers/`,{
+                method: "POST",
+                headers: {
+                    "content-type":"application/json"
+                },
+                body: JSON.stringify({
+                    surname,
+                    name,
+                    patr
+                })
+            });
+            await this.fetchTeachers();
+        },
         async deleteTeacher(teacherId) {
             let r = await fetch(`/api/teachers/${teacherId}/`,{
                 method: "DELETE"
@@ -80,6 +94,18 @@ export const useLessonsStore = defineStore({
             let r = await fetch("/api/schools/");
             this.schools = await r.json();
            
+        },
+        async addSchool(title) {
+            let r = await fetch(`/api/schools/`,{
+                method: "POST",
+                headers: {
+                    "content-type":"application/json"
+                },
+                body: JSON.stringify({
+                    title
+                })
+            });
+            await this.fetchSchools();
         },
         async deleteSchool(schoolId) {
             let r = await fetch(`/api/schools/${schoolId}/`,{

@@ -18,8 +18,8 @@ const emit = defineEmits(["nameClick", "surnameClick", "delete", "update"])
         <td><span @click="$emit('nameClick')"><input type="text" v-model="name"> </span>  </td>
         <td><span @click="OnSurnameClick"><input type="text" v-model="surname"> </span> </td>
         <td><span> <input type="text" v-model="patr"> </span>  </td>
-        <td><span @click="$emit('delete')">delete</span></td>
-        <td><span @click="$emit('update', {name, surname, patr})">update</span></td>
+        <td><button @click="$emit('delete')">удалить</button></td>
+        <td><button @click="$emit('update', {name, surname, patr})">обновить</button></td>
     
     </tr>
     </tbody>

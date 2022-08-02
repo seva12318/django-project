@@ -1,14 +1,28 @@
 <script>
 export default {
   components: {
-    Modal
+    Modal,
   },
   data() {
     return {
-      showModal: false
-    }
-  }
-}
+      showModal: false,
+      newSchool: {
+        title: "",
+      },
+    };
+  },
+  methods: {
+    onFormSumbit() {
+      this.showModal = false;
+      this.lessonsStore.addSchool(
+        this.newSchool.title
+      );
+      this.newTeacher = {
+        title: "",
+      };
+    },
+  },
+};
 </script>
 <script setup>
 import { storeToRefs } from 'pinia';
@@ -22,17 +36,11 @@ const lessonsStore = useLessonsStore();
 const {schools} = storeToRefs(lessonsStore);
 let sortFiled = ref("school_title");
 
-let school_title = ref("");
-
 const schoolStored = computed(() =>{
     return _(schools.value)
         .orderBy(x => x[sortFiled.value])
         .value();
 });
-
-function toggleSort(fildeName){
-    sortFiled.value = fildeName
-}
 
 function onDeleteClick(school){
     lessonsStore.deleteSchool(school.id)
@@ -51,7 +59,26 @@ onBeforeMount( () => {
 </script>
 
 <template>
+<button id="show-modal" @click="showModal = true">Добавить</button>
 
+  <Teleport to="body">
+    <!-- use the modal component, pass in the prop -->
+    <modal
+      :show="showModal"
+      @submit="onFormSumbit()"
+      @close="showModal = false"
+    >
+      <template #header>
+        <h3>Добавить образовательную организацию</h3>
+      </template>
+      <template #body>
+        <input type="text" v-model="newSchool.title" placeholder="Образовательная организация" />
+      </template>
+      <template #footer> </template>
+    </modal>
+  </Teleport>
+
+<hr />
     <SchoolRow 
         v-for="s in schoolStored" 
         :school_title = "s.title" 
@@ -59,26 +86,5 @@ onBeforeMount( () => {
         @delete = "onDeleteClick(s)"
         @update = "onUpdateClick(s.id, $event)"
     />
-    <hr> 
-
-  <button id="show-modal" @click="showModal = true">Добавить</button>
-
-  <Teleport to="body">
-    <!-- use the modal component, pass in the prop -->
-    <modal :show="showModal" @close="showModal = false">
-      <template #header>
-        <h3>Добавить образовательную организацию</h3>
-      </template>
-      <template #body>
-       
-        <h3>Данные образовательной организации:</h3>
-        
-        <input type="text" v-model="title" placeholder="Наименование"/>
-        
-        </template>
-       
-        <template #footer> 
-        </template>
-    </modal>
-  </Teleport>
+  
 </template>
