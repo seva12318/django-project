@@ -67,16 +67,17 @@ onBeforeMount( () => {
 <template>
     <button @click="toggleSort('name')">По имени</button>
     <button @click="toggleSort('surname')">По фамилии</button>
-    <TeacherRow 
-        v-for="s in teacherStored" 
-        :name = "s.name" 
-        :surname = "s.surname"
-        :patr = "s.patr" 
-        @surname-click = "onSurnameClick(s)"
-        @name-click = "onNameClick(s)"
-        @delete = "onDeleteClick(s)"
-        @update = "onUpdateClick(s.id, $event)"
-    />
+    
+            <TeacherRow 
+              v-for="s in teacherStored" 
+              :name = "s.name"
+              :surname = "s.surname"
+              :patr = "s.patr" 
+              @surname-click = "onSurnameClick(s)"
+              @name-click = "onNameClick(s)"
+              @delete = "onDeleteClick(s)"
+              @update = "onUpdateClick(s.id, $event)"
+            />
     <hr> 
 
   <button id="show-modal" @click="showModal = true">Добавить</button>

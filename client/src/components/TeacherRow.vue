@@ -11,20 +11,21 @@ const emit = defineEmits(["nameClick", "surnameClick", "delete", "update"])
 </script>
 
 <template>
-    <div>
-        <span class="teacher-name" @click="$emit('nameClick')"> Имя: <input type="text" v-model="name"> </span>  
-        <span class="teacher-surname" @click="OnSurnameClick"> Фамилия: <input type="text" v-model="surname"> </span> 
-        <span> Отчество: <input type="text" v-model="patr"> </span>  
-        <span @click="$emit('delete')">delete</span>
-        <span @click="$emit('update', {name, surname, patr})">update</span>
-    </div>
+    <table>
+      
+        <tbody>
+    <tr>
+        <td><span @click="$emit('nameClick')"><input type="text" v-model="name"> </span>  </td>
+        <td><span @click="OnSurnameClick"><input type="text" v-model="surname"> </span> </td>
+        <td><span> <input type="text" v-model="patr"> </span>  </td>
+        <td><span @click="$emit('delete')">delete</span></td>
+        <td><span @click="$emit('update', {name, surname, patr})">update</span></td>
+    
+    </tr>
+    </tbody>
+    </table>
 </template>
 
-<style>
-.student-name{
-    background-color: aquamarine;
-}
-.student-surname{
-    background-color: beige;
-}
+<style scoped lang="scss">
+
 </style>

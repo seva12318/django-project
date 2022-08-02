@@ -85,31 +85,8 @@ export default {
 </script>
 
 <template>
-  <h1>Главная страница</h1>
-  <!-- <input type="text" v-model ="inputText">
-    <div>Вы ввели: {{inputText}}</div> -->
-  <button @click="toggleSort('name')">По имени</button>
-  <button @click="toggleSort('surname')">По фамилии</button>
-  <StudentRow
-    v-for="s in studentsStored"
-    :name="s.name"
-    :surname="s.surname"
-    :patr="s.patr"
-    :school_title="s.school_title"
-    @surname-click="onSurnameClick(s)"
-    @name-click="onNameClick(s)"
-    @delete="onDeleteClick(s)"
-    @update="onUpdateClick(s.id, $event)"
-  />
-  <hr />
-  <!-- <form action="" @submit.prevent.stop="onFormSumbit">
-        <input type="text" v-model="surname" placeholder="Фамилия"/>
-        <input type="text" v-model="name" placeholder="Имя"/>
-        <input type="text" v-model="patr" placeholder="Отчество"/>
-        <input type="text" v-model="school" placeholder="Школа"/>
-        <button>Добавить</button>
-    </form> -->
-  <button id="show-modal" @click="showModal = true">Добавить</button>
+  <h2>Обучающиеся</h2>
+<button id="show-modal" @click="showModal = true">Добавить</button>
 
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
@@ -138,6 +115,34 @@ export default {
       <template #footer> </template>
     </modal>
   </Teleport>
+
+<hr />
+
+  <button @click="toggleSort('name')">По имени</button>
+  <button @click="toggleSort('surname')">По фамилии</button>
+
+  
+
+  <StudentRow
+    v-for="s in studentsStored"
+    :name="s.name"
+    :surname="s.surname"
+    :patr="s.patr"
+    :school_title="s.school_title"
+    @surname-click="onSurnameClick(s)"
+    @name-click="onNameClick(s)"
+    @delete="onDeleteClick(s)"
+    @update="onUpdateClick(s.id, $event)"
+  />
+  
+  <!-- <form action="" @submit.prevent.stop="onFormSumbit">
+        <input type="text" v-model="surname" placeholder="Фамилия"/>
+        <input type="text" v-model="name" placeholder="Имя"/>
+        <input type="text" v-model="patr" placeholder="Отчество"/>
+        <input type="text" v-model="school" placeholder="Школа"/>
+        <button>Добавить</button>
+    </form> -->
+  
 </template>
 
 <style></style>
