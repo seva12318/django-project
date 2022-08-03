@@ -114,7 +114,8 @@ onBeforeMount( () => {
           <span>Преподаватель: </span>
           <select v-model="newSubject.teacher" placeholder="Преподаватель">
             <option v-for="s in teachers" :value="s.id">
-              {{ s.name }}
+              {{ s.surname }} {{ s.name }} {{ s.patr }}
+              
             </option>
           </select>
         </div>
