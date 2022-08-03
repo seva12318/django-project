@@ -7,10 +7,10 @@ export default {
     return {
       showModal: false,
       newSubject: {
-        level: "",
+        level: "Начальный",
         name: "",
-        time: "",
-        teacher: ""
+        time: "10:00",
+        teacher: 1
       },
       lessonTime:[
         {name:'10:00', id:1},
@@ -32,10 +32,10 @@ export default {
         this.newSubject.teacher
       );
       this.newSubject = {
-        level: "",
+        level: "Начальный",
         name: "",
-        time: "",
-        teacher: ""
+        time: "10:00",
+        teacher: 1
       };
     },
   },

@@ -14,10 +14,6 @@ const reportsStored = computed(() => {
 });
 
 let sortFiled = ref("name");
-// let students_name = ref("");
-// let lessons_name = ref("");
-// let date = ref("");
-// let mark = ref("");
 
 onBeforeMount(() => {
   lessonsStore.fetchReports("1");
@@ -34,13 +30,22 @@ function onSelectClick(id){
 import { useLessonsStore } from "../stores/lessons";
 import ReportRow from "@/components/ReportRow.vue";
 import _ from "lodash";
+
+export default {
+data() {
+    return {
+      selectedSchool: ''
+    }
+  }
+}
 </script>
 
 <template>
 
 
 
-      <select v-model="selectedSchool">
+      <select v-model="selectedSchool" >
+      <option disabled value="">Выберите один из вариантов</option>
         <option  v-for="s in schools" :value="s.id">
           {{s.title}}
         </option>
