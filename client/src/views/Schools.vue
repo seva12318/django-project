@@ -59,6 +59,7 @@ onBeforeMount( () => {
 </script>
 
 <template>
+<h2>Образовательные организации</h2>
 <button id="show-modal" @click="showModal = true">Добавить</button>
 
   <Teleport to="body">

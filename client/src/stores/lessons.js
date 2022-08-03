@@ -130,6 +130,21 @@ export const useLessonsStore = defineStore({
             this.subjects = await r.json();
            
         },
+        async addSubject(level, name, time, teacher) {
+            let r = await fetch(`/api/subjects/`,{
+                method: "POST",
+                headers: {
+                    "content-type":"application/json"
+                },
+                body: JSON.stringify({
+                    level,
+                    name,
+                    time,
+                    teacher
+                })
+            });
+            await this.fetchSubjects();
+        },
         async deleteSubject(subjectId) {
             let r = await fetch(`/api/subjects/${subjectId}/`,{
                 method: "DELETE"

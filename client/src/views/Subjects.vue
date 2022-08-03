@@ -1,14 +1,45 @@
 <script>
 export default {
   components: {
-    Modal
+    Modal,
   },
   data() {
     return {
-      showModal: false
-    }
-  }
-}
+      showModal: false,
+      newSubject: {
+        level: "",
+        name: "",
+        time: "",
+        teacher: ""
+      },
+      lessonTime:[
+        {name:'10:00', id:1},
+        {name:'11:45', id:2}
+      ],
+      lessonLevel:[
+        {name:'Начальный', id:1},
+        {name:'Продвинутый', id:2}
+      ],
+    };
+  },
+  methods: {
+    onFormSumbit() {
+      this.showModal = false;
+      this.lessonsStore.addSubject(
+        this.newSubject.level,
+        this.newSubject.name,
+        this.newSubject.time,
+        this.newSubject.teacher
+      );
+      this.newSubject = {
+        level: "",
+        name: "",
+        time: "",
+        teacher: ""
+      };
+    },
+  },
+};
 </script>
 <script setup>
 import { storeToRefs } from 'pinia';
@@ -20,12 +51,8 @@ import Modal from '../components/modal-window.vue'
 
 const lessonsStore = useLessonsStore(); 
 const {subjects} = storeToRefs(lessonsStore);
+const {teachers} = storeToRefs(lessonsStore);
 let sortFiled = ref("name");
-
-let name = ref("");
-let level = ref("");
-let time = ref("");
-let teacher_fio = ref("");
 
 const subjectStored = computed(() =>{
     return _(subjects.value)
@@ -33,9 +60,6 @@ const subjectStored = computed(() =>{
         .value();
 });
 
-function toggleSort(fildeName){
-    sortFiled.value = fildeName
-}
 
 function onDeleteClick(subject){
     lessonsStore.deleteSubject(subject.id)
@@ -43,20 +67,62 @@ function onDeleteClick(subject){
 
 
 function onUpdateClick(id, event){
-   // console.log(id)
-   // console.log(event)
-    lessonsStore.updSubject(id,  event.name, event.level, event.time, event.teacher_fio)
+    lessonsStore.updSubject(id,  event.name, event.level, event.time, event.teacher)
 }
 
 onBeforeMount( () => {
     lessonsStore.fetchSubjects();
+    lessonsStore.fetchTeachers();
 })
-
 
 </script>
 
 <template>
+<h2>Предметы</h2>
 
+<button id="show-modal" @click="showModal = true">Добавить</button>
+
+  <Teleport to="body">
+    <!-- use the modal component, pass in the prop -->
+    <modal
+      :show="showModal"
+      @submit="onFormSumbit()"
+      @close="showModal = false"
+    >
+      <template #header>
+        <h3>Добавить образовательную организацию</h3>
+      </template>
+      <template #body>
+        <input type="text" v-model="newSubject.name" placeholder="Наименование" />
+        <div>
+          <span>Время: </span>
+          <select v-model="newSubject.time" placeholder="Время">
+            <option v-for="s in lessonTime" :value="s.name">
+              {{ s.name }}
+            </option>
+          </select>
+          </div>
+          <div>
+          <span>Уровень: </span>
+          <select v-model="newSubject.level" placeholder="Уровень">
+            <option v-for="s in lessonLevel" :value="s.name">
+              {{ s.name }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <span>Преподаватель: </span>
+          <select v-model="newSubject.teacher" placeholder="Преподаватель">
+            <option v-for="s in teachers" :value="s.id">
+              {{ s.name }}
+            </option>
+          </select>
+        </div>
+      </template>
+      <template #footer> </template>
+    </modal>
+  </Teleport>
+  <hr> 
     <SubjectRow 
         v-for="s in subjectStored" 
         :name = "s.name" 
@@ -66,29 +132,9 @@ onBeforeMount( () => {
         @delete = "onDeleteClick(s)"
         @update = "onUpdateClick(s.id, $event)"
     />
-    <hr> 
+    
 
-  <button id="show-modal" @click="showModal = true">Добавить</button>
-
-  <Teleport to="body">
-    <modal :show="showModal" @close="showModal = false">
-      <template #header>
-        <h3>Добавить предмет</h3>
-      </template>
-      <template #body>
-       
-        <h3>Данные по предмету:</h3>
-        
-        <input type="text" v-model="name" placeholder="Имя"/>
-        <input type="text" v-model="level" placeholder="Уровень"/>
-        <input type="text" v-model="time" placeholder="Время"/>
-        <input type="text" v-model="teacher_fio" placeholder="Преподаватель"/>
-        </template>
-       
-        <template #footer> 
-        </template>
-    </modal>
-  </Teleport>
+  
 </template>
 <style>
 

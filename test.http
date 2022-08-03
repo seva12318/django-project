@@ -19,9 +19,9 @@ Content-Type: application/json
 
 {
   "level": "Продвинутый", 
-  "name": "Кря",
+  "name": "web",
   "time": "11:45", 
-  "teacher": 2
+  "teacher": 1
 }
 
 ###
@@ -29,7 +29,7 @@ POST http://127.0.0.1:8000/api/journals/
 Content-Type: application/json
 
 {
- "students": 1,  
+ "students": 10,  
  "lessons": 1, 
  "mark": "5"
 }
