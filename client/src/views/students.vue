@@ -28,13 +28,18 @@ function onNameClick(student) {
 }
 
 function onDeleteClick(student) {
-  lessonsStore.deleteStudent(student.id);
+  let permission = window.confirm(
+    `Вы действительно хотите удалить студента ${student.surname} ${student.name} ${student.patr}?`
+  );
+  if (permission) {
+    lessonsStore.deleteStudent(student.id);
+  }
 }
 
-function onUpdateClick(id, event) {
+function onUpdateClick(id, { name, surname, patr, schoolId }) {
   // console.log(id)
   // console.log(event)
-  lessonsStore.updStudent(id, event.surname, event.name);
+  lessonsStore.updStudent(id, surname, name, patr, schoolId);
 }
 
 onBeforeMount(() => {
@@ -62,6 +67,7 @@ export default {
         patr: "",
         school: 1,
       },
+      isEdit: false,
     };
   },
   methods: {
@@ -73,6 +79,13 @@ export default {
         this.newStudent.patr,
         this.newStudent.school
       );
+      this.resetStudent();
+    },
+    onModalClose() {
+      this.showModal = false;
+      this.resetStudent();
+    },
+    resetStudent() {
       this.newStudent = {
         surname: "",
         name: "",
@@ -86,15 +99,11 @@ export default {
 
 <template>
   <h2>Обучающиеся</h2>
-<button id="show-modal" @click="showModal = true">Добавить</button>
+  <button id="show-modal" @click="showModal = true">Добавить</button>
 
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
-    <modal
-      :show="showModal"
-      @submit="onFormSumbit()"
-      @close="showModal = false"
-    >
+    <modal :show="showModal" @submit="onFormSumbit()" @close="onModalClose()">
       <template #header>
         <h3>Добавить обучающегося</h3>
       </template>
@@ -116,25 +125,37 @@ export default {
     </modal>
   </Teleport>
 
-<hr />
+  <hr />
 
-  <button @click="toggleSort('name')">По имени</button>
-  <button @click="toggleSort('surname')">По фамилии</button>
+  <div class="container">
+    <button @click="toggleSort('name')">По имени</button>
+    <button @click="toggleSort('surname')">По фамилии</button>
 
-  
+    <div class="toggle">
+      <input
+        type="checkbox"
+        id="toggle-button"
+        class="toggle-button"
+        v-model="isEdit"
+      />
+      <label for="toggle-button" class="text">Режим редактирования</label>
+    </div>
+  </div>
 
   <StudentRow
     v-for="s in studentsStored"
     :name="s.name"
     :surname="s.surname"
     :patr="s.patr"
-    :school_title="s.school_title"
+    :school="{ title: s.school_title, id: s.school }"
+    :schools="schools"
     @surname-click="onSurnameClick(s)"
     @name-click="onNameClick(s)"
     @delete="onDeleteClick(s)"
     @update="onUpdateClick(s.id, $event)"
+    :isEdit="isEdit"
   />
-  
+
   <!-- <form action="" @submit.prevent.stop="onFormSumbit">
         <input type="text" v-model="surname" placeholder="Фамилия"/>
         <input type="text" v-model="name" placeholder="Имя"/>
@@ -142,7 +163,59 @@ export default {
         <input type="text" v-model="school" placeholder="Школа"/>
         <button>Добавить</button>
     </form> -->
-  
 </template>
 
-<style></style>
+<style scoped>
+.container {
+  display: flex;
+  gap: 16px;
+  padding: 8px 0;
+}
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toggle-button {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  margin: 0;
+  vertical-align: top;
+  background: #ffffff;
+  border: 1px solid #bbc1e1;
+  border-radius: 30px;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: all 0.3s cubic-bezier(0.2, 0.85, 0.32, 1.2);
+}
+
+.toggle-button::after {
+  content: "";
+
+  display: inline-block;
+  position: absolute;
+  left: 3px;
+  top: 1.5px;
+
+  width: 20px;
+  height: 20px;
+  background-color: #42b983;
+  border-radius: 50%;
+
+  transform: translateX(0);
+  transition: all 0.3s cubic-bezier(0.2, 0.85, 0.32, 1.2);
+}
+
+.toggle-button:checked::after {
+  transform: translateX(calc(100% + 3px));
+  background-color: #fff;
+}
+.toggle-button:checked {
+  background-color: #42b983;
+}
+</style>
