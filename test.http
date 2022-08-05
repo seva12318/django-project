@@ -39,7 +39,7 @@ POST http://127.0.0.1:8000/api/choices/
 Content-Type: application/json
 
 {
-"students": 2, 
+"students": 1, 
 "year": "2021", 
 "semester": "2", 
 "sub_first": 1,

@@ -13,6 +13,7 @@ import { RouterLink, RouterView } from 'vue-router'
          <RouterLink to="/subjects">Предметы</RouterLink>
          <RouterLink to="/students">Обучающиеся</RouterLink>
          <RouterLink to="/schools">Образовательные организации</RouterLink>
+         <RouterLink to="/choices">Выбор студентов</RouterLink>
          <RouterLink to="/reports">Отчеты</RouterLink>
         <RouterLink to="/about">О приложении</RouterLink>
         <RouterLink to="/about">Выход</RouterLink>
