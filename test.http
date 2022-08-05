@@ -106,3 +106,14 @@ Content-Type: application/json
 {
   "title": "Кря2"
 }
+
+###
+PATCH http://127.0.0.1:8000/api/students/11/
+Content-Type: application/json
+
+{
+  "name": "Андрей",  
+ "patr": "Сергеевич",
+  "surname": "Дорофеев", 
+ "school": 1
+}

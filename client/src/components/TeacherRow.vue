@@ -22,7 +22,7 @@ const emit = defineEmits(["nameClick", "surnameClick", "delete", "update"])
         <td><span> <input type="text" v-model="patr" :disabled="!isEdit"> </span>  </td>
         <td v-show="isEdit">
             <button
-              @click="$emit('update', { name, surname, patr, school_title })"
+              @click="$emit('update', { name, surname, patr })"
             >
               Сохранить
             </button>

@@ -31,8 +31,8 @@ export default {
       this.showModal = false;
       this.resetTeachers();
     },
-    resetStudent() {
-      this.resetTeachers = {
+    resetTeachers() {
+      this.newTeacher = {
         surname: "",
         name: "",
         patr: ""
