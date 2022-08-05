@@ -2,7 +2,8 @@
 defineProps({
     name: String,
     surname: String,
-    patr: String
+    patr: String,
+    isEdit: Boolean,
 })
 
 const emit = defineEmits(["nameClick", "surnameClick", "delete", "update"])
@@ -11,19 +12,28 @@ const emit = defineEmits(["nameClick", "surnameClick", "delete", "update"])
 </script>
 
 <template>
+<div>
     <table>
       
         <tbody>
     <tr>
-        <td><span @click="$emit('nameClick')"><input type="text" v-model="name"> </span>  </td>
-        <td><span @click="OnSurnameClick"><input type="text" v-model="surname"> </span> </td>
-        <td><span> <input type="text" v-model="patr"> </span>  </td>
-        <td><button @click="$emit('delete')">удалить</button></td>
-        <td><button @click="$emit('update', {name, surname, patr})">обновить</button></td>
-    
+        <td><span @click="$emit('nameClick')"><input type="text" v-model="name" :disabled="!isEdit"> </span>  </td>
+        <td><span @click="OnSurnameClick"><input type="text" v-model="surname" :disabled="!isEdit"> </span> </td>
+        <td><span> <input type="text" v-model="patr" :disabled="!isEdit"> </span>  </td>
+        <td v-show="isEdit">
+            <button
+              @click="$emit('update', { name, surname, patr, school_title })"
+            >
+              Сохранить
+            </button>
+          </td>
+          <td v-show="isEdit">
+            <button @click="$emit('delete')">Удалить</button>
+          </td>
     </tr>
     </tbody>
     </table>
+    </div>
 </template>
 
 <style scoped lang="scss">
