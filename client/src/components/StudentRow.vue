@@ -18,6 +18,16 @@ function onSurnameClick() {
 }
 </script>
 
+<script>
+export default {
+  data() {
+    return {
+      schoolId: this.school.id,
+    };
+  },
+};
+</script>
+
 <template>
   <div>
     <table>
@@ -46,7 +56,7 @@ function onSurnameClick() {
                 type="text"
                 :value="school.title"
               />
-              <select v-else v-model="school.id" placeholder="Школа">
+              <select v-else v-model="schoolId" placeholder="Школа">
                 <option v-for="s in schools" :value="s.id">
                   {{ s.title }}
                 </option>
@@ -54,9 +64,7 @@ function onSurnameClick() {
             </span>
           </td>
           <td v-show="isEdit">
-            <button
-              @click="$emit('update', { name, surname, patr, school_title })"
-            >
+            <button @click="$emit('update', { name, surname, patr, schoolId })">
               Сохранить
             </button>
           </td>

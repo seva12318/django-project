@@ -1,175 +1,170 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
 export const useLessonsStore = defineStore({
-    "id": "lessons",
-    state: ()=>({
-        students:[],
-        teachers:[],
-        schools:[],
-        subjects:[],
-        reports:[]
-    }),
-    actions: {
-        async fetchStudents() {
-            let r = await fetch("/api/students/");
-            this.students = await r.json();
-           
+  id: "lessons",
+  state: () => ({
+    students: [],
+    teachers: [],
+    schools: [],
+    subjects: [],
+    reports: [],
+  }),
+  actions: {
+    async fetchStudents() {
+      let r = await fetch("/api/students/");
+      this.students = await r.json();
+    },
+    async deleteStudent(studentId) {
+      let r = await fetch(`/api/students/${studentId}/`, {
+        method: "DELETE",
+      });
+      await this.fetchStudents();
+    },
+    async addStudent(surname, name, patr, school) {
+      let r = await fetch(`/api/students/`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
         },
-        async deleteStudent(studentId) {
-            let r = await fetch(`/api/students/${studentId}/`,{
-                method: "DELETE"
-            });
-            await this.fetchStudents();
+        body: JSON.stringify({
+          surname,
+          name,
+          patr,
+          school,
+        }),
+      });
+      await this.fetchStudents();
+    },
+    async updStudent(studentId, surname, name, patr, schoolId) {
+      let r = await fetch(`/api/students/${studentId}/`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
         },
-        async addStudent(surname, name, patr, school) {
-            let r = await fetch(`/api/students/`,{
-                method: "POST",
-                headers: {
-                    "content-type":"application/json"
-                },
-                body: JSON.stringify({
-                    surname,
-                    name,
-                    patr,
-                    school
-                })
-            });
-            await this.fetchStudents();
+        body: JSON.stringify({
+          surname,
+          name,
+          patr,
+          school: schoolId,
+        }),
+      });
+      await this.fetchStudents();
+    },
+    async fetchTeachers() {
+      let r = await fetch("/api/teachers/");
+      this.teachers = await r.json();
+    },
+    async addTeacher(surname, name, patr) {
+      let r = await fetch(`/api/teachers/`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
         },
-        async updStudent(studentId, surname, name, patr, school_title) {
-            let r = await fetch(`/api/students/${studentId}/`,{
-                method: "PATCH",
-                headers: {
-                    "content-type":"application/json"
-                },
-                body: JSON.stringify({
-                    surname,
-                    name,
-                    patr,
-                    school_title
-                })
-            });
-            await this.fetchStudents();
+        body: JSON.stringify({
+          surname,
+          name,
+          patr,
+        }),
+      });
+      await this.fetchTeachers();
+    },
+    async deleteTeacher(teacherId) {
+      let r = await fetch(`/api/teachers/${teacherId}/`, {
+        method: "DELETE",
+      });
+      await this.fetchTeachers();
+    },
+    async updTeacher(teacherId, name, surname, patr) {
+      let r = await fetch(`/api/teachers/${teacherId}/`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
         },
-        async fetchTeachers() {
-            let r = await fetch("/api/teachers/");
-            this.teachers = await r.json();
-           
+        body: JSON.stringify({
+          name,
+          surname,
+          patr,
+        }),
+      });
+      await this.fetchTeachers();
+    },
+    async fetchSchools() {
+      let r = await fetch("/api/schools/");
+      this.schools = await r.json();
+    },
+    async addSchool(title) {
+      let r = await fetch(`/api/schools/`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
         },
-        async addTeacher(surname, name, patr) {
-            let r = await fetch(`/api/teachers/`,{
-                method: "POST",
-                headers: {
-                    "content-type":"application/json"
-                },
-                body: JSON.stringify({
-                    surname,
-                    name,
-                    patr
-                })
-            });
-            await this.fetchTeachers();
+        body: JSON.stringify({
+          title,
+        }),
+      });
+      await this.fetchSchools();
+    },
+    async deleteSchool(schoolId) {
+      let r = await fetch(`/api/schools/${schoolId}/`, {
+        method: "DELETE",
+      });
+      await this.fetchSchools();
+    },
+    async updSchool(schoolId, title) {
+      let r = await fetch(`/api/schools/${schoolId}/`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
         },
-        async deleteTeacher(teacherId) {
-            let r = await fetch(`/api/teachers/${teacherId}/`,{
-                method: "DELETE"
-            });
-            await this.fetchTeachers();
+        body: JSON.stringify({
+          title,
+        }),
+      });
+      await this.fetchSchools();
+    },
+    async fetchSubjects() {
+      let r = await fetch("/api/subjects/");
+      this.subjects = await r.json();
+    },
+    async addSubject(level, name, time, teacher) {
+      let r = await fetch(`/api/subjects/`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
         },
-        async updTeacher(teacherId, name, surname, patr) {
-            let r = await fetch(`/api/teachers/${teacherId}/`,{
-                method: "PATCH",
-                headers: {
-                    "content-type":"application/json"
-                },
-                body: JSON.stringify({
-                    name,
-                    surname,
-                    patr
-                })
-            });
-            await this.fetchTeachers();
+        body: JSON.stringify({
+          level,
+          name,
+          time,
+          teacher,
+        }),
+      });
+      await this.fetchSubjects();
+    },
+    async deleteSubject(subjectId) {
+      let r = await fetch(`/api/subjects/${subjectId}/`, {
+        method: "DELETE",
+      });
+      await this.fetchSubjects();
+    },
+    async updSubject(subjectId, name, level, time, teacher_fio) {
+      let r = await fetch(`/api/subjects/${subjectId}/`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
         },
-        async fetchSchools() {
-            let r = await fetch("/api/schools/");
-            this.schools = await r.json();
-           
-        },
-        async addSchool(title) {
-            let r = await fetch(`/api/schools/`,{
-                method: "POST",
-                headers: {
-                    "content-type":"application/json"
-                },
-                body: JSON.stringify({
-                    title
-                })
-            });
-            await this.fetchSchools();
-        },
-        async deleteSchool(schoolId) {
-            let r = await fetch(`/api/schools/${schoolId}/`,{
-                method: "DELETE"
-            });
-            await this.fetchSchools();
-        },
-        async updSchool(schoolId, title) {
-            let r = await fetch(`/api/schools/${schoolId}/`,{
-                method: "PATCH",
-                headers: {
-                    "content-type":"application/json"
-                },
-                body: JSON.stringify({
-                    title
-                })
-            });
-            await this.fetchSchools();
-        },
-        async fetchSubjects() {
-            let r = await fetch("/api/subjects/");
-            this.subjects = await r.json();
-           
-        },
-        async addSubject(level, name, time, teacher) {
-            let r = await fetch(`/api/subjects/`,{
-                method: "POST",
-                headers: {
-                    "content-type":"application/json"
-                },
-                body: JSON.stringify({
-                    level,
-                    name,
-                    time,
-                    teacher
-                })
-            });
-            await this.fetchSubjects();
-        },
-        async deleteSubject(subjectId) {
-            let r = await fetch(`/api/subjects/${subjectId}/`,{
-                method: "DELETE"
-            });
-            await this.fetchSubjects();
-        },
-        async updSubject(subjectId, name, level, time, teacher_fio) {
-            let r = await fetch(`/api/subjects/${subjectId}/`,{
-                method: "PATCH",
-                headers: {
-                    "content-type":"application/json"
-                },
-                body: JSON.stringify({
-                    name,
-                    level,
-                    time,
-                    teacher_fio
-                })
-            });
-            await this.fetchSubjects();
-        },
-        async fetchReports(subjectId) {
-            let r = await fetch(`/api/journals/${subjectId}/school/`);
-            this.reports = await r.json();
-           
-        },
-    }
-}) 
+        body: JSON.stringify({
+          name,
+          level,
+          time,
+          teacher_fio,
+        }),
+      });
+      await this.fetchSubjects();
+    },
+    async fetchReports(subjectId) {
+      let r = await fetch(`/api/journals/${subjectId}/school/`);
+      this.reports = await r.json();
+    },
+  },
+});
