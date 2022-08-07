@@ -41,14 +41,14 @@ class JournalSerializer(serializers.ModelSerializer):
         fields = ['id', 'students', 'students_name', 'lessons', 'mark'] 
 
 class ChoiceSerializer(serializers.ModelSerializer):
-    sub_first_name = serializers.CharField(source="sub_first.name", read_only=True)
-    sub_second_name = serializers.CharField(source="sub_second.name", read_only=True) 
+    sub_first_name = serializers.CharField(source="sub_first.__str__", read_only=True)
+    sub_second_name = serializers.CharField(source="sub_second.__str__", read_only=True) 
     students_name = serializers.CharField(source="students.__str__", read_only=True)
-    sub_first_level = serializers.CharField(source="sub_first.level", read_only=True)
-    sub_second_level = serializers.CharField(source="sub_second.level", read_only=True)
+    #sub_first_level = serializers.CharField(source="sub_first.level", read_only=True)
+    #sub_second_level = serializers.CharField(source="sub_second.level", read_only=True)
     class Meta:
         model = Choice
-        fields = ['id', 'students', 'students_name', 'year', 'semester', 'sub_first', 'sub_first_name', 'sub_first_level', 'sub_second', 'sub_second_name', 'sub_second_level', 'num_class']
+        fields = ['id', 'students', 'students_name', 'year', 'semester', 'sub_first', 'sub_first_name', 'sub_second', 'sub_second_name', 'num_class']
 
 class SchoolAddStudentsSerializer(serializers.Serializer):
     students = serializers.ListField(child=serializers.IntegerField()) 
