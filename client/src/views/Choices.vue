@@ -1,7 +1,52 @@
+<script setup>
+import { storeToRefs } from "pinia";
+import { computed, onBeforeMount, ref } from "vue";
+import { useLessonsStore } from "../stores/lessons";
+
+const lessonsStore = useLessonsStore();
+const { choices, students, subjects } = storeToRefs(lessonsStore);
+
+let sortFiled = ref("name");
+
+const choicesSorted = computed(() => {
+  return _(choices.value)
+    .orderBy((x) => x[sortFiled.value])
+    .value();
+});
+
+const firstSubjects = computed(() => {
+  const res = subjects.value.filter((subj) => subj.time === "10:00");
+  return res;
+});
+const secondSubjects = computed(() => {
+  const res = subjects.value.filter((subj) => subj.time === "11:45");
+  return res;
+});
+
+function toggleSort(fildeName) {
+  sortFiled.value = fildeName;
+}
+
+function onDeleteClick(choice) {
+  let permission = window.confirm(
+    `Вы действительно хотите удалить выбранные предметы студента ${choice.students_name}?`
+  );
+  if (permission) {
+    lessonsStore.deleteChoice(choice.id); // изменить
+  }
+}
+
+onBeforeMount(() => {
+  lessonsStore.fetchChoices();
+  lessonsStore.fetchStudents();
+  lessonsStore.fetchSubjects();
+});
+</script>
+
 <script>
-import TeacherRow from '@/components/TeacherRow.vue';
-import _ from 'lodash';
-import Modal from '../components/modal-window.vue'
+import ChoicesRow from "@/components/ChoicesRow.vue";
+import _ from "lodash";
+import Modal from "../components/modal-window.vue";
 export default {
   components: {
     Modal,
@@ -9,10 +54,13 @@ export default {
   data() {
     return {
       showModal: false,
-      newTeacher: {
-        surname: "",
-        name: "",
-        patr: "",
+      newChoice: {
+        studentId: 1,
+        year: new Date().getFullYear(),
+        semester: 1,
+        firstSubjectId: 1,
+        secondSubjectId: 2,
+        classTitle: "",
       },
       isEdit: false,
     };
@@ -20,95 +68,115 @@ export default {
   methods: {
     onFormSumbit() {
       this.showModal = false;
-      this.lessonsStore.addTeacher(
-        this.newTeacher.surname,
-        this.newTeacher.name,
-        this.newTeacher.patr
+      // изменить
+      this.lessonsStore.addChoice(
+        this.newChoice.studentId,
+        this.newChoice.year,
+        this.newChoice.semester,
+        this.newChoice.firstSubjectId,
+        this.newChoice.secondSubjectId,
+        this.newChoice.classTitle
       );
-      this.resetTeachers();
+      this.resetChoice();
+    },
+    onUpdateClick(
+      id,
+      {
+        studentName,
+        year,
+        semester,
+        firstSubjectId,
+        secondSubjectId,
+        classTitle,
+      }
+    ) {
+      this.lessonsStore.updateChoice(
+        id,
+        studentName,
+        year,
+        semester,
+        firstSubjectId,
+        secondSubjectId,
+        classTitle
+      );
+    },
+    onModalOpen() {
+      this.newChoice.studentId = this.students[0].id;
+      this.newChoice.firstSubjectId = this.firstSubjects[0].id;
+      this.newChoice.secondSubjectId = this.secondSubjects[0].id;
+      this.showModal = true;
     },
     onModalClose() {
+      console.log(this.firstSubjects.filter((el) => el.id === 1));
+      console.log(this.secondSubjects.filter((el) => el.id === 1));
       this.showModal = false;
-      this.resetTeachers();
+      this.resetChoice();
     },
-    resetTeachers() {
-      this.newTeacher = {
-        surname: "",
-        name: "",
-        patr: ""
+    resetChoice() {
+      this.newChoice = {
+        studentId: this.students[0].id,
+        year: new Date().getFullYear(),
+        semester: 1,
+        firstSubId: this.firstSubjects[0].id,
+        secondSubId: this.secondSubjects[0].id,
+        classTitle: "",
       };
     },
   },
 };
 </script>
-<script setup>
-import { storeToRefs } from 'pinia';
-import {computed, onBeforeMount, ref} from 'vue';
-import {useLessonsStore} from '../stores/lessons';
-
-const lessonsStore = useLessonsStore(); 
-const {teachers} = storeToRefs(lessonsStore);
-let sortFiled = ref("name");
-
-const teacherStored = computed(() =>{
-    return _(teachers.value)
-        .orderBy(x => x[sortFiled.value])
-        .value();
-});
-
-function toggleSort(fildeName){
-    sortFiled.value = fildeName
-}
-
-function onDeleteClick(teacher){
-   let permission = window.confirm(
-    `Вы действительно хотите удалить учителя ${teacher.surname} ${teacher.name} ${teacher.patr}?`
-  );
-  if (permission) {
-    lessonsStore.deleteTeacher(teacher.id);
-  }
-}
-
-function onUpdateClick(id, { name, surname, patr }){
-    lessonsStore.updTeacher(id,  name, surname, patr )
-}
-
-
-onBeforeMount( () => {
-    lessonsStore.fetchTeachers();
-})
-
-
-</script>
 
 <template>
-<h2>Преподаватели</h2>
-<button id="show-modal" @click="showModal = true">Добавить</button>
+  <h2>Выборы</h2>
+  <button id="show-modal" @click="onModalOpen()">Добавить</button>
 
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
-    <modal
-      :show="showModal"
-      @submit="onFormSumbit()"
-      @close="onModalClose()"
-    >
+    <modal :show="showModal" @submit="onFormSumbit()" @close="onModalClose()">
       <template #header>
-        <h3>Добавить преподавателя</h3>
+        <h3>Добавить выбор</h3>
       </template>
       <template #body>
-        <input type="text" v-model="newTeacher.surname" placeholder="Фамилия" />
-        <input type="text" v-model="newTeacher.name" placeholder="Имя" />
-        <input type="text" v-model="newTeacher.patr" placeholder="Отчество" />
-        
+        <div>
+          <span>Студент: </span>
+          <select v-model="newChoice.studentId" placeholder="Студент">
+            <option v-for="s in students" :value="s.id">
+              {{ `${s.surname} ${s.name} ${s.patr} ${s.school_title}` }}
+            </option>
+          </select>
+        </div>
+        <label>Год: <input type="number" v-model="newChoice.year" /></label>
+        <label
+          >Семестр: <input type="number" v-model="newChoice.semester"
+        /></label>
+        <label
+          >Класс: <input type="text" v-model="newChoice.classTitle"
+        /></label>
+        <div>
+          <span>Предмет 1: </span>
+          <select v-model="newChoice.firstSubjectId" placeholder="Предмет 1">
+            <option v-for="s in firstSubjects" :value="s.id">
+              {{ `${s.name} ${s.level}` }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <span>Предмет 2: </span>
+          <select v-model="newChoice.secondSubjectId" placeholder="Предмет 2">
+            <option v-for="s in secondSubjects" :value="s.id">
+              {{ `${s.name} ${s.level}` }}
+            </option>
+          </select>
+        </div>
       </template>
 
       <template #footer> </template>
     </modal>
   </Teleport>
 
-<hr />
+  <hr />
 
-    <div class="container">
+  <div class="container">
     <button @click="toggleSort('name')">По имени</button>
     <button @click="toggleSort('surname')">По фамилии</button>
 
@@ -122,20 +190,27 @@ onBeforeMount( () => {
       <label for="toggle-button" class="text">Режим редактирования</label>
     </div>
   </div>
-            <TeacherRow 
-              v-for="s in teacherStored" 
-              :name = "s.name"
-              :surname = "s.surname"
-              :patr = "s.patr" 
-              @surname-click = "onSurnameClick(s)"
-              @name-click = "onNameClick(s)"
-              @delete = "onDeleteClick(s)"
-              @update = "onUpdateClick(s.id, $event)"
-              :isEdit="isEdit"
-            />
-    <hr> 
-
- 
+  <ChoicesRow
+    v-for="choice in choicesSorted"
+    :studentName="choice.students_name"
+    :year="choice.year"
+    :semester="choice.semester"
+    :firstSubject="{
+      id: choice.sub_first,
+      name: `${choice.sub_first_name} ${choice.sub_first}`,
+    }"
+    :firstSubjects="firstSubjects"
+    :secondSubject="{
+      id: choice.sub_second,
+      name: `${choice.sub_second_name} ${choice.sub_second}`,
+    }"
+    :secondSubjects="secondSubjects"
+    :classTitle="choice.num_class"
+    @delete="onDeleteClick(choice)"
+    @update="onUpdateClick(choice.id, $event)"
+    :isEdit="isEdit"
+  />
+  <hr />
 </template>
 
 <style scoped>

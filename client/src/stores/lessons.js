@@ -8,6 +8,7 @@ export const useLessonsStore = defineStore({
     schools: [],
     subjects: [],
     reports: [],
+    choices: [],
   }),
   actions: {
     async fetchStudents() {
@@ -165,6 +166,66 @@ export const useLessonsStore = defineStore({
     async fetchReports(subjectId) {
       let r = await fetch(`/api/journals/${subjectId}/school/`);
       this.reports = await r.json();
+    },
+    async fetchChoices() {
+      let r = await fetch("/api/choices/");
+      this.choices = await r.json();
+    },
+    async addChoice(
+      students,
+      year,
+      semester,
+      sub_first,
+      sub_second,
+      num_class
+    ) {
+      let r = await fetch(`/api/choices/`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          students,
+          year: "" + year,
+          semester: "" + semester,
+          sub_first,
+          sub_second,
+          num_class,
+        }),
+      });
+      await this.fetchChoices();
+    },
+    // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    async updateChoice(
+      choiceId,
+      students_name,
+      year,
+      semester,
+      sub_first,
+      sub_second,
+      num_class
+    ) {
+      let r = await fetch(`/api/choices/${choiceId}/`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          students_name,
+          year,
+          semester,
+          sub_first,
+          sub_second,
+          num_class,
+        }),
+      });
+      await this.fetchChoices();
+    },
+    async deleteChoice(choiceId) {
+      let r = await fetch(`/api/choices/${choiceId}/`, {
+        method: "DELETE",
+      });
+      await this.fetchChoices();
     },
   },
 });

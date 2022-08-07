@@ -54,7 +54,7 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
+  width: 400px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -78,7 +78,7 @@ export default {
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
 }
 

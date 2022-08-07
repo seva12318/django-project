@@ -81,9 +81,14 @@ export default {
       );
       this.resetStudent();
     },
+    onModalOpen() {
+      this.newStudent.school = this.schools[0].id;
+      this.showModal = true;
+    },
     onModalClose() {
       this.showModal = false;
       this.resetStudent();
+      console.log(this.schools);
     },
     resetStudent() {
       this.newStudent = {
@@ -99,7 +104,7 @@ export default {
 
 <template>
   <h2>Обучающиеся</h2>
-  <button id="show-modal" @click="showModal = true">Добавить</button>
+  <button id="show-modal" @click="onModalOpen()">Добавить</button>
 
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
