@@ -44,8 +44,8 @@ class ChoiceSerializer(serializers.ModelSerializer):
     sub_first_name = serializers.CharField(source="sub_first.__str__", read_only=True)
     sub_second_name = serializers.CharField(source="sub_second.__str__", read_only=True) 
     students_name = serializers.CharField(source="students.__str__", read_only=True)
-    #sub_first_level = serializers.CharField(source="sub_first.level", read_only=True)
-    #sub_second_level = serializers.CharField(source="sub_second.level", read_only=True)
+    #sub_first_level = serializers.CharField(source="sub_first.level", read_only=True) на случай если уровень понадобится отправлять отдельно
+    #sub_second_level = serializers.CharField(source="sub_second.level", read_only=True) на случай если уровень понадобится отправлять отдельно
     class Meta:
         model = Choice
         fields = ['id', 'students', 'students_name', 'year', 'semester', 'sub_first', 'sub_first_name', 'sub_second', 'sub_second_name', 'num_class']
