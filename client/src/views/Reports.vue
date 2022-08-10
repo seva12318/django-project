@@ -54,7 +54,7 @@ data() {
     
     <!-- не выводит список -->
   <ReportRow
-    v-for="r in reportsStored"
+    v-for="r in reportsStored[0]"
     :students_name="r.students_name"
     :lessons_name="r.lessons_name"
     :date="r.date"
