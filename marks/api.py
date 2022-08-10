@@ -62,6 +62,22 @@ class JournalViewSet(viewsets.ModelViewSet):
             "school-journal": data,
         })
 
+    @action(detail=True, url_path="subject", methods=['GET'])
+    def subject(self, *args, **kwargs):
+        data =None
+        param1 = Choice.objects.filter(sub_first=self.kwargs['pk'])
+        param2 = Choice.objects.filter(sub_second=self.kwargs['pk'])
+        if param1.count() > 0 and param2.count() > 0:
+            data = students_data(param1, self.kwargs['pk']) + students_data(param2, self.kwargs['pk'])
+        elif param1.count() > 0 and param2.count() == 0:
+            data = students_data(param1, self.kwargs['pk'])
+        elif param1.count() == 0 and param2.count() > 0:
+            data = students_data(param2, self.kwargs['pk'])
+        
+        return Response({
+            "sub-journal": data,
+        })
+        
 class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
@@ -161,3 +177,16 @@ class TeacherViewSet(viewsets.ModelViewSet):
         return Response({
            "subjects": data, 
         })
+
+def students_data(participants, less_id):
+    i=0
+    for part in participants:
+        journal = Journal.objects.filter(students = part.students, lessons = less_id)
+        serializer = JournalReportSerializer(journal, many=True)
+        #КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
+        if i == 0:
+            data = serializer.data
+        else:
+            data=data+serializer.data
+        i=i+1 
+    return data
