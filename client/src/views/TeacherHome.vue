@@ -1,0 +1,107 @@
+<template lang="">
+  <div class="wrapper">
+    <div class="teacher_wrapper">
+      <div class="info">
+        <div class="greeting">
+          {{ `Здравствуйте, ${teacher.name} ${teacher.surname}!` }}
+        </div>
+        <div class="description">
+          Ваши предметы отображены ниже. Чтобы взаимодействовать с ними,
+          кликните на соответствующую карточку.
+        </div>
+      </div>
+      <div class="subjects">
+        <div
+          class="subject"
+          v-for="subject in subjects"
+          @click="navigate(subject.id)"
+        >
+          <span class="subject_title">{{
+            `${subject.name} (${subject.level})`
+          }}</span>
+          <span>
+            {{ `Время: ${subject.time}` }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import { storeToRefs } from "pinia";
+import { onBeforeMount } from "vue";
+import { useTeacherStore } from "../stores/teacherStore";
+
+const teacherStore = useTeacherStore();
+const { teacher, subjects } = storeToRefs(teacherStore);
+
+// mock
+onBeforeMount(() => {
+  teacherStore.fetchTeacherById(1);
+  teacherStore.fetchTeacherSubjects(1);
+});
+</script>
+<script>
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    navigate(subjectId) {
+      this.$router.push({ path: `/subjects/${subjectId}` });
+    },
+  },
+};
+</script>
+<style scoped>
+.teacher_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 50px;
+}
+.info {
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.greeting {
+  font-size: 24px;
+}
+.description {
+  max-width: 40vw;
+  font-size: 16px;
+}
+.subjects {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.subject {
+  padding: 40px 60px;
+  border-radius: 8px;
+  background: #42b983;
+
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subject:hover {
+  opacity: 0.9;
+  transform: scale(1.1);
+}
+
+.subject_title {
+  font-size: 18px;
+  font-weight: 500;
+}
+</style>
