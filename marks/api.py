@@ -151,8 +151,16 @@ class SubjectViewSet(viewsets.ModelViewSet):
     serializer_class = SubjectSerializer
     renderer_classes = [renderers.JSONRenderer]
 
-    def get_queryset(self):
-        return Subject.objects.all()  
+    @action(detail=True, url_path="lessons", methods=['GET'])
+    def students(self, *args, **kwargs):
+        current_sub = self.get_object()
+        lessons = Lesson.objects.filter(subjects_id=current_sub)
+        serializer = LessonSerializer(lessons, many=True)
+        data = serializer.data
+
+        return Response({
+           "sub-lessons": data, 
+        })
 
 class ChoiceViewSet(viewsets.ModelViewSet):
     queryset = Choice.objects.all()
