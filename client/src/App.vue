@@ -32,6 +32,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: Roboto;
 }
 
 #app {
@@ -57,5 +58,16 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  padding: 5px 10px;
+}
+
+input {
+  width: 100%;
+  padding: 5px 10px;
 }
 </style>

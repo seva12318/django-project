@@ -30,7 +30,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { onBeforeMount } from "vue";
-import { useTeacherStore } from "../stores/teacherStore";
+import { useTeacherStore } from "../../stores/teacherStore";
 
 const teacherStore = useTeacherStore();
 const { teacher, subjects } = storeToRefs(teacherStore);

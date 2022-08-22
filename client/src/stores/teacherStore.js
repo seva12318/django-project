@@ -5,8 +5,9 @@ export const useTeacherStore = defineStore({
   state: () => ({
     teacher: {},
     subjects: [],
-    subject: {},
-    lessons: [],
+    subject: null,
+    lessons: null,
+    isLoading: false,
   }),
   actions: {
     // 21.08.2022
@@ -50,8 +51,25 @@ export const useTeacherStore = defineStore({
           "content-type": "application/json",
         },
       });
-      const lessons = (await response.json()).lessons;
+      const lessons = (await response.json())["sub-lessons"];
       this.lessons = lessons;
+    },
+
+    // 22.08.2022
+    async addLesson({ topic, date, subjectId, homework }) {
+      this.isLoading = true;
+
+      await fetch("/api/lessons/", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ topic, date, homework, subjects: subjectId }),
+      });
+
+      this.fetchSubjectLessons(subjectId).finally(
+        () => (this.isLoading = false)
+      );
     },
   },
 });
