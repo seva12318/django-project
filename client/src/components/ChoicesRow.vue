@@ -119,12 +119,12 @@ export default {
   width: 250px;
 }
 .year {
-  max-width: 50px;
+  max-width: 100px;
 }
 .semester {
-  max-width: 50px;
+  max-width: 100px;
 }
 .classTitle {
-  max-width: 50px;
+  max-width: 100px;
 }
 </style>

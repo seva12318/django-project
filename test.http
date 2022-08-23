@@ -9,7 +9,16 @@ Content-Type: application/json
   "subjects": 1, 
   "topic":"Past Simple Dimple", 
   "homework": "Past simple", 
-  "date": "22.07.2022"
+  "date": "2022-08-20"
+}
+
+###
+
+PATCH http://127.0.0.1:8000/api/lessons/1/
+Content-Type: application/json
+
+{
+  "topic":"Past Simple Dimple"
 }
 
 ###

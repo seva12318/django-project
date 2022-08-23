@@ -14,7 +14,7 @@
         <div
           class="subject"
           v-for="subject in subjects"
-          @click="navigate(subject.id)"
+          @click="navigateToSubject(subject.id)"
         >
           <span class="subject_title">{{
             `${subject.name} (${subject.level})`
@@ -47,7 +47,7 @@ export default {
     return {};
   },
   methods: {
-    navigate(subjectId) {
+    navigateToSubject(subjectId) {
       this.$router.push({ path: `/subjects/${subjectId}` });
     },
   },

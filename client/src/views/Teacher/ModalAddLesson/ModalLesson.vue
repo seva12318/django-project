@@ -1,29 +1,29 @@
 <template lang="">
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
-    <modal
-      :show="showModal"
-      @submit="onSubmit({ topic, date, homework })"
-      @close="onClose()"
-    >
+    <modal :show="showModal" @submit="submit()" @close="closeModal()">
       <template #header>
-        <h3>Добавить урок</h3>
+        <h3>
+          {{
+            isEdit ? `Редактирование урока №${lesson.number}` : "Добавить урок"
+          }}
+        </h3>
       </template>
       <template #body>
         <div class="block">
           <span>Тема: </span>
-          <input type="text" placeholder="Тема урока" v-model="topic" />
+          <input type="text" placeholder="Тема урока" v-model="lesson.topic" />
         </div>
         <div class="block">
           <span>Дата: </span>
-          <input type="date" placeholder="Дата урока" v-model="date" />
+          <input type="date" placeholder="Дата урока" v-model="lesson.date" />
         </div>
 
         <span>Домашнее задание: </span>
         <textarea
           placeholder="Текст домашнего задания"
           rows="4"
-          v-model="homework"
+          v-model="lesson.homework"
         />
       </template>
 
@@ -36,17 +36,20 @@ defineProps({
   showModal: Boolean,
   onClose: Function,
   onSubmit: Function,
+  isEdit: Boolean,
+  lesson: Object,
 });
 </script>
 <script>
 import Modal from "../../../components/modal-window.vue";
 export default {
-  data() {
-    return {
-      topic: "",
-      date: new Date(Date.now()).toISOString().split("T")[0],
-      homework: "",
-    };
+  methods: {
+    submit() {
+      this.onSubmit(this.lesson);
+    },
+    closeModal() {
+      this.onClose();
+    },
   },
 };
 </script>

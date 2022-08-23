@@ -71,5 +71,24 @@ export const useTeacherStore = defineStore({
         () => (this.isLoading = false)
       );
     },
+
+    // 23.08.2022
+    async updateLesson(lessonId, updatedLesson) {
+      this.isLoading = true;
+
+      await fetch(`/api/lessons/${lessonId}/`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(updatedLesson),
+      });
+
+      console.log(updatedLesson);
+
+      this.fetchSubjectLessons(updatedLesson.subjects).finally(
+        () => (this.isLoading = false)
+      );
+    },
   },
 });
