@@ -152,7 +152,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     renderer_classes = [renderers.JSONRenderer]
 
     @action(detail=True, url_path="lessons", methods=['GET'])
-    def students(self, *args, **kwargs):
+    def lessons(self, *args, **kwargs):
         current_sub = self.get_object()
         lessons = Lesson.objects.filter(subjects_id=current_sub)
         serializer = LessonSerializer(lessons, many=True)
@@ -160,6 +160,22 @@ class SubjectViewSet(viewsets.ModelViewSet):
 
         return Response({
            "sub-lessons": data, 
+        })
+    
+    @action(detail=True, url_path="students", methods=['GET'])
+    def students(self, *args, **kwargs):
+        data =None
+        param1 = Choice.objects.filter(sub_first=self.kwargs['pk'])
+        param2 = Choice.objects.filter(sub_second=self.kwargs['pk'])
+        if param1.count() > 0 and param2.count() > 0:
+            data = students_list(param1) + students_list(param2)
+        elif param1.count() > 0 and param2.count() == 0:
+            data = students_list(param1)
+        elif param1.count() == 0 and param2.count() > 0:
+            data = students_list(param2)
+        
+        return Response({
+            "sub-journal": data,
         })
 
 class ChoiceViewSet(viewsets.ModelViewSet):
@@ -191,6 +207,19 @@ def students_data(participants, less_id):
     for part in participants:
         journal = Journal.objects.filter(students = part.students, lessons = less_id)
         serializer = JournalReportSerializer(journal, many=True)
+        #КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
+        if i == 0:
+            data = serializer.data
+        else:
+            data=data+serializer.data
+        i=i+1 
+    return data
+
+def students_list(participants):
+    i=0
+    for part in participants:
+        students = Student.objects.filter(id = part.students.id)
+        serializer = StudentSerializer(students, many=True)
         #КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
         if i == 0:
             data = serializer.data
