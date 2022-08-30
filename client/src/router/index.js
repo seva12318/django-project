@@ -9,6 +9,8 @@ import choices from "../views/Choices.vue";
 // 21.08.2022
 import TeacherHome from "../views/Teacher/TeacherHome.vue";
 import Subject from "../views/Teacher/Subject.vue";
+// 29.08.2022
+import Journal from "../views/Teacher/Journal.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +59,11 @@ const router = createRouter({
       path: "/subjects/:id",
       name: "subject",
       component: Subject,
+    },
+    {
+      path: "/subjects/:subjectId/lessons/:lessonId/journal",
+      name: "journal",
+      component: Journal,
     },
   ],
 });

@@ -71,6 +71,7 @@
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useTeacherStore } from "../../stores/teacherStore";
+import { formatDate } from "../../util/formatDate";
 import Loader from "../../components/Loader/Loader.vue";
 import ModalLesson from "./ModalAddLesson/ModalLesson.vue";
 
@@ -100,18 +101,15 @@ export default {
   },
   methods: {
     navigateToLesson(lessonId) {
-      // this.$router.push({ path: `/lessons/${lessonId}` });
-      alert(`navigate to ${lessonId}`);
+      this.$router.push({
+        path: `/subjects/${this.subjectId}/lessons/${lessonId}/journal`,
+      });
     },
     onModalOpen() {
       this.showModal = true;
     },
     onModalClose() {
       this.showModal = false;
-    },
-    formatDate(date) {
-      // format from yyyy-mm-dd to dd.mm.yyyy
-      return date.split("-").reverse().join(".");
     },
     onAddLesson(lesson) {
       this.teacherStore.addLesson({

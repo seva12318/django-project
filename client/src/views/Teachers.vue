@@ -1,7 +1,7 @@
 <script>
-import TeacherRow from '@/components/TeacherRow.vue';
-import _ from 'lodash';
-import Modal from '../components/modal-window.vue'
+import TeacherRow from "@/components/TeacherRow.vue";
+import _ from "lodash";
+import Modal from "../components/modal-window.vue";
 export default {
   components: {
     Modal,
@@ -35,33 +35,33 @@ export default {
       this.newTeacher = {
         surname: "",
         name: "",
-        patr: ""
+        patr: "",
       };
     },
   },
 };
 </script>
 <script setup>
-import { storeToRefs } from 'pinia';
-import {computed, onBeforeMount, ref} from 'vue';
-import {useLessonsStore} from '../stores/lessons';
+import { storeToRefs } from "pinia";
+import { computed, onBeforeMount, ref } from "vue";
+import { useLessonsStore } from "../stores/lessons";
 
-const lessonsStore = useLessonsStore(); 
-const {teachers} = storeToRefs(lessonsStore);
+const lessonsStore = useLessonsStore();
+const { teachers } = storeToRefs(lessonsStore);
 let sortFiled = ref("name");
 
-const teacherStored = computed(() =>{
-    return _(teachers.value)
-        .orderBy(x => x[sortFiled.value])
-        .value();
+const teacherStored = computed(() => {
+  return _(teachers.value)
+    .orderBy((x) => x[sortFiled.value])
+    .value();
 });
 
-function toggleSort(fildeName){
-    sortFiled.value = fildeName
+function toggleSort(fildeName) {
+  sortFiled.value = fildeName;
 }
 
-function onDeleteClick(teacher){
-   let permission = window.confirm(
+function onDeleteClick(teacher) {
+  let permission = window.confirm(
     `Вы действительно хотите удалить учителя ${teacher.surname} ${teacher.name} ${teacher.patr}?`
   );
   if (permission) {
@@ -69,29 +69,22 @@ function onDeleteClick(teacher){
   }
 }
 
-function onUpdateClick(id, { name, surname, patr }){
-    lessonsStore.updTeacher(id,  name, surname, patr )
+function onUpdateClick(id, { name, surname, patr }) {
+  lessonsStore.updTeacher(id, name, surname, patr);
 }
 
-
-onBeforeMount( () => {
-    lessonsStore.fetchTeachers();
-})
-
-
+onBeforeMount(() => {
+  lessonsStore.fetchTeachers();
+});
 </script>
 
 <template>
-<h2>Преподаватели</h2>
-<button id="show-modal" @click="showModal = true">Добавить</button>
+  <h2>Преподаватели</h2>
+  <button id="show-modal" @click="showModal = true">Добавить</button>
 
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
-    <modal
-      :show="showModal"
-      @submit="onFormSumbit()"
-      @close="onModalClose()"
-    >
+    <modal :show="showModal" @submit="onFormSumbit()" @close="onModalClose()">
       <template #header>
         <h3>Добавить преподавателя</h3>
       </template>
@@ -99,16 +92,15 @@ onBeforeMount( () => {
         <input type="text" v-model="newTeacher.surname" placeholder="Фамилия" />
         <input type="text" v-model="newTeacher.name" placeholder="Имя" />
         <input type="text" v-model="newTeacher.patr" placeholder="Отчество" />
-        
       </template>
 
       <template #footer> </template>
     </modal>
   </Teleport>
 
-<hr />
+  <hr />
 
-    <div class="container">
+  <div class="container">
     <button @click="toggleSort('name')">По имени</button>
     <button @click="toggleSort('surname')">По фамилии</button>
 
@@ -122,20 +114,18 @@ onBeforeMount( () => {
       <label for="toggle-button" class="text">Режим редактирования</label>
     </div>
   </div>
-            <TeacherRow 
-              v-for="s in teacherStored" 
-              :name = "s.name"
-              :surname = "s.surname"
-              :patr = "s.patr" 
-              @surname-click = "onSurnameClick(s)"
-              @name-click = "onNameClick(s)"
-              @delete = "onDeleteClick(s)"
-              @update = "onUpdateClick(s.id, $event)"
-              :isEdit="isEdit"
-            />
-    <hr> 
-
- 
+  <TeacherRow
+    v-for="s in teacherStored"
+    :name="s.name"
+    :surname="s.surname"
+    :patr="s.patr"
+    @surname-click="onSurnameClick(s)"
+    @name-click="onNameClick(s)"
+    @delete="onDeleteClick(s)"
+    @update="onUpdateClick(s.id, $event)"
+    :isEdit="isEdit"
+  />
+  <hr />
 </template>
 
 <style scoped>
@@ -191,4 +181,8 @@ onBeforeMount( () => {
 .toggle-button:checked {
   background-color: #42b983;
 }
+
+/* button {
+  width: 50px;
+} */
 </style>

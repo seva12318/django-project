@@ -1,28 +1,26 @@
 <template lang="">
-  <div class="wrapper">
-    <div class="teacher_wrapper">
-      <div class="info">
-        <div class="greeting">
-          {{ `Здравствуйте, ${teacher.name} ${teacher.surname}!` }}
-        </div>
-        <div class="description">
-          Ваши предметы отображены ниже. Чтобы взаимодействовать с ними,
-          кликните на соответствующую карточку.
-        </div>
+  <div class="teacher_wrapper">
+    <div class="info">
+      <div class="greeting">
+        {{ `Здравствуйте, ${teacher.name} ${teacher.surname}!` }}
       </div>
-      <div class="subjects">
-        <div
-          class="subject"
-          v-for="subject in subjects"
-          @click="navigateToSubject(subject.id)"
-        >
-          <span class="subject_title">{{
-            `${subject.name} (${subject.level})`
-          }}</span>
-          <span>
-            {{ `Время: ${subject.time}` }}
-          </span>
-        </div>
+      <div class="description">
+        Ваши предметы отображены ниже. Чтобы взаимодействовать с ними, кликните
+        на соответствующую карточку.
+      </div>
+    </div>
+    <div class="subjects">
+      <div
+        class="subject"
+        v-for="subject in subjects"
+        @click="navigateToSubject(subject.id)"
+      >
+        <span class="subject_title">{{
+          `${subject.name} (${subject.level})`
+        }}</span>
+        <span>
+          {{ `Время: ${subject.time}` }}
+        </span>
       </div>
     </div>
   </div>
@@ -60,7 +58,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 90%;
   gap: 50px;
 }
 .info {

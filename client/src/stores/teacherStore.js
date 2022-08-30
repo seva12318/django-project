@@ -7,6 +7,9 @@ export const useTeacherStore = defineStore({
     subjects: [],
     subject: null,
     lessons: null,
+    subjectStudents: null,
+    lesson: null,
+    marks: null,
     isLoading: false,
   }),
   actions: {
@@ -84,11 +87,79 @@ export const useTeacherStore = defineStore({
         body: JSON.stringify(updatedLesson),
       });
 
-      console.log(updatedLesson);
-
       this.fetchSubjectLessons(updatedLesson.subjects).finally(
         () => (this.isLoading = false)
       );
+    },
+
+    // 29.08.2022
+    async fetchStudentsBySubjectId(subjectId) {
+      this.isLoading = true;
+
+      const response = await fetch(`/api/subjects/${subjectId}/students/`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      this.subjectStudents = (await response.json())["sub-journal"];
+
+      this.isLoading = false;
+    },
+
+    async fetchLessonById(lessonId) {
+      this.isLoading = true;
+
+      const response = await fetch(`/api/lessons/${lessonId}/`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      this.lesson = await response.json();
+
+      this.isLoading = false;
+    },
+
+    // 30.08.2022
+    async fetchMarksByLessonId(lessonId) {
+      this.isLoading = true;
+
+      const response = await fetch(`/api/lessons/${lessonId}/journal/`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      this.marks = (await response.json()).journal;
+
+      this.isLoading = false;
+    },
+
+    async addMark({ studentId, mark, lessonId }) {
+      await fetch("/api/journals/", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          students: studentId,
+          lessons: lessonId,
+          mark: String(mark),
+        }),
+      });
+    },
+
+    async updateMark({ markId, mark }) {
+      await fetch(`/api/journals/${markId}/`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          mark,
+        }),
+      });
     },
   },
 });

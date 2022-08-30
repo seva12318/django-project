@@ -36,9 +36,10 @@ body {
 }
 
 #app {
-  flex: 1;
+  /* flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; */
+  height: 100vh;
 }
 
 header {

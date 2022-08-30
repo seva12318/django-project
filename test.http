@@ -38,8 +38,8 @@ POST http://127.0.0.1:8000/api/journals/
 Content-Type: application/json
 
 {
- "students": 10,  
- "lessons": 1, 
+ "students": 1,  
+ "lessons": 55, 
  "mark": "5"
 }
 
