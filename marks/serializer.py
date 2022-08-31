@@ -27,7 +27,7 @@ class SubjectSerializer(serializers.ModelSerializer):
         fields = ['id', 'level', 'name', 'time', 'teacher', 'teacher_fio'] 
 
 class LessonSerializer(serializers.ModelSerializer):
-    subjects_name = serializers.CharField(source="subjects.name", read_only=True) 
+    subjects_name = serializers.CharField(source="subjects.__str__", read_only=True) 
     class Meta:
         model = Lesson
         fields = ['id', 'subjects', 'subjects_name', 'topic', 'homework', 'date']

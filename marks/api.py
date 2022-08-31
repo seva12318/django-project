@@ -202,17 +202,19 @@ class TeacherViewSet(viewsets.ModelViewSet):
            "subjects": data, 
         })
 
-def students_data(participants, less_id):
+def students_data(participants, sub_id):
     i=0
     for part in participants:
-        journal = Journal.objects.filter(students = part.students, lessons = less_id)
-        serializer = JournalReportSerializer(journal, many=True)
-        #КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
-        if i == 0:
-            data = serializer.data
-        else:
-            data=data+serializer.data
-        i=i+1 
+        lesson = Lesson.objects.filter(subjects_id = sub_id)
+        for less in lesson:
+            journal = Journal.objects.filter(students = part.students, lessons = less)
+            serializer = JournalReportSerializer(journal, many=True)
+            #КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
+            if i == 0:
+                data = serializer.data
+            else:
+                data=data+serializer.data
+            i=i+1 
     return data
 
 def students_list(participants):
