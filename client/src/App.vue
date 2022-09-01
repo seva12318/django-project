@@ -40,11 +40,13 @@ body {
   display: flex;
   flex-direction: column; */
   height: 100vh;
+  padding: 0 50px;
 }
 
 header {
   padding-top: 20px;
   padding-left: 20px;
+  padding-bottom: 20px;
 }
 
 .nav {
