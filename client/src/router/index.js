@@ -4,13 +4,15 @@ import students from "../views/students.vue";
 import teachers from "../views/teachers.vue";
 import schools from "../views/schools.vue";
 import subjects from "../views/subjects.vue";
-import reports from "../views/reports.vue";
+import ReportBySchool from "../views/ReportBySchool.vue";
 import choices from "../views/Choices.vue";
 // 21.08.2022
 import TeacherHome from "../views/Teacher/TeacherHome.vue";
 import Subject from "../views/Teacher/Subject.vue";
 // 29.08.2022
 import Journal from "../views/Teacher/Journal.vue";
+// 01.09.2022
+import ReportBySubject from "../views/ReportBySubject.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,9 +43,14 @@ const router = createRouter({
       component: subjects,
     },
     {
-      path: "/reports",
-      name: "reports",
-      component: reports,
+      path: "/reports/schools",
+      name: "report by school",
+      component: ReportBySchool,
+    },
+    {
+      path: "/reports/subjects",
+      name: "report by subject",
+      component: ReportBySubject,
     },
     {
       path: "/choices",

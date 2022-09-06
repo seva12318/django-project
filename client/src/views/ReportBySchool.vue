@@ -16,7 +16,9 @@ const reportsStored = computed(() => {
 });
 
 const reportByStudent = computed(() => {
-  return reports.value ? groupByStudent(reports.value["school-journal"]) : [];
+  return reports.value
+    ? groupByStudent(reports.value["school-journal"] || [])
+    : [];
 });
 
 let sortFiled = ref("name");
@@ -51,6 +53,8 @@ export default {
 </script>
 
 <template>
+  <h2>Отчёт по школам</h2>
+
   <select v-model="selectedSchool">
     <option disabled value="">Выберите один из вариантов</option>
     <option v-for="s in schools" :value="s.id">
