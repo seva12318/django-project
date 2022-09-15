@@ -11,6 +11,7 @@ export const useTeacherStore = defineStore({
     lesson: null,
     marks: null,
     isLoading: false,
+    report: [],
   }),
   actions: {
     // 21.08.2022
@@ -160,6 +161,21 @@ export const useTeacherStore = defineStore({
           mark,
         }),
       });
+    },
+
+    // 02.09.2022
+    async fetchReportBySubjectId(subjectId) {
+      this.isLoading = true;
+
+      const response = await fetch(`/api/journals/${subjectId}/subject/`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      this.report = (await response.json())["sub-journal"];
+
+      this.isLoading = false;
     },
   },
 });

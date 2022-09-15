@@ -65,7 +65,7 @@ const studentsWithMarks = computed(() => {
   return sortedStudents !== null && marks !== null
     ? sortedStudents.value.map((s) => ({
         ...s,
-        mark: +marks.value[
+        mark: marks.value[
           marks.value.findIndex((mark) => mark.students === s.id)
         ]?.mark,
         markId:

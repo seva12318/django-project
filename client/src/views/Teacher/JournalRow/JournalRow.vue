@@ -5,7 +5,7 @@
   >
     <span>{{ number }}</span>
     <span>{{ name }}</span>
-    <input type="number" v-model="mark" @input="save(markId, mark)" />
+    <input v-model="mark" @input="save(markId, mark)" />
   </div>
 </template>
 <script setup>
