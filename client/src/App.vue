@@ -41,8 +41,11 @@ export default {
           <RouterLink to="/reports/schools" class="popup_item"
             >Отчёт по школам</RouterLink
           >
+          <RouterLink to="/reports/teachers/1/subjects" class="popup_item"
+            >Отчёты по предметам преподавателя</RouterLink
+          >
           <RouterLink to="/reports/subjects" class="popup_item"
-            >Отчёты по предметам</RouterLink
+            >Отчёты по предметам (всем)</RouterLink
           >
         </template>
       </Popup>

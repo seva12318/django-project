@@ -13,6 +13,7 @@ import Subject from "../views/Teacher/Subject.vue";
 import Journal from "../views/Teacher/Journal.vue";
 // 01.09.2022
 import ReportBySubject from "../views/ReportBySubject.vue";
+import ReportOfSubjects from "../views/ReportOfSubjects.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,9 +49,14 @@ const router = createRouter({
       component: ReportBySchool,
     },
     {
-      path: "/reports/subjects",
-      name: "report by subject",
+      path: "/reports/teachers/:id/subjects",
+      name: "report by teacher subject",
       component: ReportBySubject,
+    },
+    {
+      path: "/reports/subjects",
+      name: "report by subjects",
+      component: ReportOfSubjects,
     },
     {
       path: "/choices",

@@ -35,7 +35,7 @@
               </div>
               <hr />
               <span class="title">Домашнее задание:</span>
-              <span>{{ `${lesson.homework}` }}</span>
+              <span class="homework">{{ `${lesson.homework}` }}</span>
               <hr />
             </div>
             <div class="btns">
@@ -236,5 +236,10 @@ export default {
 .subject_no_lessons {
   margin-top: 200px;
   text-align: center;
+}
+
+.homework {
+  width: 100px;
+  word-wrap: break-word;
 }
 </style>
