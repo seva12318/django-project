@@ -3,7 +3,7 @@ from django.db import router
 from marks.api import SchoolViewSet, StudentViewSet
 from marks.views import ChoicesView, LessonView, OneLessonView, OneSchoolView, OneStudentView, OneSubjectView, OneTeacherView, SchoolView, StudentView, SubjectView, TeacherView
 from django.urls import include, path
-
+from marks import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -21,5 +21,7 @@ urlpatterns = [
     path("subjects/<int:id>/", OneSubjectView.as_view()),
     path("lessons/", LessonView.as_view()),
     path("lessons/<int:id>/", OneLessonView.as_view()),
-    path("choices/", ChoicesView.as_view())
+    path("choices/", ChoicesView.as_view()),
+    path('', views.home, name = 'home'),
+    path("signup/", views.SignUp.as_view(), name="signup"),
 ]

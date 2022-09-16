@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 from marks.api import ChoiceViewSet, JournalViewSet, LessonViewSet, SchoolViewSet, StudentViewSet, SubjectViewSet, TeacherViewSet
-import marks.urls
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
@@ -30,6 +30,18 @@ router.register(r'subjects', SubjectViewSet, basename='subject')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/marks/', include(marks.urls)),
+    #path('api/marks/', include(marks.urls)),
     path("api/", include(router.urls)),
+    path('accounts/',  include('django.contrib.auth.urls')),
+    
+    #path('register/', user_views.register, name = 'register'),
+    #path('profile/', user_views.profile, name = 'profile'),
+    path('home/', include('marks.urls')),
+    #path('logout/', auth_views.LogoutView.as_view(template_name='account/logout.html'), name = 'logout'),
+    #path('password-reset/', auth_views.PasswordResetView.as_view(template_name='account/password_reset.html'), name = 'password_reset'),
+    #path('password-reset/done/', auth_views.PasswordResetView.as_view(template_name='account/password_reset_done.html'), name = 'password_reset_done'),
+    #path('password-reset-confirm/<uidb64>/token/', auth_views.PasswordResetConfirmView.as_view(template_name='account/password_reset_confirm.html'), name = 'password_reset_confirm'),
+    #path('password-reset-complete/', auth_views.PasswordCompleteView.as_view(template_name='account/password_reset_complete.html'), name = 'password_reset_complete'),
+
+
 ]
