@@ -8,7 +8,7 @@ class StudentSerializer(serializers.ModelSerializer):
     school_title = serializers.CharField(source="school.title", read_only=True)
     class Meta:
         model  =Student
-        fields = ['id', 'name', 'surname', 'patr', 'school', 'school_title']  
+        fields = ['id', 'name', 'surname', 'patr', 'school', 'school_title', 'num_class']  
 
 class SchoolSerializer(serializers.ModelSerializer):
      class Meta:
@@ -48,7 +48,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
     #sub_second_level = serializers.CharField(source="sub_second.level", read_only=True) на случай если уровень понадобится отправлять отдельно
     class Meta:
         model = Choice
-        fields = ['id', 'students', 'students_name', 'year', 'semester', 'sub_first', 'sub_first_name', 'sub_second', 'sub_second_name', 'num_class']
+        fields = ['id', 'students', 'students_name', 'year', 'semester', 'sub_first', 'sub_first_name', 'sub_second', 'sub_second_name']
 
 class SchoolAddStudentsSerializer(serializers.Serializer):
     students = serializers.ListField(child=serializers.IntegerField()) 
@@ -63,7 +63,8 @@ class JournalReportSerializer(serializers.ModelSerializer):
     students_name = serializers.CharField(source="students.__str__", read_only=True)
     lessons_name = serializers.CharField(source="lessons.subjects.__str__", read_only=True)
     date = serializers.CharField(source="lessons.date", read_only=True)
+    num_class = serializers.CharField(source="students.num_class", read_only=True)
     class Meta:
         model = Journal
-        fields = ['students', 'students_name', 'lessons', 'date', 'lessons_name', 'mark'] 
+        fields = ['students', 'students_name', 'num_class', 'lessons', 'date', 'lessons_name', 'mark'] 
 
