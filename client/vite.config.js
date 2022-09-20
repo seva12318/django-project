@@ -15,6 +15,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "http://127.0.0.1:8000/",
+      //"/api/home": "http://127.0.0.1:8000/",
+      //"/api/accounts": "http://127.0.0.1:8000/",
     },
   },
 });

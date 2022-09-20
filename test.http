@@ -1,4 +1,4 @@
-GET http://127.0.0.1:8000/api/journals/4/subject/
+GET http://127.0.0.1:8000/api/subject/1/lessons
 
 ###
 

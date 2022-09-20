@@ -3,13 +3,16 @@ from msilib.schema import Class
 from rest_framework import viewsets, renderers
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from marks.models import Choice, Journal, Lesson, School, Student, Subject, Teacher
+from marks.permissions import IsStaffUser
 from marks.serializer import JournalReportSerializer, ChoiceSerializer, JournalSerializer, LessonAddMarkSerializer, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset =  Student.objects.all()
     serializer_class = StudentSerializer
     renderer_classes = [renderers.JSONRenderer]
+    #permission_classes = [IsStaffUser]
 
     def get_queryset(self):
         return Student.objects.all()
@@ -29,6 +32,7 @@ class JournalViewSet(viewsets.ModelViewSet):
     queryset = Journal.objects.all()
     serializer_class = JournalSerializer
     renderer_classes = [renderers.JSONRenderer]
+    #permission_classes = [IsStaffUser]
 
     def get_queryset(self):
         return Journal.objects.all()  
@@ -82,6 +86,7 @@ class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     renderer_classes = [renderers.JSONRenderer]
+    #permission_classes = [IsStaffUser]
 
     def get_queryset(self):
         return Lesson.objects.all()  
@@ -115,6 +120,7 @@ class SchoolViewSet(viewsets.ModelViewSet):
     queryset =  School.objects.all()
     serializer_class = SchoolSerializer
     renderer_classes = [renderers.JSONRenderer]
+    #permission_classes = [IsStaffUser]
 
     @action(detail=True, url_path="students", methods=['GET'])
     def students(self, *args, **kwargs):
@@ -150,11 +156,13 @@ class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
     renderer_classes = [renderers.JSONRenderer]
+    #permission_classes = [IsStaffUser]
 
     @action(detail=True, url_path="lessons", methods=['GET'])
     def lessons(self, *args, **kwargs):
         current_sub = self.get_object()
-        lessons = Lesson.objects.filter(subjects_id=current_sub)
+        #teacher = Teacher.objects.get(user=self.request.user)
+        lessons = Lesson.objects.filter(subjects_id=current_sub,subjects__teacher__user = self.request.user)
         serializer = LessonSerializer(lessons, many=True)
         data = serializer.data
 
@@ -182,6 +190,8 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
     renderer_classes = [renderers.JSONRenderer]
+    #permission_classes = [IsStaffUser]
+
     def get_queryset(self):
         return Choice.objects.all()
 
@@ -189,6 +199,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
     queryset =  Teacher.objects.all()
     serializer_class = TeacherSerializer
     renderer_classes = [renderers.JSONRenderer]
+    #permission_classes = [IsStaffUser]
 
     @action(detail=True, url_path="subjects", methods=['GET'])
     def subjects(self, *args, **kwargs):
@@ -201,6 +212,27 @@ class TeacherViewSet(viewsets.ModelViewSet):
         return Response({
            "subjects": data, 
         })
+
+
+class ActiveTeacherViewSet(viewsets.GenericViewSet):
+    renderer_classes = [renderers.JSONRenderer]
+    #permission_classes = [IsAuthenticated]
+
+    def get_current_teacher(self):
+        return Teacher.objects.get(user=self.request.user)
+ 
+    @action(detail=False, url_path="subjects", methods=['GET'])
+    def subjects(self, *args, **kwargs):
+        current_teacher = self.get_current_teacher()
+        subjects = Subject.objects.filter(teacher=current_teacher)
+        
+        serializer = SubjectSerializer(subjects, many=True)
+        data = serializer.data
+
+        return Response({
+           "subjects": data, 
+        })
+
 
 def students_data(participants, sub_id):
     i=0
