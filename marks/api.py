@@ -1,5 +1,3 @@
-from gc import get_objects
-from msilib.schema import Class
 from rest_framework import viewsets, renderers
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -12,7 +10,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset =  Student.objects.all()
     serializer_class = StudentSerializer
     renderer_classes = [renderers.JSONRenderer]
-    #permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUser]
 
     def get_queryset(self):
         return Student.objects.all()
@@ -32,7 +30,7 @@ class JournalViewSet(viewsets.ModelViewSet):
     queryset = Journal.objects.all()
     serializer_class = JournalSerializer
     renderer_classes = [renderers.JSONRenderer]
-    #permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUser]
 
     def get_queryset(self):
         return Journal.objects.all()  
@@ -86,7 +84,7 @@ class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     renderer_classes = [renderers.JSONRenderer]
-    #permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUser]
 
     def get_queryset(self):
         return Lesson.objects.all()  
@@ -120,7 +118,7 @@ class SchoolViewSet(viewsets.ModelViewSet):
     queryset =  School.objects.all()
     serializer_class = SchoolSerializer
     renderer_classes = [renderers.JSONRenderer]
-    #permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUser]
 
     @action(detail=True, url_path="students", methods=['GET'])
     def students(self, *args, **kwargs):
@@ -156,7 +154,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
     renderer_classes = [renderers.JSONRenderer]
-    #permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUser]
 
     @action(detail=True, url_path="lessons", methods=['GET'])
     def lessons(self, *args, **kwargs):
@@ -190,7 +188,7 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
     renderer_classes = [renderers.JSONRenderer]
-    #permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUser]
 
     def get_queryset(self):
         return Choice.objects.all()
@@ -199,7 +197,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
     queryset =  Teacher.objects.all()
     serializer_class = TeacherSerializer
     renderer_classes = [renderers.JSONRenderer]
-    #permission_classes = [IsStaffUser]
+    permission_classes = [IsStaffUser]
 
     @action(detail=True, url_path="subjects", methods=['GET'])
     def subjects(self, *args, **kwargs):
@@ -216,7 +214,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
 
 class ActiveTeacherViewSet(viewsets.GenericViewSet):
     renderer_classes = [renderers.JSONRenderer]
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_current_teacher(self):
         return Teacher.objects.get(user=self.request.user)

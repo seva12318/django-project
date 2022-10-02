@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -31,7 +30,6 @@ class Migration(migrations.Migration):
                 ('surname', models.CharField(max_length=50, verbose_name='Фамилия')),
                 ('name', models.CharField(max_length=50, verbose_name='Имя')),
                 ('patr', models.CharField(max_length=50, verbose_name='Отчество')),
-                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'db_table': 'teachers',

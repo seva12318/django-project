@@ -7,8 +7,11 @@
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.1",
     "lodash": "^4.17.21",
     "pinia": "^2.0.14",
+    "sass": "^1.55.0",
     "vue": "^3.2.36",
     "vue-router": "^4.0.15"
   },

@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-mj9s+jy04u=%rtkq2&4*=&$i1u=ua^42m%he2$td2bhs9@$_s4
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
 
 
 # Application definition
@@ -34,7 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',

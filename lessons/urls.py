@@ -13,9 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+
+from lessons.views import LoginView, LogoutView, CheckLoginView
 from marks.api import ActiveTeacherViewSet, ChoiceViewSet, JournalViewSet, LessonViewSet, SchoolViewSet, StudentViewSet, SubjectViewSet, TeacherViewSet
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
@@ -33,11 +36,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path('api/marks/', include(marks.urls)),
     path("api/", include(router.urls)),
-    path('api/accounts/',  include('django.contrib.auth.urls')),
+    # path('api/accounts/',  include('django.contrib.auth.urls')),
     
     #path('register/', user_views.register, name = 'register'),
     #path('profile/', user_views.profile, name = 'profile'),
     path('api/home/', include('marks.urls')),
+    path('api/accounts/login/', LoginView.as_view()),
+    path('api/accounts/logout/', LogoutView.as_view()),
+    path('api/accounts/check-login/', CheckLoginView.as_view()),
     #path('logout/', auth_views.LogoutView.as_view(template_name='account/logout.html'), name = 'logout'),
     #path('password-reset/', auth_views.PasswordResetView.as_view(template_name='account/password_reset.html'), name = 'password_reset'),
     #path('password-reset/done/', auth_views.PasswordResetView.as_view(template_name='account/password_reset_done.html'), name = 'password_reset_done'),
@@ -45,4 +51,4 @@ urlpatterns = [
     #path('password-reset-complete/', auth_views.PasswordCompleteView.as_view(template_name='account/password_reset_complete.html'), name = 'password_reset_complete'),
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
