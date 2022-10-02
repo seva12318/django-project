@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=50, verbose_name='Имя')),
                 ('surname', models.CharField(max_length=50, verbose_name='Фамилия')),
                 ('patr', models.CharField(max_length=50, verbose_name='Отчество')),
-                ('num_class', models.CharField(max_length=3, verbose_name='Класс')),
+                # ('num_class', models.CharField(max_length=3, verbose_name='Класс')),
                 ('school', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='marks.school')),
             ],
             options={
@@ -96,6 +96,7 @@ class Migration(migrations.Migration):
                 ('students', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='marks.student')),
                 ('sub_first', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='sub_first', to='marks.subject')),
                 ('sub_second', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='sub_second', to='marks.subject')),
+                ('num_class', models.CharField(max_length=3, verbose_name='Класс')),
             ],
             options={
                 'db_table': 'choices',

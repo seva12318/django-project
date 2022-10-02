@@ -9,7 +9,7 @@ class Student(models.Model):
     surname = models.CharField("Фамилия", max_length=50)
     patr = models.CharField("Отчество", max_length=50)
     school = models.ForeignKey("School", null=True, on_delete=models.CASCADE)
-    num_class = models.CharField("Класс", max_length=3) 
+    num_class = models.CharField("Класс", max_length=3, null=True)
 
     def __str__(self):
         return f'{self.surname} {self.name} {self.patr}'
