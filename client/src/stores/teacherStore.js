@@ -17,7 +17,7 @@ export const useTeacherStore = defineStore({
     // 21.08.2022
     async fetchTeacherById(id) {
       try{
-      const response = await fetch(`/api/teachers/${id}`, {
+      const response = await fetch(`/api/teachers/${id}/`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -34,7 +34,7 @@ export const useTeacherStore = defineStore({
 
     async fetchTeacherSubjects(teacherId) {
       try{
-      const response = await fetch(`/api/teachers/${teacherId}/subjects`, {
+      const response = await fetch(`/api/teachers/${teacherId}/subjects/`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -49,7 +49,7 @@ export const useTeacherStore = defineStore({
     },
 
     async fetchSubjectById(subjectId) {
-      const response = await fetch(`/api/subjects/${subjectId}`, {
+      const response = await fetch(`/api/subjects/${subjectId}/`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -60,7 +60,7 @@ export const useTeacherStore = defineStore({
     },
 
     async fetchSubjectLessons(subjectId) {
-      const response = await fetch(`/api/subjects/${subjectId}/lessons`, {
+      const response = await fetch(`/api/subjects/${subjectId}/lessons/`, {
         method: "GET",
         headers: {
           "content-type": "application/json",

@@ -46,51 +46,51 @@ const router = createRouter({
             component: LoginView,
             meta: {requiresAuth: false}
         },
-        // {
-        //   path: "/students",
-        //   name: "students",
-        //   component: students,
-        // },
-        // {
-        //   path: "/teachers",
-        //   name: "teachers",
-        //   component: teachers,
-        // },
-        // {
-        //   path: "/schools",
-        //   name: "schools",
-        //   component: schools,
-        // },
-        // {
-        //   path: "/subjects",
-        //   name: "subjects",
-        //   component: subjects,
-        // },
-        // {
-        //   path: "/reports/schools",
-        //   name: "report by school",
-        //   component: ReportBySchool,
-        // },
-        // {
-        //   path: "/reports/teachers/:id/subjects",
-        //   name: "report by teacher subject",
-        //   component: ReportBySubject,
-        // },
-        // {
-        //   path: "/reports/subjects",
-        //   name: "report by subjects",
-        //   component: ReportOfSubjects,
-        // },
-        // {
-        //   path: "/choices",
-        //   name: "choices",
-        //   component: choices,
-        // },
-        // {
-        //   path: "/teacherHome",
-        //   name: "teacherHome",
-        //   component: TeacherHome,
-        // },
+        {
+          path: "/students",
+          name: "students",
+          component: students,
+        },
+        {
+          path: "/teachers",
+          name: "teachers",
+          component: teachers,
+        },
+        {
+          path: "/schools",
+          name: "schools",
+          component: schools,
+        },
+        {
+          path: "/subjects",
+          name: "subjects",
+          component: subjects,
+        },
+        {
+          path: "/reports/schools",
+          name: "report by school",
+          component: ReportBySchool,
+        },
+        {
+          path: "/reports/teachers/:id/subjects",
+          name: "report by teacher subject",
+          component: ReportBySubject,
+        },
+        {
+          path: "/reports/subjects",
+          name: "report by subjects",
+          component: ReportOfSubjects,
+        },
+        {
+          path: "/choices",
+          name: "choices",
+          component: choices,
+        },
+        {
+          path: "/teacherHome",
+          name: "teacherHome",
+          component: TeacherHome,
+        },
 
     ],
 });
