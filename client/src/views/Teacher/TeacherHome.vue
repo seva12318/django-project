@@ -35,8 +35,8 @@ const { teacher, subjects } = storeToRefs(teacherStore);
 
 // mock
 onBeforeMount(() => {
-  teacherStore.fetchTeacherById(1);
-  teacherStore.fetchTeacherSubjects(1);
+  teacherStore.fetchTeacherById(3);
+  teacherStore.fetchTeacherSubjects(3);
 });
 </script>
 <script>

@@ -16,17 +16,24 @@ export const useTeacherStore = defineStore({
   actions: {
     // 21.08.2022
     async fetchTeacherById(id) {
+      try{
       const response = await fetch(`/api/teachers/${id}`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
         },
       });
+      //console.log(response);
       const teacher = await response.json();
       this.teacher = teacher;
+    }
+    catch(error){
+      console.log(error)
+    }
     },
 
     async fetchTeacherSubjects(teacherId) {
+      try{
       const response = await fetch(`/api/teachers/${teacherId}/subjects`, {
         method: "GET",
         headers: {
@@ -35,6 +42,10 @@ export const useTeacherStore = defineStore({
       });
       const subjects = (await response.json()).subjects;
       this.subjects = subjects;
+      }
+      catch(error){
+        console.log(error)
+      }
     },
 
     async fetchSubjectById(subjectId) {
