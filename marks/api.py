@@ -211,6 +211,16 @@ class TeacherViewSet(viewsets.ModelViewSet):
            "subjects": data, 
         })
 
+    @action(detail=False, url_path="user", methods=['GET'])
+    def subjects(self, *args, **kwargs):
+        current_teacher = self.request.user.id
+        teacher = Teacher.objects.filter(user=current_teacher)
+        serializer = TeacherSerializer(teacher, many=True)
+        data = serializer.data
+        return Response({
+           "teacher": data, 
+        })
+
 
 class ActiveTeacherViewSet(viewsets.GenericViewSet):
     renderer_classes = [renderers.JSONRenderer]
