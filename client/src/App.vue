@@ -50,12 +50,21 @@ watch(isAuthenticated, () => {
         <nav class="nav">
             <div class="flex-grow-1"></div>
                  <RouterLink to="/">Домашняя</RouterLink>
-                 <RouterLink to="/teachers">Преподаватели</RouterLink>
+                 <!-- <RouterLink to="/teachers">Преподаватели</RouterLink>
                  <RouterLink to="/subjects">Предметы</RouterLink>
                  <RouterLink to="/students">Обучающиеся</RouterLink>
                  <RouterLink to="/schools">Образовательные организации</RouterLink>
-                 <RouterLink to="/choices">Выбор студентов</RouterLink>
-                 <Popup :show="showPopup" :onClose="closePopup">
+                 <RouterLink to="/choices">Выбор студентов</RouterLink> -->
+                 <RouterLink to="/reports/schools" class="popup_item"
+                       >Отчёт по школам</RouterLink
+                     >
+                     <RouterLink to="/reports/teachers/1/subjects" class="popup_item"
+                       >Отчёты по предметам преподавателя</RouterLink
+                     >
+                     <RouterLink to="/reports/subjects" class="popup_item"
+                       >Отчёты по предметам (всем)</RouterLink
+                     >
+                 <!-- <Popup :show="showPopup" :onClose="closePopup">
                    <template #anchor>
                      <span @mouseenter="openPopup()" class="popup_opener">Отчёты</span>
                    </template>
@@ -70,8 +79,8 @@ watch(isAuthenticated, () => {
                        >Отчёты по предметам (всем)</RouterLink
                      >
                    </template>
-                 </Popup>
-                 <RouterLink to="/about">О приложении</RouterLink>
+                 </Popup> -->
+                 <!-- <RouterLink to="/about">О приложении</RouterLink> -->
                  <RouterLink to="/teacherHome">Дом препода</RouterLink>
 
             <a href="#" @click="onLogout" v-if="isAuthenticated">Выход</a>

@@ -68,3 +68,7 @@ class JournalReportSerializer(serializers.ModelSerializer):
         model = Journal
         fields = ['students', 'students_name', 'num_class', 'lessons', 'date', 'lessons_name', 'mark'] 
 
+class IdUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = ['user']

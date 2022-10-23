@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from marks.models import Choice, Journal, Lesson, School, Student, Subject, Teacher
 from marks.permissions import IsStaffUser
-from marks.serializer import JournalReportSerializer, ChoiceSerializer, JournalSerializer, LessonAddMarkSerializer, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
+from marks.serializer import IdUserSerializer, JournalReportSerializer, ChoiceSerializer, JournalSerializer, LessonAddMarkSerializer, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset =  Student.objects.all()
@@ -212,10 +212,10 @@ class TeacherViewSet(viewsets.ModelViewSet):
         })
 
     @action(detail=False, url_path="user", methods=['GET'])
-    def subjects(self, *args, **kwargs):
+    def user(self, *args, **kwargs):
         current_teacher = self.request.user.id
         teacher = Teacher.objects.filter(user=current_teacher)
-        serializer = TeacherSerializer(teacher, many=True)
+        serializer = IdUserSerializer(teacher, many=True)
         data = serializer.data
         return Response({
            "teacher": data, 

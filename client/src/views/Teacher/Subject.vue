@@ -74,8 +74,12 @@ import { useTeacherStore } from "../../stores/teacherStore";
 import { formatDate } from "../../util/formatDate";
 import Loader from "../../components/Loader/Loader.vue";
 import ModalLesson from "./ModalAddLesson/ModalLesson.vue";
+import { useAuthStore } from "../../stores/authStore";
+
+const authStore = useAuthStore();
 
 const teacherStore = useTeacherStore();
+
 // добавить уроки и удалить из data, когда появится ручка
 const { subject, lessons, isLoading } = storeToRefs(teacherStore);
 const sortedLessons = computed(() => {
@@ -116,6 +120,7 @@ export default {
         ...lesson,
         subjectId: Number(this.subjectId),
         date: lesson.date,
+        
       });
       this.onModalClose();
       this.sortedLessons =
@@ -142,6 +147,7 @@ export default {
         topic: "",
         homework: "",
         date: new Date(Date.now()).toISOString().split("T")[0],
+        //csrf: this.csrf
       };
       this.onModalOpen();
     },

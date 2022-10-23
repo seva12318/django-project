@@ -25,7 +25,7 @@ function onSubmit() {
             </div>
             <div class="col-12">
                 <label class="form-label">Пароль</label>
-                <input type="text" v-model="password" class="form-control">
+                <input type="password" v-model="password" class="form-control">
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Войти</button>

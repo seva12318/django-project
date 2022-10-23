@@ -109,6 +109,7 @@ export const useLessonsStore = defineStore({
     async deleteSchool(schoolId) {
       let r = await fetch(`/api/schools/${schoolId}/`, {
         method: "DELETE",
+       
       });
       await this.fetchSchools();
     },

@@ -34,9 +34,24 @@ const teacherStore = useTeacherStore();
 const { teacher, subjects } = storeToRefs(teacherStore);
 
 // mock
+
+
+
 onBeforeMount(() => {
-  teacherStore.fetchTeacherById(1);
-  teacherStore.fetchTeacherSubjects(1);
+  //авторизация
+  teacherStore.fetchTeacherId().then(function (result, reject) {
+    // что-то делаем с результатом операции
+    
+    teacherStore.fetchTeacherById(result);
+    teacherStore.fetchTeacherSubjects(result);
+  },
+  function (err) {
+    // обрабатываем ошибку
+    console.error(err.message)
+  }
+  )
+
+  
 });
 </script>
 <script>

@@ -33,6 +33,15 @@ export const useAuthStore = defineStore("AuthStore", () => {
         await check();
     }
 
+    // async function addLesson(topic,homework, date, subjectId ){
+    //     let r = await axios.post("/api/lessons/", {
+    //         topic:topic,
+    //         date:date,
+    //         homework:homework,
+    //         subjects: subjectId,
+    //     });
+    // }
+    
     return {
         isAuthenticated,
         userName,
@@ -43,4 +52,6 @@ export const useAuthStore = defineStore("AuthStore", () => {
         login,
         logout
     }
+
+
 })

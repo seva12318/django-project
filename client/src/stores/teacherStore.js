@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
 
+import {ref} from "vue";
+import axios from "axios";
+
 export const useTeacherStore = defineStore({
   id: "teacher",
   state: () => ({
@@ -12,6 +15,7 @@ export const useTeacherStore = defineStore({
     marks: null,
     isLoading: false,
     report: [],
+    teacherId: null
   }),
   actions: {
     // 21.08.2022
@@ -38,6 +42,7 @@ export const useTeacherStore = defineStore({
         method: "GET",
         headers: {
           "content-type": "application/json",
+          // "csrftoken": csrftoken,
         },
       });
       const subjects = (await response.json()).subjects;
@@ -74,14 +79,25 @@ export const useTeacherStore = defineStore({
     async addLesson({ topic, date, subjectId, homework }) {
       this.isLoading = true;
 
-      await fetch("/api/lessons/", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ topic, date, homework, subjects: subjectId }),
-      });
-
+      // await fetch("/api/lessons/", {
+      //   method: "POST",
+      //   headers: {
+      //     "content-type": "application/json",
+      //     
+      //   },
+      //   body: JSON.stringify({ topic, date, homework, subjects: subjectId}),
+      // });
+      
+      //работает не трогать
+      let response = await axios.post("/api/lessons/", {
+        
+        topic:topic,
+        date:date,
+        homework:homework,
+        subjects: subjectId,
+        
+    });
+    
       this.fetchSubjectLessons(subjectId).finally(
         () => (this.isLoading = false)
       );
@@ -91,12 +107,20 @@ export const useTeacherStore = defineStore({
     async updateLesson(lessonId, updatedLesson) {
       this.isLoading = true;
 
-      await fetch(`/api/lessons/${lessonId}/`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(updatedLesson),
+      // await fetch(`/api/lessons/${lessonId}/`, {
+      //   method: "PATCH",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify(updatedLesson),
+      // });
+
+      //а почему???????
+      let response = await axios.patch(`/api/lessons/${lessonId}/`,{
+        topic:updatedLesson.topic,
+        date:updatedLesson.date,
+        homework:updatedLesson.homework,
+        subjects: updatedLesson.subjectId,
       });
 
       this.fetchSubjectLessons(updatedLesson.subjects).finally(
@@ -149,29 +173,45 @@ export const useTeacherStore = defineStore({
     },
 
     async addMark({ studentId, mark, lessonId }) {
-      await fetch("/api/journals/", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          students: studentId,
+      //this.isLoading = true;
+      let response = await axios.post("/api/journals/",{
+        students: studentId,
           lessons: lessonId,
           mark: String(mark),
-        }),
-      });
+      })
+      // await fetch("/api/journals/", {
+      //   method: "POST",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     students: studentId,
+      //     lessons: lessonId,
+      //     mark: String(mark),
+      //   }),
+      // });
+      //this.isLoading = false;
     },
 
     async updateMark({ markId, mark }) {
-      await fetch(`/api/journals/${markId}/`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          mark,
-        }),
+
+      let response = await axios.patch(`/api/journals/${markId}/`,{
+        mark: mark,
       });
+
+      // this.fetchSubjectLessons(updatedLesson.subjects).finally(
+      //   () => (this.isLoading = false)
+
+
+      // await fetch(`/api/journals/${markId}/`, {
+      //   method: "PATCH",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     mark,
+      //   }),
+      // });
     },
 
     // 02.09.2022
@@ -188,5 +228,16 @@ export const useTeacherStore = defineStore({
 
       this.isLoading = false;
     },
+    async fetchTeacherId() {
+      this.isLoading = true;
+      
+      let r = await axios.get('/api/teachers/user/')
+      //console.log(r.data.teacher[0].user);
+      this.teacherId  = r.data.teacher[0].user;
+     //console.log(this.teacherId);
+      this.isLoading = false;
+     return this.teacherId;
+    },
   },
+  
 });

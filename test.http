@@ -126,3 +126,7 @@ Content-Type: application/json
   "surname": "Дорофеев", 
  "school": 1
 }
+
+
+###
+GET http://127.0.0.1:8000/api/teachers/1/subjects/
