@@ -233,7 +233,7 @@ export const useTeacherStore = defineStore({
       
       let r = await axios.get('/api/teachers/user/')
       //console.log(r.data.teacher[0].user);
-      this.teacherId  = r.data.teacher[0].user;
+      this.teacherId  = r.data.teacher[0].id;
      //console.log(this.teacherId);
       this.isLoading = false;
      return this.teacherId;
