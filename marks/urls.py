@@ -1,13 +1,11 @@
 #from xml.etree.ElementInclude import include
 from django.db import router
-from marks.api import SchoolViewSet, StudentViewSet
 from marks.views import ChoicesView, LessonView, OneLessonView, OneSchoolView, OneStudentView, OneSubjectView, OneTeacherView, SchoolView, StudentView, SubjectView, TeacherView
 from django.urls import include, path
 from marks import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r'students', StudentViewSet, basename='student')
 
 
 urlpatterns = [

@@ -38,7 +38,7 @@ export const useTeacherStore = defineStore({
 
     async fetchTeacherSubjects(teacherId) {
       try{
-      const response = await fetch(`/api/teachers/${teacherId}/subjects/`, {
+      const response = await fetch(`/api/teachers/subjects/`, {
         method: "GET",
         headers: {
           "content-type": "application/json",

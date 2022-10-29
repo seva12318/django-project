@@ -53,7 +53,7 @@ class Subject(models.Model):
 class Lesson(models.Model):
     subjects = models.ForeignKey("Subject", null=True, on_delete=models.CASCADE, verbose_name = 'Название предмета')
     topic = models.CharField("Тема", max_length=100)
-    homework = models.CharField("Домашнее задание", max_length=500)
+    homework = models.CharField("Домашнее задание", max_length=500, blank=True)
     date = models.CharField("Дата", max_length=10)
     
     class Meta:

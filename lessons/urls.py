@@ -19,18 +19,18 @@ from django.urls import path, include
 from django.conf import settings
 
 from lessons.views import LoginView, LogoutView, CheckLoginView
-from marks.api import ActiveTeacherViewSet, ChoiceViewSet, JournalViewSet, LessonViewSet, SchoolViewSet, StudentViewSet, SubjectViewSet, TeacherViewSet
+from marks.api import JournalViewSet, LessonViewSet, SubjectViewSet, TeacherViewSet#, SchoolViewSet, StudentViewSet, ActiveTeacherViewSet, ChoiceViewSet
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
-router.register(r'students', StudentViewSet, basename='student')
-router.register(r'schools', SchoolViewSet, basename='school')
+#router.register(r'students', StudentViewSet, basename='student')
+#router.register(r'schools', SchoolViewSet, basename='school')
 router.register(r'teachers', TeacherViewSet, basename='teacher')
 router.register(r'journals', JournalViewSet, basename='journal')
 router.register(r'lessons', LessonViewSet, basename='lesson')
-router.register(r'choices', ChoiceViewSet, basename='choice')
+#router.register(r'choices', ChoiceViewSet, basename='choice')
 router.register(r'subjects', SubjectViewSet, basename='subject')
-router.register(r'active-teacher', ActiveTeacherViewSet, basename='active_teacher')
+#router.register(r'active-teacher', ActiveTeacherViewSet, basename='active_teacher')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
