@@ -6,25 +6,7 @@ from marks.models import Choice, Journal, Lesson, School, Student, Subject, Teac
 from marks.permissions import IsStaffUser
 from marks.serializer import IdUserSerializer, JournalReportSerializer, ChoiceSerializer, JournalSerializer, LessonAddMarkSerializer, LessonSerializer, SchoolAddStudentsSerializer, SchoolSerializer, StudentSerializer, SubjectSerializer, TeacherSerializer
 
-# class StudentViewSet(viewsets.ModelViewSet):
-#     queryset =  Student.objects.all()
-#     serializer_class = StudentSerializer
-#     renderer_classes = [renderers.JSONRenderer]
-#     permission_classes = [IsStaffUser]
-
-#     def get_queryset(self):
-#         return Student.objects.all()
-# ##################ВЫБОРЫ КОНКРЕТНОГО СТУДЕНТА#############################
-#     @action(detail=True, url_path="choice", methods=['GET'])
-#     def students(self, *args, **kwargs):
-#         current_student= self.get_object()
-#         choice = Choice.objects.filter(students=current_student)
-#         serializer = ChoiceSerializer(choice, many=True)
-#         data = serializer.data
-
-#         return Response({
-#             "students-choices": data,
-#         })
+###########ДЛЯ ПОЛЬЗОВАТЕЛЯ######################
 
 class JournalViewSet(viewsets.ModelViewSet):
     queryset = Journal.objects.all()
@@ -115,24 +97,6 @@ class LessonViewSet(viewsets.ModelViewSet):
         else:
     	    return Response(status=400)
 
-# class SchoolViewSet(viewsets.ModelViewSet):
-#     queryset =  School.objects.all()
-#     serializer_class = SchoolSerializer
-#     renderer_classes = [renderers.JSONRenderer]
-#     permission_classes = [IsStaffUser]
-# ##############################СПИСОК СТУДЕНТОВ ПО ШКОЛАМ########################################
-#     @action(detail=True, url_path="students", methods=['GET'])
-#     def students(self, *args, **kwargs):
-#         current_school = self.get_object()
-#         students = Student.objects.filter(school=current_school)
-        
-#         serializer = StudentSerializer(students, many=True)
-#         data = serializer.data
-
-#         return Response({
-#            "students": data, 
-#         })
-
 class SubjectViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Subject.objects.filter(teacher__user = self.request.user.id)
@@ -169,15 +133,6 @@ class SubjectViewSet(viewsets.ModelViewSet):
             "sub-journal": data,
         })
 
-# class ChoiceViewSet(viewsets.ModelViewSet):
-#     queryset = Choice.objects.all()
-#     serializer_class = ChoiceSerializer
-#     renderer_classes = [renderers.JSONRenderer]
-#     permission_classes = [IsStaffUser]
-
-#     def get_queryset(self):
-#         return Choice.objects.all()
-
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset =  Teacher.objects.all()
     serializer_class = TeacherSerializer
@@ -209,7 +164,6 @@ class TeacherViewSet(viewsets.ModelViewSet):
            "teacher": data, 
         })
 
-
 class ActiveTeacherViewSet(viewsets.GenericViewSet):
     renderer_classes = [renderers.JSONRenderer]
     permission_classes = [IsAuthenticated]
@@ -228,7 +182,6 @@ class ActiveTeacherViewSet(viewsets.GenericViewSet):
         return Response({
            "subjects": data, 
         })
-
 
 def students_data(participants, sub_id):
     i=0
@@ -257,4 +210,52 @@ def students_list(participants):
             data=data+serializer.data
         i=i+1 
     return data
+
+##########!!!!!!!!!!!!!!ДЛЯ АДМИНКИ - НЕ УДАЛТЬ!!!!!!!!!!!!!!!#########################
+    # class StudentViewSet(viewsets.ModelViewSet):
+#     queryset =  Student.objects.all()
+#     serializer_class = StudentSerializer
+#     renderer_classes = [renderers.JSONRenderer]
+#     permission_classes = [IsStaffUser]
+
+#     def get_queryset(self):
+#         return Student.objects.all()
+# ##################ВЫБОРЫ КОНКРЕТНОГО СТУДЕНТА#############################
+#     @action(detail=True, url_path="choice", methods=['GET'])
+#     def students(self, *args, **kwargs):
+#         current_student= self.get_object()
+#         choice = Choice.objects.filter(students=current_student)
+#         serializer = ChoiceSerializer(choice, many=True)
+#         data = serializer.data
+
+#         return Response({
+#             "students-choices": data,
+#         })
+
+# class SchoolViewSet(viewsets.ModelViewSet):
+#     queryset =  School.objects.all()
+#     serializer_class = SchoolSerializer
+#     renderer_classes = [renderers.JSONRenderer]
+#     permission_classes = [IsStaffUser]
+# ##############################СПИСОК СТУДЕНТОВ ПО ШКОЛАМ########################################
+#     @action(detail=True, url_path="students", methods=['GET'])
+#     def students(self, *args, **kwargs):
+#         current_school = self.get_object()
+#         students = Student.objects.filter(school=current_school)
+        
+#         serializer = StudentSerializer(students, many=True)
+#         data = serializer.data
+
+#         return Response({
+#            "students": data, 
+#         })
+
+# class ChoiceViewSet(viewsets.ModelViewSet):
+#     queryset = Choice.objects.all()
+#     serializer_class = ChoiceSerializer
+#     renderer_classes = [renderers.JSONRenderer]
+#     permission_classes = [IsStaffUser]
+
+#     def get_queryset(self):
+#         return Choice.objects.all()
 
