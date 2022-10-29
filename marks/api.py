@@ -212,7 +212,7 @@ def students_list(participants):
     return data
 
 ##########!!!!!!!!!!!!!!ДЛЯ АДМИНКИ - НЕ УДАЛТЬ!!!!!!!!!!!!!!!#########################
-    # class StudentViewSet(viewsets.ModelViewSet):
+# class StudentViewSet(viewsets.ModelViewSet):
 #     queryset =  Student.objects.all()
 #     serializer_class = StudentSerializer
 #     renderer_classes = [renderers.JSONRenderer]
