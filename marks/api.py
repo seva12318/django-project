@@ -78,7 +78,8 @@ class LessonViewSet(viewsets.ModelViewSet):
         journal = Journal.objects.filter(lessons = current_lesson, lessons__subjects__in = subjects)
         serializer = JournalSerializer(journal, many=True)
         data = serializer.data
-        
+        try: i = data[0]
+        except: return Response(status=400)          
         return Response({
             "journal" : data
         })
