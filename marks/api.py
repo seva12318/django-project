@@ -233,11 +233,11 @@ def students_list(participants):
 #             "students-choices": data,
 #         })
 
-# class SchoolViewSet(viewsets.ModelViewSet):
-#     queryset =  School.objects.all()
-#     serializer_class = SchoolSerializer
-#     renderer_classes = [renderers.JSONRenderer]
-#     permission_classes = [IsStaffUser]
+class SchoolViewSet(viewsets.ModelViewSet):
+    queryset =  School.objects.all()
+    serializer_class = SchoolSerializer
+    renderer_classes = [renderers.JSONRenderer]
+    permission_classes = [IsStaffUser]
 # ##############################СПИСОК СТУДЕНТОВ ПО ШКОЛАМ########################################
 #     @action(detail=True, url_path="students", methods=['GET'])
 #     def students(self, *args, **kwargs):
