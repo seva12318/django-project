@@ -35,23 +35,21 @@ const { teacher, subjects } = storeToRefs(teacherStore);
 
 // mock
 
-
-
 onBeforeMount(() => {
   //авторизация
-  teacherStore.fetchTeacherId().then(function (result, reject) {
-    // что-то делаем с результатом операции
-    
-    teacherStore.fetchTeacherById(result);
-    teacherStore.fetchTeacherSubjects(result);
-  },
-  function (err) {
-    // обрабатываем ошибку
-    console.error(err.message)
-  }
-  )
+  teacherStore.fetchTeacherId().then(
+    function (result, reject) {
+      console.log(result);
+      // что-то делаем с результатом операции
 
-  
+      teacherStore.fetchTeacherById(result);
+      teacherStore.fetchTeacherSubjects(result);
+    },
+    function (err) {
+      // обрабатываем ошибку
+      console.error(err.message);
+    }
+  );
 });
 </script>
 <script>
@@ -94,6 +92,15 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 60%;
+  gap: 36px;
+}
+
+@media screen and (max-width: 1440px) {
+  .subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
 }
 
 .subject {

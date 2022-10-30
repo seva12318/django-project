@@ -5,7 +5,18 @@
   >
     <span>{{ number }}</span>
     <span>{{ name }}</span>
-    <input v-model="mark" @input="save(markId, mark)" />
+    <select
+      v-model="mark"
+      @change="save(markId, mark)"
+      placeholder="Оцена за урок"
+    >
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="x">x</option>
+    </select>
+    <!-- <input v-model="mark" @input="save(markId, mark)" /> -->
   </div>
 </template>
 <script setup>
@@ -37,7 +48,8 @@ export default {
 }
 
 .journal_record > span,
-input {
+input,
+select {
   width: calc(100% / 3);
   border: 1px solid black;
   border-top: none;

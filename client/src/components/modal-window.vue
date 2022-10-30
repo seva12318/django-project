@@ -116,7 +116,9 @@ export default {
 
 .modal-footer {
   display: flex;
-  justify-content: space-around;
-  gap: 50%;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  gap: 36px;
 }
 </style>
