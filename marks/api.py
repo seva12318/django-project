@@ -72,14 +72,20 @@ class LessonViewSet(viewsets.ModelViewSet):
     @action(detail=True, url_path="journal", methods=['GET'])
     def journal(self, *args, **kwargs):
         current_lesson = self.get_object()
-        subjects = Subject.objects.filter(
+        subjects = Lesson.objects.filter(subjects__in = Subject.objects.filter(
              teacher__in = Teacher.objects.filter(
-             user = self.request.user.id))
-        journal = Journal.objects.filter(lessons = current_lesson, lessons__subjects__in = subjects)
+             user = self.request.user.id)))
+        i=0
+        for sub in subjects.values('id'):
+            if sub['id']== current_lesson.id:
+                i=1
+                break
+        if i==0:
+            return Response(status=400)
+        
+        journal = Journal.objects.filter(lessons = current_lesson)
         serializer = JournalSerializer(journal, many=True)
-        data = serializer.data
-        try: i = data[0]
-        except: return Response(status=400)          
+        data = serializer.data       
         return Response({
             "journal" : data
         })
