@@ -1,19 +1,14 @@
 import {createRouter, createWebHistory} from "vue-router";
-import HomeView from "../views/HomeView.vue";
 import students from "../views/students.vue";
 import teachers from "../views/teachers.vue";
 import schools from "../views/schools.vue";
 import subjects from "../views/subjects.vue";
 import ReportBySchool from "../views/ReportBySchool.vue";
 import choices from "../views/Choices.vue";
-// 21.08.2022
 import TeacherHome from "../views/Teacher/TeacherHome.vue";
 import Subject from "../views/Teacher/Subject.vue";
-// 29.08.2022
 import Journal from "../views/Teacher/Journal.vue";
 import LoginView from "../views/LoginView.vue";
-
-// 01.09.2022
 import ReportBySubject from "../views/ReportBySubject.vue";
 import ReportOfSubjects from "../views/ReportOfSubjects.vue";
 import {useAuthStore} from "@/stores/authStore";

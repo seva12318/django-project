@@ -159,7 +159,6 @@ export const useTeacherStore = defineStore({
 
     // 30.08.2022
     async fetchMarksByLessonId(lessonId) {
-      this.isLoading = true;
 
       const response = await fetch(`/api/lessons/${lessonId}/journal/`, {
         method: "GET",
@@ -169,49 +168,21 @@ export const useTeacherStore = defineStore({
       });
       this.marks = (await response.json()).journal;
 
-      this.isLoading = false;
     },
 
     async addMark({ studentId, mark, lessonId }) {
-      //this.isLoading = true;
       let response = await axios.post("/api/journals/",{
         students: studentId,
           lessons: lessonId,
           mark: String(mark),
       })
-      // await fetch("/api/journals/", {
-      //   method: "POST",
-      //   headers: {
-      //     "content-type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     students: studentId,
-      //     lessons: lessonId,
-      //     mark: String(mark),
-      //   }),
-      // });
-      //this.isLoading = false;
     },
 
     async updateMark({ markId, mark }) {
-
       let response = await axios.patch(`/api/journals/${markId}/`,{
         mark: mark,
       });
 
-      // this.fetchSubjectLessons(updatedLesson.subjects).finally(
-      //   () => (this.isLoading = false)
-
-
-      // await fetch(`/api/journals/${markId}/`, {
-      //   method: "PATCH",
-      //   headers: {
-      //     "content-type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     mark,
-      //   }),
-      // });
     },
 
     // 02.09.2022

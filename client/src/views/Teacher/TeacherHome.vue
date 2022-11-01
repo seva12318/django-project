@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div class="teacher_wrapper">
     <div class="info">
       <div class="greeting">
@@ -25,6 +25,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { storeToRefs } from "pinia";
 import { onBeforeMount } from "vue";

@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div class="wrapper">
     <Loader v-if="!Boolean(lessons) || !Boolean(subject) || isLoading" />
     <div class="subject_wrapper" v-else>
@@ -21,9 +21,12 @@
         <div class="subject_lessons">
           <div class="subject_lesson" v-for="(lesson, index) in sortedLessons">
             <div>
+                <div class="d-flex justify-content-between">
               <span class="title">{{
                 `Урок №${sortedLessons.length - index}`
               }}</span>
+                    <div @click="onRemoveClicked(lesson)" class="btn btn-sm btn-danger">x</div>
+                    </div>
               <hr />
               <div>
                 <span class="title">Тема: </span>
@@ -40,7 +43,7 @@
             </div>
             <div class="btns">
               <div
-                class="btn add_lesson"
+                class="btn btn-green add_lesson"
                 @click="
                   openEditLessonModal({
                     ...lesson,
@@ -50,7 +53,7 @@
               >
                 Редактировать
               </div>
-              <div class="btn add_lesson" @click="navigateToLesson(lesson.id)">
+              <div class="btn btn-green add_lesson" @click="navigateToLesson(lesson.id)">
                 Открыть журнал
               </div>
             </div>
@@ -88,6 +91,10 @@ const sortedLessons = computed(() => {
       lessons.value.sort((l1, l2) => (l1.date > l2.date ? -1 : 1))
     : null;
 });
+
+function onRemoveClicked(lesson) {
+    console.log(lesson);
+}
 </script>
 <script>
 export default {
@@ -120,7 +127,7 @@ export default {
         ...lesson,
         subjectId: Number(this.subjectId),
         date: lesson.date,
-        
+
       });
       this.onModalClose();
       this.sortedLessons =
@@ -186,8 +193,9 @@ export default {
   margin-top: 20px;
   gap: 20px;
 }
-.btn {
-  padding: 10px 20px;
+
+.btn-green {
+      padding: 10px 20px;
   border-radius: 8px;
   background: #42b983;
 
@@ -200,9 +208,10 @@ export default {
   text-align: center;
 
   width: fit-content;
+    transition: all .3s;
 }
-.btn:hover {
-  opacity: 0.9;
+.btn-green:hover {
+  /*opacity: 0.9;*/
   transform: scale(1.1);
 }
 .subject_lessons {
