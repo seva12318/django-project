@@ -19,7 +19,9 @@ class JournalViewSet(viewsets.ModelViewSet):
     permission_classes = [IsStaffUser]
 
     def get_queryset(self):
-        return Journal.objects.all()
+        return Journal.objects.filter(
+            lessons__subjects__teacher__in=Teacher.objects.filter(user=self.request.user.id)
+        ).all()
 
     #########################ОЦЕНКИ КОНКРЕТНОГО СТУДЕНТА(ВСЕ ПРЕДМЕТЫ)###############################
     @action(detail=True, url_path="lesson", methods=['GET'])
@@ -36,7 +38,6 @@ class JournalViewSet(viewsets.ModelViewSet):
     @action(detail=True, url_path="school", methods=['GET'])
     def school(self, *args, **kwargs):
         participants = Student.objects.filter(school=self.kwargs['pk'])
-        # serializer = StudentSerializer(participants, many=True)
         i = 0
         for part in participants:
             journal = Journal.objects.filter(students=part)
@@ -81,8 +82,8 @@ class LessonViewSet(viewsets.ModelViewSet):
     def journal(self, *args, **kwargs):
         current_lesson = self.get_object()
         subjects = Lesson.objects.filter(subjects__in=Subject.objects.filter(
-            teacher__in=Teacher.objects.filter(
-                user=self.request.user.id)))
+            teacher__in=Teacher.objects.filter(user=self.request.user.id))
+        )
         i = 0
         for sub in subjects.values('id'):
             if sub['id'] == current_lesson.id:
