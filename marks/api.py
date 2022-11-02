@@ -38,16 +38,12 @@ class JournalViewSet(viewsets.ModelViewSet):
     @action(detail=True, url_path="school", methods=['GET'])
     def school(self, *args, **kwargs):
         participants = Student.objects.filter(school=self.kwargs['pk'])
-        i = 0
+        data = []
         for part in participants:
             journal = Journal.objects.filter(students=part)
             serializer = JournalReportSerializer(journal, many=True)
             # КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
-            if i == 0:
-                data = serializer.data
-            else:
-                data = data + serializer.data
-            i = i + 1
+            data = data + serializer.data
 
         return Response({
             "school-journal": data,
@@ -213,32 +209,22 @@ class ActiveTeacherViewSet(viewsets.GenericViewSet):
 
 
 def students_data(participants, sub_id):
-    i = 0
+    data = []
     for part in participants:
         lesson = Lesson.objects.filter(subjects_id=sub_id)
         for less in lesson:
             journal = Journal.objects.filter(students=part.students, lessons=less)
             serializer = JournalReportSerializer(journal, many=True)
-            # КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
-            if i == 0:
-                data = serializer.data
-            else:
-                data = data + serializer.data
-            i = i + 1
+            data = data + serializer.data
     return data
 
 
 def students_list(participants):
-    i = 0
+    data = []
     for part in participants:
         students = Student.objects.filter(id=part.students.id)
         serializer = StudentSerializer(students, many=True)
-        # КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
-        if i == 0:
-            data = serializer.data
-        else:
-            data = data + serializer.data
-        i = i + 1
+        data = data + serializer.data
     return data
 
 
