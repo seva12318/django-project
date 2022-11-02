@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
     <modal :show="showModal" @submit="submit()" @close="closeModal()">
@@ -18,7 +18,6 @@
           <span>Дата: </span>
           <input type="date" placeholder="Дата урока" v-model="lesson.date" />
         </div>
-
         <span>Домашнее задание: </span>
         <textarea
           placeholder="Текст домашнего задания"

@@ -1,214 +1,144 @@
-import { defineStore } from "pinia";
-
-import {ref} from "vue";
+import {defineStore} from "pinia";
 import axios from "axios";
 
 export const useTeacherStore = defineStore({
-  id: "teacher",
-  state: () => ({
-    teacher: {},
-    subjects: [],
-    subject: null,
-    lessons: null,
-    subjectStudents: null,
-    lesson: null,
-    marks: null,
-    isLoading: false,
-    report: [],
-    teacherId: null
-  }),
-  actions: {
-    // 21.08.2022
-    async fetchTeacherById(id) {
-      try{
-      const response = await fetch(`/api/teachers/${id}/`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
+    id: "teacher",
+    state: () => ({
+        teacher: {},
+        subjects: [],
+        subject: null,
+        lessons: null,
+        subjectStudents: null,
+        lesson: null,
+        marks: null,
+        isLoading: false,
+        report: [],
+        teacherId: null
+    }),
+    actions: {
+        // 21.08.2022
+        async fetchTeacherById(id) {
+            try {
+                const response = await axios.get(`/api/teachers/${id}/`);
+                const teacher = response.data;
+                this.teacher = teacher;
+            } catch (error) {
+                console.log(error)
+            }
         },
-      });
-      //console.log(response);
-      const teacher = await response.json();
-      this.teacher = teacher;
-    }
-    catch(error){
-      console.log(error)
-    }
-    },
 
-    async fetchTeacherSubjects(teacherId) {
-      try{
-      const response = await fetch(`/api/teachers/subjects/`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          // "csrftoken": csrftoken,
+        async fetchTeacherSubjects(teacherId) {
+            const response = await axios.get(`/api/teachers/subjects/`);
+            this.subjects = response.data.subjects;
         },
-      });
-      const subjects = (await response.json()).subjects;
-      this.subjects = subjects;
-      }
-      catch(error){
-        console.log(error)
-      }
-    },
 
-    async fetchSubjectById(subjectId) {
-      const response = await fetch(`/api/subjects/${subjectId}/`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
+        async fetchSubjectById(subjectId) {
+            const response = await axios.get(`/api/subjects/${subjectId}/`);
+            this.subject = response.data;
         },
-      });
-      const subject = await response.json();
-      this.subject = subject;
-    },
 
-    async fetchSubjectLessons(subjectId) {
-      const response = await fetch(`/api/subjects/${subjectId}/lessons/`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
+        async fetchSubjectLessons(subjectId) {
+            const response = await axios.get(`/api/subjects/${subjectId}/lessons/`);
+            this.lessons = response.data["sub-lessons"];
         },
-      });
-      const lessons = (await response.json())["sub-lessons"];
-      this.lessons = lessons;
-    },
 
-    // 22.08.2022
-    async addLesson({ topic, date, subjectId, homework }) {
-      this.isLoading = true;
+        // 22.08.2022
+        async addLesson({topic, date, subjectId, homework}) {
+            this.isLoading = true;
+            //работает не трогать
+            let response = await axios.post("/api/lessons/", {
+                topic: topic,
+                date: date,
+                homework: homework,
+                subjects: subjectId,
+            });
 
-      // await fetch("/api/lessons/", {
-      //   method: "POST",
-      //   headers: {
-      //     "content-type": "application/json",
-      //     
-      //   },
-      //   body: JSON.stringify({ topic, date, homework, subjects: subjectId}),
-      // });
-      
-      //работает не трогать
-      let response = await axios.post("/api/lessons/", {
-        
-        topic:topic,
-        date:date,
-        homework:homework,
-        subjects: subjectId,
-        
-    });
-    
-      this.fetchSubjectLessons(subjectId).finally(
-        () => (this.isLoading = false)
-      );
-    },
-
-    // 23.08.2022
-    async updateLesson(lessonId, updatedLesson) {
-      this.isLoading = true;
-
-      // await fetch(`/api/lessons/${lessonId}/`, {
-      //   method: "PATCH",
-      //   headers: {
-      //     "content-type": "application/json",
-      //   },
-      //   body: JSON.stringify(updatedLesson),
-      // });
-
-      //а почему???????
-      let response = await axios.patch(`/api/lessons/${lessonId}/`,{
-        topic:updatedLesson.topic,
-        date:updatedLesson.date,
-        homework:updatedLesson.homework,
-        subjects: updatedLesson.subjectId,
-      });
-
-      this.fetchSubjectLessons(updatedLesson.subjects).finally(
-        () => (this.isLoading = false)
-      );
-    },
-
-    // 29.08.2022
-    async fetchStudentsBySubjectId(subjectId) {
-      this.isLoading = true;
-
-      const response = await fetch(`/api/subjects/${subjectId}/students/`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
+            this.fetchSubjectLessons(subjectId).finally(
+                () => (this.isLoading = false)
+            );
         },
-      });
-      this.subjectStudents = (await response.json())["sub-journal"];
 
-      this.isLoading = false;
-    },
+        // 23.08.2022
+        async updateLesson(lessonId, updatedLesson) {
+            this.isLoading = true;
 
-    async fetchLessonById(lessonId) {
-      this.isLoading = true;
+            let response = await axios.patch(`/api/lessons/${lessonId}/`, {
+                topic: updatedLesson.topic,
+                date: updatedLesson.date,
+                homework: updatedLesson.homework,
+                subjects: updatedLesson.subjectId,
+            });
 
-      const response = await fetch(`/api/lessons/${lessonId}/`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
+            await this.fetchSubjectLessons(updatedLesson.subjects)
+
+            this.isLoading = false;
         },
-      });
-      this.lesson = await response.json();
 
-      this.isLoading = false;
-    },
-
-    // 30.08.2022
-    async fetchMarksByLessonId(lessonId) {
-
-      const response = await fetch(`/api/lessons/${lessonId}/journal/`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
+        async removeLesson(lesson) {
+            if (confirm("Подтвердите удаление урока")) {
+                let response = await axios.delete(`/api/lessons/${lesson.id}/`);
+                await this.fetchSubjectLessons(lesson.subjects);
+            }
         },
-      });
-      this.marks = (await response.json()).journal;
 
-    },
+        // 29.08.2022
+        async fetchStudentsBySubjectId(subjectId) {
+            this.isLoading = true;
 
-    async addMark({ studentId, mark, lessonId }) {
-      let response = await axios.post("/api/journals/",{
-        students: studentId,
-          lessons: lessonId,
-          mark: String(mark),
-      })
-    },
+            const response = await axios.get(`/api/subjects/${subjectId}/students/`);
+            this.subjectStudents = response.data["sub-journal"];
 
-    async updateMark({ markId, mark }) {
-      let response = await axios.patch(`/api/journals/${markId}/`,{
-        mark: mark,
-      });
-
-    },
-
-    // 02.09.2022
-    async fetchReportBySubjectId(subjectId) {
-      this.isLoading = true;
-
-      const response = await fetch(`/api/journals/${subjectId}/subject/`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
+            this.isLoading = false;
         },
-      });
-      this.report = (await response.json())["sub-journal"];
 
-      this.isLoading = false;
+        async fetchLessonById(lessonId) {
+            this.isLoading = true;
+
+            const response = await axios.get(`/api/lessons/${lessonId}/`);
+            this.lesson = response.data;
+
+            this.isLoading = false;
+        },
+
+        // 30.08.2022
+        async fetchMarksByLessonId(lessonId) {
+            const response = await axios.get(`/api/lessons/${lessonId}/journal/`);
+            this.marks = response.data.journal;
+        },
+
+        async addMark({studentId, mark, lessonId}) {
+            let response = await axios.post("/api/journals/", {
+                students: studentId,
+                lessons: lessonId,
+                mark: String(mark),
+            })
+        },
+
+        async updateMark({markId, mark}) {
+            let response = await axios.patch(`/api/journals/${markId}/`, {
+                mark: mark,
+            });
+
+        },
+
+        // 02.09.2022
+        async fetchReportBySubjectId(subjectId) {
+            this.isLoading = true;
+
+            const response = await axios.get(`/api/journals/${subjectId}/subject/`);
+            this.report = response.data["sub-journal"];
+
+            this.isLoading = false;
+        },
+        async fetchTeacherId() {
+            this.isLoading = true;
+            let r = await axios.get('/api/teachers/user/')
+            //console.log(r.data.teacher[0].user);
+            this.teacherId = r.data.teacher[0].id;
+            //console.log(this.teacherId);
+            this.isLoading = false;
+            return this.teacherId;
+        },
     },
-    async fetchTeacherId() {
-      this.isLoading = true;
-      
-      let r = await axios.get('/api/teachers/user/')
-      //console.log(r.data.teacher[0].user);
-      this.teacherId  = r.data.teacher[0].id;
-     //console.log(this.teacherId);
-      this.isLoading = false;
-     return this.teacherId;
-    },
-  },
-  
+
 });

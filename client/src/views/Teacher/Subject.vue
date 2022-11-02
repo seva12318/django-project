@@ -14,10 +14,10 @@
         <div class="subject_no_lessons">
           На данный момент у вас нет уроков по этому предмету
         </div>
-        <div class="btn" @click="openAddLessonModal()">+ Добавить урок</div>
+        <div class="btn btn-green" @click="openAddLessonModal()">+ Добавить урок</div>
       </div>
       <div class="lessons_wrapper" v-else>
-        <div class="btn" @click="openAddLessonModal()">+ Добавить урок</div>
+        <div class="btn btn-green" @click="openAddLessonModal()">+ Добавить урок</div>
         <div class="subject_lessons">
           <div class="subject_lesson" v-for="(lesson, index) in sortedLessons">
             <div>
@@ -43,7 +43,7 @@
             </div>
             <div class="btns">
               <div
-                class="btn btn-green add_lesson"
+                class="btn btn-green "
                 @click="
                   openEditLessonModal({
                     ...lesson,
@@ -53,7 +53,7 @@
               >
                 Редактировать
               </div>
-              <div class="btn btn-green add_lesson" @click="navigateToLesson(lesson.id)">
+              <div class="btn btn-green " @click="navigateToLesson(lesson.id)">
                 Открыть журнал
               </div>
             </div>
@@ -73,11 +73,11 @@
 <script setup>
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
-import { useTeacherStore } from "../../stores/teacherStore";
-import { formatDate } from "../../util/formatDate";
+import { useTeacherStore } from "@/stores/teacherStore";
+import { formatDate } from "@/util/formatDate";
 import Loader from "../../components/Loader/Loader.vue";
 import ModalLesson from "./ModalAddLesson/ModalLesson.vue";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
 
@@ -93,9 +93,10 @@ const sortedLessons = computed(() => {
 });
 
 function onRemoveClicked(lesson) {
-    console.log(lesson);
+    teacherStore.removeLesson(lesson);
 }
 </script>
+
 <script>
 export default {
   data() {
@@ -212,6 +213,7 @@ export default {
 }
 .btn-green:hover {
   /*opacity: 0.9;*/
+  background: #42b983;
   transform: scale(1.1);
 }
 .subject_lessons {
