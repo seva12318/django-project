@@ -1,8 +1,8 @@
 import {createRouter, createWebHistory} from "vue-router";
-import students from "../views/students.vue";
-import teachers from "../views/teachers.vue";
-import schools from "../views/schools.vue";
-import subjects from "../views/subjects.vue";
+import students from "../views/Students.vue";
+import teachers from "../views/Teachers.vue";
+import schools from "../views/Schools.vue";
+import subjects from "../views/Subjects.vue";
 import ReportBySchool from "../views/ReportBySchool.vue";
 import choices from "../views/Choices.vue";
 import TeacherHome from "../views/Teacher/TeacherHome.vue";
