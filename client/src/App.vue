@@ -52,7 +52,11 @@ watch(isAuthenticated, () => {
             <div class="flex-grow-1"></div>
             <template v-if=isAuthenticated>
                  <RouterLink to="/">Список предметов</RouterLink>
+                 <RouterLink to="/reports/schools" >Оценки учеников по школам</RouterLink>
+                 <RouterLink to="/reports/teachers/1/subjects">Оценки учеников по классам</RouterLink>
+                 <RouterLink to="/reports/subjects" >Домашние задания</RouterLink>
             </template>
+            
             <a href="#" @click="onLogout" v-if="isAuthenticated">Выход</a>
         </nav>
     </header>
