@@ -19,27 +19,28 @@ const subjectId = computed(() => route.params.subjectId);
 const lessonId = computed(() => route.params.lessonId);
 
 const sortedStudents = computed(() => {
-    return subjectStudents !== null
-        ? // descending sort
+    return subjectStudents.value? // descending sort
         subjectStudents.value.sort((s1, s2) => {
             return s1.surname > s2.surname ? 1 : -1;
         })
-        : null;
+        : [];
 });
 
 const studentsWithMarks = computed(() => {
-    return sortedStudents !== null && marks !== null
+    return sortedStudents.value && marks.value
         ? sortedStudents.value.map((s) => ({
             ...s,
-            mark: marks.value[
-                marks.value.findIndex((mark) => mark.students === s.id)
-                ]?.mark,
-            markId:
-            marks.value[marks.value.findIndex((mark) => mark.students === s.id)]
-                ?.id,
+            mark: marks.value[marks.value.findIndex((mark) => mark.students === s.id)]?.mark,
+            markId: marks.value[marks.value.findIndex((mark) => mark.students === s.id)]?.id,
         }))
         : null;
 });
+
+const loading = computed(() => {
+    return isLoading.value || !Boolean(subjectStudents) ||
+      !Boolean(lesson) ||
+      !Boolean(subject);
+})
 
 async function onChangeMark(studentId, markId, mark) {
     if (markId) {
@@ -72,12 +73,7 @@ onBeforeMount(() => {
 
 <template>
     <Loader
-        v-if="
-      !Boolean(subjectStudents) ||
-      !Boolean(lesson) ||
-      !Boolean(subject) ||
-      isLoading
-    "
+        v-if="loading"
     />
     <div class="journal_wrapper" v-else>
         <h2>

@@ -136,11 +136,6 @@ export default {
 
       });
       this.onModalClose();
-      this.sortedLessons =
-        this.lessons !== null
-          ? // descending sort
-            this.lessons.value.sort((l1, l2) => (l1.date > l2.date ? -1 : 1))
-          : null;
     },
     onUpdateLesson(lesson) {
       this.teacherStore.updateLesson(lesson.id, {
@@ -148,11 +143,6 @@ export default {
         date: lesson.date,
       });
       this.onModalClose();
-      this.sortedLessons =
-        this.lessons !== null
-          ? // descending sort
-            this.lessons.value.sort((l1, l2) => (l1.date > l2.date ? -1 : 1))
-          : null;
     },
     openAddLessonModal() {
       this.isEdit = false;
