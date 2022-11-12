@@ -71,16 +71,17 @@
   />
 </template>
 <script setup>
-import { computed } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { storeToRefs } from "pinia";
 import { useTeacherStore } from "@/stores/teacherStore";
 import { formatDate } from "@/util/formatDate";
 import Loader from "../../components/Loader/Loader.vue";
 import ModalLesson from "./ModalAddLesson/ModalLesson.vue";
 import { useAuthStore } from "@/stores/authStore";
+import {useRoute} from "vue-router";
 
 const authStore = useAuthStore();
-
+const route = useRoute();
 const teacherStore = useTeacherStore();
 
 // добавить уроки и удалить из data, когда появится ручка
@@ -95,6 +96,10 @@ const sortedLessons = computed(() => {
 function onRemoveClicked(lesson) {
     teacherStore.removeLesson(lesson);
 }
+  onBeforeMount( () => {
+    teacherStore.fetchSubjectLessons(route.params.id);
+    teacherStore.fetchSubjectById(route.params.id);
+  });
 </script>
 
 <script>
@@ -164,10 +169,6 @@ export default {
       this.currentLesson = lesson;
       this.onModalOpen();
     },
-  },
-  beforeMount() {
-    this.teacherStore.fetchSubjectLessons(this.subjectId);
-    this.teacherStore.fetchSubjectById(this.subjectId);
   },
 };
 </script>
