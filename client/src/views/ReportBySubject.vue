@@ -1,13 +1,17 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import { useTeacherStore } from "../stores/teacherStore";
 import { computed, onBeforeMount, ref } from "vue";
+import _ from "lodash";
 
+import { useTeacherStore } from "../stores/teacherStore";
 import { groupByStudent } from "../util/group";
+import { formatDate } from "../util/formatDate";
 
 const teacherStore = useTeacherStore();
 const { subjects, lessons, subjectStudents, report } =
   storeToRefs(teacherStore);
+
+const selectedSubject = ref("");
 
 const sortedStudents = computed(() => {
   return subjectStudents !== null
@@ -26,29 +30,12 @@ const sortedLessons = computed(() => {
 onBeforeMount(() => {
   teacherStore.fetchTeacherSubjects(1);
 });
-</script>
 
-<script>
-import { useLessonsStore } from "../stores/lessons";
-import ReportRow from "@/components/ReportRow.vue";
-import _ from "lodash";
-import { useTeacherStore } from "../stores/teacherStore";
-import { formatDate } from "../util/formatDate";
-
-export default {
-  data() {
-    return {
-      selectedSubject: "",
-    };
-  },
-  methods: {
-    onSelectClick(id) {
-      this.teacherStore.fetchReportBySubjectId(id);
-      this.teacherStore.fetchStudentsBySubjectId(id);
-      this.teacherStore.fetchSubjectLessons(id);
-    },
-  },
-};
+function onSelectClick(id) {
+  teacherStore.fetchReportBySubjectId(id);
+  teacherStore.fetchStudentsBySubjectId(id);
+  teacherStore.fetchSubjectLessons(id);
+}
 </script>
 
 <template>

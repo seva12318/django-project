@@ -1,7 +1,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import { useLessonsStore } from "../stores/lessons";
 import { computed, onBeforeMount, ref } from "vue";
+import _ from "lodash";
+
+import ReportRow from "@/components/ReportRow.vue";
+import { useLessonsStore } from "../stores/lessons";
 
 import { groupByStudent } from "../util/group";
 
@@ -23,33 +26,20 @@ const reportByStudent = computed(() => {
 
 let sortFiled = ref("name");
 
+const selectedSchool = ref("");
+
 onBeforeMount(() => {
   // lessonsStore.fetchReports("1");
   lessonsStore.fetchSchools();
 });
-</script>
 
-<script>
-import { useLessonsStore } from "../stores/lessons";
-import ReportRow from "@/components/ReportRow.vue";
-import _ from "lodash";
-
-export default {
-  data() {
-    return {
-      selectedSchool: "",
-    };
-  },
-  methods: {
-    onSelectClick(id) {
-      console.log(id);
-      console.log(this.reportsStored);
-      console.log(this.reportsStored[0]);
-      console.log(this.reportByStudent);
-      this.lessonsStore.fetchReports(id);
-    },
-  },
-};
+function onSelectClick(id) {
+  console.log(id);
+  console.log(reportsStored);
+  console.log(reportsStored[0]);
+  console.log(reportByStudent);
+  lessonsStore.fetchReports(id);
+}
 </script>
 
 <template>

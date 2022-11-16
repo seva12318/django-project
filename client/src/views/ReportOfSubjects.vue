@@ -8,6 +8,9 @@ import { groupByStudent } from "../util/group";
 const lessonsStore = useLessonsStore();
 const { subjects, lessons } = storeToRefs(lessonsStore);
 
+const isSubjectsSortDescending = ref(false);
+const isLessonsSortDescending = ref(false);
+
 const filteredLessons = computed(() =>
   lessons
     ? lessons.value.reduce((acc, val) => {
@@ -26,81 +29,66 @@ onBeforeMount(() => {
   lessonsStore.fetchSubjects();
   lessonsStore.fetchLessons();
 });
-</script>
 
-<script>
-import { useLessonsStore } from "../stores/lessons";
-import ReportRow from "@/components/ReportRow.vue";
-import _ from "lodash";
-import { useTeacherStore } from "../stores/teacherStore";
-import { formatDate } from "../util/formatDate";
+function sortSubjects() {
+  if (isSubjectsSortDescending) {
+    return subjects
+      ? subjects.sort((a, b) =>
+          `${a.name} (${a.level})` > `${b.name} (${b.level})` ? -1 : 1
+        )
+      : null;
+  } else {
+    return subjects
+      ? subjects.sort((a, b) =>
+          `${a.name} (${a.level})` > `${b.name} (${b.level})` ? 1 : -1
+        )
+      : null;
+  }
+}
 
-export default {
-  data() {
-    return {
-      isSubjectsSortDescending: false,
-      isLessonsSortDescending: false,
-      filteredLessons: null,
-    };
-  },
-  methods: {
-    sortSubjects() {
-      if (this.isSubjectsSortDescending) {
-        return this.subjects
-          ? this.subjects.sort((a, b) =>
-              `${a.name} (${a.level})` > `${b.name} (${b.level})` ? -1 : 1
-            )
-          : null;
-      } else {
-        return this.subjects
-          ? this.subjects.sort((a, b) =>
-              `${a.name} (${a.level})` > `${b.name} (${b.level})` ? 1 : -1
-            )
-          : null;
-      }
-    },
-    filterLessons() {
-      return this.lessons
-        ? this.lessons.reduce((acc, val) => {
-            const key = val["subjects"];
-            if (acc[key]) {
-              acc[key].push(val);
-            } else {
-              acc[key] = [val];
-            }
-            return acc;
-          }, {})
-        : null;
-    },
-    sortLessons() {
-      if (this.isLessonsSortDescending) {
-        this.filteredLessons
-          ? Object.keys(this.filteredLessons).forEach((key) => {
-              this.filteredLessons[key] = this.filteredLessons[key].sort(
-                (a, b) => (a.date > b.date ? -1 : 1)
-              );
-            })
-          : null;
-      } else {
-        this.filteredLessons
-          ? Object.keys(this.filteredLessons).forEach((key) => {
-              this.filteredLessons[key] = this.filteredLessons[key].sort(
-                (a, b) => (a.date > b.date ? 1 : -1)
-              );
-            })
-          : null;
-      }
+function filterLessons() {
+  return lessons
+    ? lessons.reduce((acc, val) => {
+        const key = val["subjects"];
+        if (acc[key]) {
+          acc[key].push(val);
+        } else {
+          acc[key] = [val];
+        }
+        return acc;
+      }, {})
+    : null;
+}
 
-      return this.filteredLessons;
-    },
-    changeSubjectsSort() {
-      this.isSubjectsSortDescending = !this.isSubjectsSortDescending;
-    },
-    changeLessonsSort() {
-      this.isLessonsSortDescending = !this.isLessonsSortDescending;
-    },
-  },
-};
+function sortLessons() {
+  if (isLessonsSortDescending) {
+    filteredLessons
+      ? Object.keys(filteredLessons).forEach((key) => {
+          filteredLessons[key] = filteredLessons[key].sort((a, b) =>
+            a.date > b.date ? -1 : 1
+          );
+        })
+      : null;
+  } else {
+    filteredLessons
+      ? Object.keys(filteredLessons).forEach((key) => {
+          filteredLessons[key] = filteredLessons[key].sort((a, b) =>
+            a.date > b.date ? 1 : -1
+          );
+        })
+      : null;
+  }
+
+  return filteredLessons;
+}
+
+function changeSubjectsSort() {
+  isSubjectsSortDescending = !isSubjectsSortDescending;
+}
+
+function changeLessonsSort() {
+  isLessonsSortDescending = !isLessonsSortDescending;
+}
 </script>
 
 <template>
