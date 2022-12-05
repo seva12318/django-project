@@ -20,6 +20,7 @@ export default {
 .anchor {
   position: relative;
   height: 50px;
+  background:rgb(5, 33, 84);
 }
 .popup {
   position: absolute;
@@ -29,7 +30,7 @@ export default {
   display: flex;
   flex-direction: column;
 
-  background: #42b983;
+  background:rgb(5, 33, 84);
   width: 220px;
 }
 </style>

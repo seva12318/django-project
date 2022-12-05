@@ -64,7 +64,7 @@ class JournalViewSet(viewsets.ModelViewSet):
 
         return Response({
             "sub-journal": data,
-        })
+        })   
 
 
 class LessonViewSet(viewsets.ModelViewSet):

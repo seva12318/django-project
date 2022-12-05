@@ -18,7 +18,7 @@ function onSurnameClick() {
 </script>
 
 <template>
-  <div
+  <div :id = number
     class="journal_record"
     :class="{ odd: number % 2 === 1, even: number % 2 === 0 }"
   >

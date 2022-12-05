@@ -19,28 +19,27 @@ const subjectId = computed(() => route.params.subjectId);
 const lessonId = computed(() => route.params.lessonId);
 
 const sortedStudents = computed(() => {
-    return subjectStudents.value? // descending sort
+    return subjectStudents !== null
+        ? // descending sort
         subjectStudents.value.sort((s1, s2) => {
             return s1.surname > s2.surname ? 1 : -1;
         })
-        : [];
-});
-
-const studentsWithMarks = computed(() => {
-    return sortedStudents.value && marks.value
-        ? sortedStudents.value.map((s) => ({
-            ...s,
-            mark: marks.value[marks.value.findIndex((mark) => mark.students === s.id)]?.mark,
-            markId: marks.value[marks.value.findIndex((mark) => mark.students === s.id)]?.id,
-        }))
         : null;
 });
 
-const loading = computed(() => {
-    return isLoading.value || !Boolean(subjectStudents) ||
-      !Boolean(lesson) ||
-      !Boolean(subject);
-})
+const studentsWithMarks = computed(() => {
+    return sortedStudents !== null && marks !== null
+        ? sortedStudents.value.map((s) => ({
+            ...s,
+            mark: marks.value[
+                marks.value.findIndex((mark) => mark.students === s.id)
+                ]?.mark,
+            markId:
+            marks.value[marks.value.findIndex((mark) => mark.students === s.id)]
+                ?.id,
+        }))
+        : null;
+});
 
 async function onChangeMark(studentId, markId, mark) {
     if (markId) {
@@ -73,7 +72,12 @@ onBeforeMount(() => {
 
 <template>
     <Loader
-        v-if="loading"
+        v-if="
+      !Boolean(subjectStudents) ||
+      !Boolean(lesson) ||
+      !Boolean(subject) ||
+      isLoading
+    "
     />
     <div class="journal_wrapper" v-else>
         <h2>
@@ -116,6 +120,7 @@ onBeforeMount(() => {
     flex: 1;
     width: 90%;
     padding: 50px 100px;
+    
 }
 
 .journal_header {
@@ -142,8 +147,8 @@ onBeforeMount(() => {
 .btn {
     padding: 10px 20px;
     border-radius: 8px;
-    background: #42b983;
-
+    color: white;
+    background-color: rgb(5, 33, 84);
     cursor: pointer;
 
     display: flex;
@@ -153,6 +158,10 @@ onBeforeMount(() => {
     text-align: center;
 
     width: fit-content;
+}
+.btn.btn:hover{
+    background-color: rgb(5, 33, 84);
+    color: white;
 }
 
 .btn.save {

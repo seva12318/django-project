@@ -25,7 +25,7 @@
               <span class="title">{{
                       `Урок №${sortedLessons.length - index}`
                   }}</span>
-                                <div @click="onRemoveClicked(lesson)" class="btn btn-sm btn-danger">x</div>
+                                <div @click="onRemoveClicked(lesson)" class="btn btn-sm btn-danger">Удалить урок</div>
                             </div>
                             <hr/>
                             <div>
@@ -165,19 +165,20 @@ function openEditLessonModal(lesson) {
 <style scoped>
 .subject_wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
     justify-content: flex-start;
     flex: 1;
     width: 90%;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .subject_name {
     display: flex;
     flex-direction: column;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
     text-align: center;
+    color: rgb(5, 33, 84);
 }
 
 .lessons_wrapper {
@@ -186,19 +187,20 @@ function openEditLessonModal(lesson) {
     align-items: center;
     margin-top: 20px;
     gap: 20px;
+    color: rgb(5, 33, 84);
 }
 
 .btn-green {
     padding: 10px 20px;
     border-radius: 8px;
-    background: #42b983;
+    background: rgb(5, 33, 84);
 
     cursor: pointer;
 
     display: flex;
     flex-direction: column;
     gap: 10px;
-
+color:white;
     text-align: center;
 
     width: fit-content;
@@ -207,7 +209,8 @@ function openEditLessonModal(lesson) {
 
 .btn-green:hover {
     /*opacity: 0.9;*/
-    background: #42b983;
+    color: white;
+    background: rgb(5, 33, 84);
     transform: scale(1.1);
 }
 
@@ -219,6 +222,7 @@ function openEditLessonModal(lesson) {
     gap: 10px;
     max-width: 100%;
     padding-bottom: 100px;
+    color: rgb(5, 33, 84);
 }
 
 .subject_lesson {
@@ -230,6 +234,7 @@ function openEditLessonModal(lesson) {
     border: 1px solid gray;
     min-width: 300px;
     max-width: calc(100% / 4);
+    color: rgb(5, 33, 84);
 }
 
 .subject_lesson hr {
@@ -238,8 +243,9 @@ function openEditLessonModal(lesson) {
 }
 
 .subject_lesson .title {
-    font-size: 18px;
+    font-size: px;
     font-weight: 500;
+    color: rgb(5, 33, 84);
 }
 
 .subject_lesson .btns {
@@ -253,10 +259,19 @@ function openEditLessonModal(lesson) {
 .subject_no_lessons {
     margin-top: 200px;
     text-align: center;
+    color: rgb(5, 33, 84);
 }
 
 .homework {
     width: 100px;
     word-wrap: break-word;
+    color: rgb(5, 33, 84);
 }
+
+.btn-sm btn-danger{
+    background-color: red;
+}
+
+
+
 </style>

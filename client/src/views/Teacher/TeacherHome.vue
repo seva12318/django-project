@@ -105,12 +105,13 @@ export default {
 }
 
 .subject {
+  position: center;
   padding: 40px 60px;
   border-radius: 8px;
-  background: #42b983;
+  background: rgb(5, 33, 84);
 
   cursor: pointer;
-
+  color: white;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -119,10 +120,12 @@ export default {
 .subject:hover {
   opacity: 0.9;
   transform: scale(1.1);
+  color: white;
+  background-color: rgb(47, 97, 245);
 }
 
 .subject_title {
   font-size: 18px;
   font-weight: 500;
-}
+  color: white;}
 </style>

@@ -151,7 +151,7 @@ onBeforeMount( () => {
 
   width: 20px;
   height: 20px;
-  background-color: #42b983;
+  background-color: rgb(5, 33, 84);
   border-radius: 50%;
 
   transform: translateX(0);
@@ -163,6 +163,6 @@ onBeforeMount( () => {
   background-color: #fff;
 }
 .toggle-button:checked {
-  background-color: #42b983;
+  background-color: #4242b9;
 }
 </style>

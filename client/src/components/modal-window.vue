@@ -70,7 +70,7 @@ export default {
 
 .modal-header h3 {
   margin-top: 0;
-  color: #42b983;
+  color:rgb(5, 33, 84);
 }
 
 .modal-body {
@@ -85,7 +85,8 @@ export default {
 
 .modal-default-button {
   border: none;
-  background-color: #42b983;
+  background-color: rgb(5, 33, 84);
+  color:white;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;

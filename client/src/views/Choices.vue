@@ -218,6 +218,7 @@ export default {
   display: flex;
   gap: 16px;
   padding: 8px 0;
+background-color: rgb(5, 33, 84)
 }
 .toggle {
   display: flex;
@@ -252,7 +253,7 @@ export default {
 
   width: 20px;
   height: 20px;
-  background-color: #42b983;
+  background-color: rgb(5, 33, 84);
   border-radius: 50%;
 
   transform: translateX(0);
@@ -264,6 +265,6 @@ export default {
   background-color: #fff;
 }
 .toggle-button:checked {
-  background-color: #42b983;
+  background-color:rgb(5, 33, 84);
 }
 </style>

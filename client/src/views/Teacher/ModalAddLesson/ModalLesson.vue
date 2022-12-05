@@ -59,4 +59,8 @@ export default {
   gap: 10px;
   align-items: center;
 }
+
+h3{
+  color: rgb(5, 33, 84);
+}
 </style>
