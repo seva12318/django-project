@@ -23,7 +23,12 @@ const sortedLessons = computed(() => {
 });
 
 onBeforeMount(() => {
-  teacherStore.fetchTeacherSubjects(1);
+  teacherStore
+    .fetchTeacherId()
+    .then((id) => {
+      teacherStore.fetchTeacherSubjects(id);
+    })
+    .catch(console.log);
 });
 </script>
 
