@@ -57,7 +57,7 @@ watch(isAuthenticated, () => {
             
             <ul>
                 <hr style="border-color:  rgb(255, 255, 255); border-width: 0.5px;  " >
-                <img src="https://github.com/ladybag38/cont/blob/main/only_logo.png?raw=true" height="100" width="120" padding-right="10px" padding-top="50px"> 
+                <img src="https://github.com/ladybag38/cont/blob/main/logo1012.png?raw=true" height="100" width="120" padding-right="10px" padding-top="50px"> 
                 <li><button type="submit" class="btn btn-primary"><RouterLink to="/" class="rout" active-class="router-link">Список предметов</RouterLink></button></li>
                  <li><button type="submit" class="btn btn-primary"><RouterLink to="/reports/schools"  class="rout" active-class="router-link">Оценки по школам</RouterLink></button></li>
                  <li><button type="submit" class="btn btn-primary"><RouterLink to="/reports/teachers/1/subjects" class="rout" active-class="router-link">Оценки по классам</RouterLink></button></li>
