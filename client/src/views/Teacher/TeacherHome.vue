@@ -30,6 +30,7 @@
 import { storeToRefs } from "pinia";
 import { onBeforeMount } from "vue";
 import { useTeacherStore } from "../../stores/teacherStore";
+import router from "../../router";
 
 const teacherStore = useTeacherStore();
 const { teacher, subjects } = storeToRefs(teacherStore);
@@ -52,19 +53,12 @@ onBeforeMount(() => {
     }
   );
 });
+
+function navigateToSubject(subjectId) {
+  router.push({ path: `/subjects/${subjectId}` });
+}
 </script>
-<script>
-export default {
-  data() {
-    return {};
-  },
-  methods: {
-    navigateToSubject(subjectId) {
-      this.$router.push({ path: `/subjects/${subjectId}` });
-    },
-  },
-};
-</script>
+
 <style scoped>
 .teacher_wrapper {
   display: flex;
@@ -127,5 +121,6 @@ export default {
 .subject_title {
   font-size: 18px;
   font-weight: 500;
-  color: white;}
+  color: white;
+}
 </style>

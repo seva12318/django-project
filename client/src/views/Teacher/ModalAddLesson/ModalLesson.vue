@@ -31,27 +31,25 @@
   </Teleport>
 </template>
 <script setup>
-defineProps({
+import Modal from "../../../components/modal-window.vue";
+
+const { showModal, onClose, onSubmit, isEdit, lesson } = defineProps({
   showModal: Boolean,
   onClose: Function,
   onSubmit: Function,
   isEdit: Boolean,
   lesson: Object,
 });
+
+function submit() {
+  onSubmit(lesson);
+}
+
+function closeModal() {
+  onClose(lesson);
+}
 </script>
-<script>
-import Modal from "../../../components/modal-window.vue";
-export default {
-  methods: {
-    submit() {
-      this.onSubmit(this.lesson);
-    },
-    closeModal() {
-      this.onClose();
-    },
-  },
-};
-</script>
+
 <style scoped>
 .block {
   width: 100%;
@@ -60,7 +58,7 @@ export default {
   align-items: center;
 }
 
-h3{
+h3 {
   color: rgb(5, 33, 84);
 }
 </style>

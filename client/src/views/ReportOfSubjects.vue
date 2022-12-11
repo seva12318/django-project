@@ -51,29 +51,23 @@ const sortedSubjects = computed(() => {
 
 const sortedLessons = computed(() => {
   console.log(filteredLessons);
-  if (isLessonsSortDescending) {
-    return filteredLessons
-      ? Object.keys(filteredLessons.value).reduce((acc, key) => {
-          return {
-            ...acc,
-            [key]: filteredLessons.value[key].sort((a, b) =>
-              unformatDate(a.date) > unformatDate(b.date) ? -1 : 1
-            ),
-          };
-        }, {})
-      : null;
-  } else {
-    return filteredLessons
-      ? Object.keys(filteredLessons.value).reduce((acc, key) => {
-          return {
-            ...acc,
-            [key]: filteredLessons.value[key].sort((a, b) =>
-              unformatDate(a.date) > unformatDate(b.date) ? 1 : -1
-            ),
-          };
-        }, {})
-      : null;
-  }
+
+  return filteredLessons
+    ? Object.keys(filteredLessons.value).reduce((acc, key) => {
+        return {
+          ...acc,
+          [key]: filteredLessons.value[key].sort((a, b) =>
+            isLessonsSortDescending
+              ? a.date > b.date
+                ? -1
+                : 1
+              : a.date > b.date
+              ? 1
+              : -1
+          ),
+        };
+      }, {})
+    : null;
 });
 
 function changeSubjectsSort() {
