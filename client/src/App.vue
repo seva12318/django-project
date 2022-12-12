@@ -108,7 +108,36 @@ watch(isAuthenticated, () => {
     </nav>
   </header>
 
+<<<<<<< HEAD
   <RouterView />
+=======
+        
+        
+           <template v-if=isAuthenticated> 
+            
+            <ul>
+                <hr style="border-color:  rgb(255, 255, 255); border-width: 0.5px;  " >
+                <img src="https://github.com/ladybag38/cont/blob/main/logo1012.png?raw=true" height="100" width="120" padding-right="10px" padding-top="50px"> 
+                <li><button type="submit" class="btn btn-primary"><RouterLink to="/" class="rout" active-class="router-link">Список предметов</RouterLink></button></li>
+                 <li><button type="submit" class="btn btn-primary"><RouterLink to="/reports/schools"  class="rout" active-class="router-link">Оценки по школам</RouterLink></button></li>
+                 <li><button type="submit" class="btn btn-primary"><RouterLink to="/reports/teachers/1/subjects" class="rout" active-class="router-link">Оценки по классам</RouterLink></button></li>
+                 <li><button type="submit" class="btn btn-primary"><RouterLink to="/reports/subjects"       class="rout" active-class="router-link">Домашние задания</RouterLink></button></li>
+                 <li><button type="submit" class="btn btn-primary" ><RouterLink to="/" @click="onLogout" v-if="isAuthenticated" class="rout" active-class="router-link">Выйти</RouterLink></button></li>
+
+               
+                </ul>
+               
+           </template>
+            
+    
+       
+        </nav>
+        
+    </header>
+
+    <RouterView/>
+   
+>>>>>>> 47ff9e41408daea709fcda35d746862a999ad40a
 </template>
 
 <style lang="scss">
