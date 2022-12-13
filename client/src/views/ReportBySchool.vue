@@ -138,10 +138,10 @@ function downloadXLSX() {
 
 function onSelectClick(id) {
   console.log(id);
-  console.log(this.reportsStored);
-  console.log(this.reportsStored[0]);
-  console.log(this.reportByStudent);
-  this.lessonsStore.fetchReports(id);
+  console.log(reportsStored);
+  console.log(reportsStored[0]);
+  console.log(reportByStudent);
+  lessonsStore.fetchReports(id);
 }
 </script>
 
