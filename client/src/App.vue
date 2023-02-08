@@ -48,7 +48,7 @@ watch(isAuthenticated, () => {
         <ul>
           <hr style="border-color: rgb(255, 255, 255); border-width: 0.5px" />
           <img
-            src="https://github.com/ladybag38/cont/blob/main/only_logo.png?raw=true"
+            src="https://github.com/ladybag38/cont/blob/main/only_l.png?raw=true"
             height="100"
             width="120"
             padding-right="10px"
