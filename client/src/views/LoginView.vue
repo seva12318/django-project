@@ -22,7 +22,7 @@ function onSubmit() {
     <div class="d-flex justify-content-center">
         <div class="row mb-3" style="width: 400px">
             <div class="card" style="width:18 rem">
-            <img src="https://github.com/ladybag38/cont/blob/main/logo.PNG?raw=true" height="150">
+            <img src="https://github.com/ladybag38/cont/blob/main/only_l.png?raw=true" height="150">
             <div class="col-12">
                
             <label class="col-sm-2 col-form-label" ></label>
