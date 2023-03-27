@@ -101,21 +101,12 @@ onBeforeMount(() => {
     <h2>Отчёт по предметам</h2>
     <div class="cl">
       <li>
-        <select v-model="selectedSubject" id="selecsuj">
+        <select v-model="selectedSubject" id="selecsuj" @change="onSelectClick(selectedSubject)">
           <option disabled value="">Выберите один из вариантов</option>
           <option v-for="s in subjects" :value="s.id">
             {{ `${s.name} (${s.level})` }}
           </option>
         </select>
-      </li>
-
-      <li>
-        <button
-          class="btn btn-info ms-2"
-          @click="onSelectClick(selectedSubject)"
-        >
-          Показать
-        </button>
       </li>
       <li>
         <button class="btn btn-info ms-2" @click="onClick(downloadxlsx())">

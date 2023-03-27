@@ -150,17 +150,12 @@ function onSelectClick(id) {
 
   <div class="cl">
     <li>
-      <select v-model="selectedSchool" id="selececol">
+      <select v-model="selectedSchool" id="selececol" @change="onSelectClick(selectedSchool)">
         <option disabled value="">Выберите один из вариантов</option>
         <option v-for="s in schools" :value="s.id">
           {{ s.title }}
         </option>
       </select>
-    </li>
-    <li>
-      <button class="btn btn-info ms-2" @click="onSelectClick(selectedSchool)">
-        Показать
-      </button>
     </li>
     <li>
       <button class="btn btn-info ms-2" @click="downloadXLSX">
