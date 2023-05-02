@@ -415,7 +415,8 @@ GET /api/journals/\<id\>/lesson/ | id студента
 					"id":347,
 					"students":31,
 					"students_name":"Атучина Елизавета Дмитриевна",
-					"lessons":41,"mark":"3"
+					"lessons":41,
+					"mark":"3"
 				}
 			]
 	}
