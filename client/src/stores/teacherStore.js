@@ -111,12 +111,27 @@ export const useTeacherStore = defineStore({
                 students: studentId,
                 lessons: lessonId,
                 mark: String(mark),
-            })
+            });
         },
 
         async updateMark({markId, mark}) {
             let response = await axios.patch(`/api/journals/${markId}/`, {
-                mark: mark,
+                mark: String(mark),
+            });
+
+        },
+
+        async addHwMark({studentId, hwmark, lessonId}) {
+            let response = await axios.post("/api/journals/", {
+                students: studentId,
+                lessons: lessonId,
+                hwmark: String(hwmark),
+            });
+        },
+
+        async updateHwMark({markId, hwmark}) {
+            let response = await axios.patch(`/api/journals/${markId}/`, {
+                hwmark: String(hwmark)
             });
 
         },

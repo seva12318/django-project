@@ -34,8 +34,11 @@ const studentsWithMarks = computed(() => {
             mark: marks.value[
                 marks.value.findIndex((mark) => mark.students === s.id)
                 ]?.mark,
-            markId:
-            marks.value[marks.value.findIndex((mark) => mark.students === s.id)]
+            hwmark: marks.value[
+                marks.value.findIndex((mark) => mark.students === s.id)
+                ]?.hwmark,
+            markId: marks.value[
+                marks.value.findIndex((mark) => mark.students === s.id)]
                 ?.id,
         }))
         : null;
@@ -49,6 +52,19 @@ async function onChangeMark(studentId, markId, mark) {
             studentId,
             lessonId: lessonId.value,
             mark,
+        });
+    }
+    await teacherStore.fetchMarksByLessonId(lessonId.value);
+}
+
+async function onChangeHwMark(studentId, markId, hwmark) {
+    if (markId) {
+        await teacherStore.updateHwMark({markId, hwmark});
+    } else {
+        await teacherStore.addHwMark({
+            studentId,
+            lessonId: lessonId.value,
+            hwmark,
         });
     }
     await teacherStore.fetchMarksByLessonId(lessonId.value);
@@ -93,7 +109,8 @@ onBeforeMount(() => {
             <tr>
                 <th>№</th>
                 <th>ФИО</th>
-                <th>Оценка</th>
+                <th>Оценка за урок</th>
+                <th>Оценка за ДЗ</th>
             </tr>
             </thead>
             <tbody>
@@ -102,7 +119,9 @@ onBeforeMount(() => {
                 :number="index + 1"
                 :name="`${student.surname} ${student.name} ${student.patr}`"
                 :mark="student.mark || null"
+                :hwmark="student.hwmark || null"
                 :markId="student.markId"
+                @hwmark-clicked="onChangeHwMark(student.id, student.markId, $event)"
                 @mark-clicked="onChangeMark(student.id, student.markId, $event)"
             />
             </tbody>
