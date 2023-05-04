@@ -211,8 +211,8 @@ li {
 
 .btn-primary {
   background-color: rgb(5, 33, 84);
-  font-weight: 10;
-  font-size: 15;
+  font-weight: 10px;
+  font-size: 15px;
   padding: 15px 5px;
 }
 

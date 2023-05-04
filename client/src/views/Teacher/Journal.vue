@@ -110,11 +110,12 @@ onBeforeMount(() => {
                 <th>№</th>
                 <th>ФИО</th>
                 <th>Оценка за урок</th>
-                <th>Оценка за ДЗ</th>
+                <th v-if="lesson.homework.length !== 0">Оценка за ДЗ</th>
             </tr>
             </thead>
             <tbody>
             <JournalRow
+                :hwavailable="lesson.homework.length"
                 v-for="(student, index) in studentsWithMarks"
                 :number="index + 1"
                 :name="`${student.surname} ${student.name} ${student.patr}`"
@@ -172,7 +173,7 @@ onBeforeMount(() => {
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
 
     text-align: center;
 
