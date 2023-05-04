@@ -35,7 +35,8 @@ class LessonSerializer(serializers.ModelSerializer):
 class JournalSerializer(serializers.ModelSerializer):
     students_name = serializers.CharField(source="students.__str__", read_only=True)
     #lessons = serializers.CharField(source="lessons.subjects.name", read_only=True)
-
+    mark = serializers.CharField(required=False)
+    hwmark = serializers.CharField(required=False)
     class Meta:
         model = Journal
         fields = ['id', 'students', 'students_name', 'lessons', 'mark', 'hwmark']

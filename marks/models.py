@@ -64,8 +64,7 @@ class Journal(models.Model):
     students = models.ForeignKey("Student", null=True, on_delete=models.CASCADE,  verbose_name = 'ФИО студента')
     lessons = models.ForeignKey("Lesson", null=True, on_delete=models.CASCADE, verbose_name = 'Тема урока')
     mark = models.CharField("Оценка", max_length=1)
-    hwmark = models.CharField("Оценка за ДЗ", max_length=1, default='2')
-    
+    hwmark = models.CharField("Оценка за ДЗ", max_length=1)
     class Meta:
         db_table = "journal"
 
