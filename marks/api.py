@@ -44,10 +44,12 @@ class JournalViewSet(viewsets.ModelViewSet):
             serializer = JournalReportSerializer(journal, many=True)
             # КОСТЫЛЬ, НО НАДЕЮСЬ, ЧТО ПЕРЕДЕЛАЮ
             data = data + serializer.data
-
-        return Response({
-            "school-journal": data,
-        })
+        if self.request.user.is_superuser == True:
+            return Response({
+                "school-journal": data,
+            })
+        else:
+            return Response(status=403)
 
     #####################ОЦЕНКИ СТУДЕНТОВ С ФИЛЬТРОМ ПО ПРЕДМЕТУ(ОТЧЕТ)##################################
     @action(detail=True, url_path="subject", methods=['GET'])
@@ -166,7 +168,10 @@ class TeacherViewSet(viewsets.ModelViewSet):
     @action(detail=False, url_path="subjects", methods=['GET'])
     def subjects(self, *args, **kwargs):
         current_teacher = self.get_current_teacher()
-        subjects = Subject.objects.filter(teacher=current_teacher)
+        if self.request.user.is_superuser == True:
+            subjects = Subject.objects.all()
+        else:
+            subjects = Subject.objects.filter(teacher=current_teacher)
 
         serializer = SubjectSerializer(subjects, many=True)
         data = serializer.data
@@ -233,3 +238,5 @@ class SchoolViewSet(viewsets.ModelViewSet):
     serializer_class = SchoolSerializer
     renderer_classes = [renderers.JSONRenderer]
     permission_classes = [IsStaffUser]
+
+
