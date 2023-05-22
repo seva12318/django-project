@@ -1,6 +1,7 @@
 #from xml.etree.ElementInclude import include
 from django.db import router
-from marks.views import ChoicesView, LessonView, OneLessonView, OneSchoolView, OneStudentView, OneSubjectView, OneTeacherView, SchoolView, StudentView, SubjectView, TeacherView
+from marks.views import ChoicesView, LessonView, OneLessonView, OneSchoolView, OneStudentView, OneSubjectView, \
+    OneTeacherView, SchoolView, StudentView, SubjectView, TeacherView, UploadJson, DownloadGroups
 from django.urls import include, path
 from marks import views
 from rest_framework.routers import DefaultRouter
@@ -22,4 +23,6 @@ urlpatterns = [
     path("choices/", ChoicesView.as_view()),
     path('', views.home, name = 'home'),
     path("signup/", views.SignUp.as_view(), name="signup"),
+    path("uploadjson/", UploadJson.as_view(), name='upload_json'),
+    path("downloadgroups/", DownloadGroups.as_view(), name='download_file')
 ]

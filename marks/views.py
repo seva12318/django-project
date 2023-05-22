@@ -1,10 +1,15 @@
-from django.shortcuts import render
+import os
+
+from django.shortcuts import render, redirect
 from django.views import View
-from django.http import JsonResponse 
+from django.http import JsonResponse, FileResponse, HttpResponse
 from marks.models import Choice, Lesson, School, Student, Subject, Teacher
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView
+
+from .alg import GroupDistribution
 # Создаем здесь представления. 
 def home(request):
     return render(request,"marks/home.html")
@@ -118,8 +123,18 @@ class ChoicesView(View):
             "choices": list(choices)
         })
 
+class UploadJson(View):
+    def post(self, request, *args):
+        file = request.FILES['pupilschoices']
+        with open('tables/data.json', 'wb+') as destination:
+            for string in file.readlines():
+                destination.write(string)
+        GroupDistribution().create_table()
+        return redirect('download_file')
 
-        
-
-
-
+class DownloadGroups(View):
+    def get(self, request):
+        with open('tables/groups.xlsx', 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = 'attachment; filename="Table.xlsx"'
+            return response

@@ -94,9 +94,15 @@
           {% block pretitle %}{% endblock %}
           {% block content_title %}{% if title %}<h1>{{ title }}</h1>
 
-          <p align="right"><a  href="http://127.0.0.1:8000/admin/marks/choice/">
+          <a align="right"><a  href="http://127.0.0.1:8000/admin/marks/choice/">
             <input type="button" value=" Импортировать выбор"></a>
-          </p>
+          </a>
+
+          <form method="post" enctype="multipart/form-data" action="{% url 'upload_json' %}">
+              {% csrf_token %}
+              <p><input type="file" name="pupilschoices"></p><p>
+           <input type="submit" value="Отправить на распределение"></p>
+          </form>
           
           {% endif %}{% endblock %}
           {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}

@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-mj9s+jy04u=%rtkq2&4*=&$i1u=ua^42m%he2$td2bhs9@$_s4
 DEBUG = True
 
 ALLOWED_HOSTS = []
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000",
+                        "http://127.0.0.1:8000/groupdistribution/"]
 
 
 # Application definition
@@ -44,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'marks',
+    'xlsxwriter',
+    'pandas',
+    'openpyxl'
 ]
 
 MIDDLEWARE = [
@@ -124,6 +128,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'tables')
+MEDIA_URL = '/tables/'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
